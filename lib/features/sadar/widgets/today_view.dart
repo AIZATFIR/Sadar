@@ -343,24 +343,27 @@ class _TodayViewState extends ConsumerState<TodayView> {
                             const Icon(Icons.favorite_border_rounded, size: 18, color: AppPalette.accent),
                             const SizedBox(width: 8),
                             const Text(
-                              "Today's reflection",
+                              'Refleksi',
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
                                 color: AppPalette.text,
                               ),
                             ),
-                            const Spacer(),
-                            if (hasReflected)
-                              Text(
-                                _feelingLabel(reflection.feeling),
-                                style: const TextStyle(fontSize: 12, color: AppPalette.accent, fontWeight: FontWeight.bold),
-                              )
-                            else
-                              const Text(
-                                '[ How did today feel? ]',
-                                style: TextStyle(fontSize: 12, color: AppPalette.textDim),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                hasReflected ? _feelingLabel(reflection.feeling) : 'Rasa hari ini',
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: hasReflected ? AppPalette.accent : AppPalette.textDim,
+                                  fontWeight: hasReflected ? FontWeight.bold : FontWeight.w500,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
+                            ),
                           ],
                         ),
                         if (hasReflected && reflection.proudOfToday.isNotEmpty) ...[
@@ -409,13 +412,13 @@ class _TodayViewState extends ConsumerState<TodayView> {
   String _feelingLabel(ReflectionFeeling feeling) {
     switch (feeling) {
       case ReflectionFeeling.proud:
-        return 'Proud 🌟';
+        return 'Puas 🌟';
       case ReflectionFeeling.good:
-        return 'Good 🌿';
+        return 'Baik 🌿';
       case ReflectionFeeling.okay:
-        return 'Okay ☁️';
+        return 'Cukup ☁️';
       case ReflectionFeeling.notSatisfied:
-        return 'Reflecting 🌧️';
+        return 'Evaluasi 🌧️';
     }
   }
 
@@ -432,82 +435,84 @@ class _TodayViewState extends ConsumerState<TodayView> {
 
     if (habitType == 'timed') {
       final whitelistStr = habit.allowedPackages.isNotEmpty
-          ? ' • ${habit.allowedPackages.length} apps whitelist'
+          ? ' • ${habit.allowedPackages.length} app'
           : '';
       subtitle = '${habit.target} min$whitelistStr';
       if (!isDone) {
-        trailingAction = FilledButton.tonalIcon(
+        trailingAction = FilledButton.tonal(
           style: FilledButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            minimumSize: const Size(40, 30),
             backgroundColor: AppPalette.accent.withValues(alpha: 0.18),
             foregroundColor: AppPalette.accent,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          ),
-          icon: const Icon(Icons.play_arrow_rounded, size: 16),
-          label: const Text(
-            'Fokus YPT',
-            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           ),
           onPressed: () => _startYptFocus(habit),
+          child: const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.play_arrow_rounded, size: 15),
+              SizedBox(width: 2),
+              Text('Mulai', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+            ],
+          ),
         );
       }
     } else if (habitType == 'progression') {
       final step = habit.currentStep;
       if (step.isRest) {
-        title = '${habit.name}: 💤 ${step.dayName} (Rest Day)';
-        subtitle = 'Hari pemulihan & istirahat otot';
+        title = '${step.dayName} • Rest Day';
+        subtitle = 'Pemulihan tubuh';
         if (!isDone) {
-          trailingAction = FilledButton.tonalIcon(
+          trailingAction = FilledButton.tonal(
             style: FilledButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              minimumSize: const Size(40, 30),
               backgroundColor: const Color(0xFF6366F1).withValues(alpha: 0.2),
               foregroundColor: const Color(0xFF818CF8),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            ),
-            icon: const Icon(Icons.bedtime_rounded, size: 16),
-            label: const Text(
-              'Ambil Rest',
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),
             onPressed: () => _toggleComplete(habit, entry?.status ?? HabitStatus.unmarked),
+            child: const Text('Rest', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
           );
         }
       } else {
-        title = '${habit.name}: ${step.dayName} — ${step.title}';
-        subtitle = '${step.target}x repetisi (Terkunci)';
+        title = '${step.dayName} • ${step.title}';
+        subtitle = '${step.target}x repetisi';
         if (!isDone) {
-          trailingAction = FilledButton.tonalIcon(
+          trailingAction = FilledButton.tonal(
             style: FilledButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              minimumSize: const Size(40, 30),
               backgroundColor: const Color(0xFFEAB308).withValues(alpha: 0.2),
               foregroundColor: const Color(0xFFFDE047),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            ),
-            icon: const Icon(Icons.check_rounded, size: 16),
-            label: Text(
-              '${step.target}x Selesai',
-              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),
             onPressed: () => _toggleComplete(habit, entry?.status ?? HabitStatus.unmarked),
+            child: Text('${step.target}x Selesai', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
           );
         }
       }
     } else if (habitType == 'hybrid') {
       subtitle = '${habit.hybridSets} Set @ ${habit.hybridDurationSeconds}s';
       if (!isDone) {
-        trailingAction = FilledButton.tonalIcon(
+        trailingAction = FilledButton.tonal(
           style: FilledButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            minimumSize: const Size(40, 30),
             backgroundColor: const Color(0xFFEC4899).withValues(alpha: 0.2),
             foregroundColor: const Color(0xFFF472B6),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          ),
-          icon: const Icon(Icons.timer_outlined, size: 16),
-          label: const Text(
-            'Mulai',
-            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           ),
           onPressed: () => _startYptFocus(habit),
+          child: const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.timer_outlined, size: 14),
+              SizedBox(width: 2),
+              Text('Mulai', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+            ],
+          ),
         );
       }
     } else {
@@ -519,40 +524,42 @@ class _TodayViewState extends ConsumerState<TodayView> {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              icon: const Icon(Icons.remove_circle_outline_rounded, size: 20, color: Colors.white54),
-              visualDensity: VisualDensity.compact,
+              icon: const Icon(Icons.remove_circle_outline_rounded, size: 18, color: Colors.white54),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 26, minHeight: 26),
               onPressed: currentVal > 0 ? () => _incrementCount(habit, -1) : null,
             ),
             Text(
               '$currentVal',
               style: TextStyle(
-                fontSize: 13,
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color: isDone ? const Color(0xFF22C55E) : Colors.white,
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.add_circle_outline_rounded, size: 20, color: AppPalette.accent),
-              visualDensity: VisualDensity.compact,
+              icon: const Icon(Icons.add_circle_outline_rounded, size: 18, color: AppPalette.accent),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 26, minHeight: 26),
               onPressed: () => _incrementCount(habit, 1),
             ),
           ],
         );
       } else {
-        subtitle = 'Target harian';
+        subtitle = '1x Selesai';
       }
     }
 
-    String badgeLabel = '🔢 Count';
+    String badgeLabel = 'Hitung';
     Color badgeColor = const Color(0xFF3B82F6);
     if (habitType == 'timed') {
-      badgeLabel = '⏱️ YPT';
+      badgeLabel = 'Fokus';
       badgeColor = AppPalette.accent;
     } else if (habitType == 'progression') {
-      badgeLabel = '🏋️ Bodybuilding';
+      badgeLabel = 'Rutin';
       badgeColor = const Color(0xFFEAB308);
     } else if (habitType == 'hybrid') {
-      badgeLabel = '⚡ Hybrid';
+      badgeLabel = 'Hybrid';
       badgeColor = const Color(0xFFEC4899);
     }
 
@@ -561,7 +568,7 @@ class _TodayViewState extends ConsumerState<TodayView> {
       onLongPress: () => _openHabitEditor(habit),
       borderRadius: BorderRadius.circular(16),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
           color: isDone
               ? const Color(0xFF22C55E).withValues(alpha: 0.08)
@@ -573,98 +580,106 @@ class _TodayViewState extends ConsumerState<TodayView> {
                 : AppPalette.stroke,
           ),
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            // Checkbox Button
-            InkWell(
-              onTap: () => _toggleComplete(habit, entry?.status ?? HabitStatus.unmarked),
-              borderRadius: BorderRadius.circular(8),
-              child: Container(
-                width: 26,
-                height: 26,
-                decoration: BoxDecoration(
-                  color: isDone ? const Color(0xFF22C55E) : Colors.transparent,
+            Row(
+              children: [
+                // Checkbox Button
+                InkWell(
+                  onTap: () => _toggleComplete(habit, entry?.status ?? HabitStatus.unmarked),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: isDone ? const Color(0xFF22C55E) : AppPalette.stroke,
-                    width: 1.8,
+                  child: Container(
+                    width: 24,
+                    height: 24,
+                    decoration: BoxDecoration(
+                      color: isDone ? const Color(0xFF22C55E) : Colors.transparent,
+                      borderRadius: BorderRadius.circular(7),
+                      border: Border.all(
+                        color: isDone ? const Color(0xFF22C55E) : AppPalette.stroke,
+                        width: 1.6,
+                      ),
+                    ),
+                    child: isDone
+                        ? const Icon(Icons.check_rounded, size: 16, color: Colors.white)
+                        : null,
                   ),
                 ),
-                child: isDone
-                    ? const Icon(Icons.check_rounded, size: 18, color: Colors.white)
-                    : null,
-              ),
+                const SizedBox(width: 8),
+
+                // Emoji
+                Text(habit.iconKey, style: const TextStyle(fontSize: 18)),
+                const SizedBox(width: 8),
+
+                // Title
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: isDone ? FontWeight.w500 : FontWeight.w700,
+                      color: isDone ? AppPalette.textDim : AppPalette.text,
+                      decoration: isDone ? TextDecoration.lineThrough : null,
+                      decorationColor: AppPalette.textDim,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+
+                if (trailingAction != null) ...[
+                  const SizedBox(width: 6),
+                  trailingAction,
+                ],
+
+                // Edit options button
+                IconButton(
+                  icon: const Icon(Icons.more_vert_rounded, size: 16, color: Colors.white38),
+                  padding: EdgeInsets.zero,
+                  visualDensity: VisualDensity.compact,
+                  constraints: const BoxConstraints(minWidth: 26, minHeight: 26),
+                  tooltip: 'Ubah',
+                  onPressed: () => _openHabitEditor(habit),
+                ),
+              ],
             ),
-            const SizedBox(width: 12),
-
-            // Emoji
-            Text(habit.iconKey, style: const TextStyle(fontSize: 20)),
-            const SizedBox(width: 10),
-
-            // Main Info
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+            const SizedBox(height: 4),
+            Padding(
+              padding: const EdgeInsets.only(left: 36),
+              child: Row(
                 children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          title,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: isDone ? FontWeight.w500 : FontWeight.w700,
-                            color: isDone ? AppPalette.textDim : AppPalette.text,
-                            decoration: isDone ? TextDecoration.lineThrough : null,
-                            decorationColor: AppPalette.textDim,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+                    decoration: BoxDecoration(
+                      color: badgeColor.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      badgeLabel,
+                      style: TextStyle(
+                        fontSize: 9,
+                        fontWeight: FontWeight.w700,
+                        color: badgeColor,
                       ),
-                      const SizedBox(width: 6),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
-                        decoration: BoxDecoration(
-                          color: badgeColor.withValues(alpha: 0.15),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Text(
-                          badgeLabel,
-                          style: TextStyle(
-                            fontSize: 9,
-                            fontWeight: FontWeight.w700,
-                            color: badgeColor,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                   if (subtitle.isNotEmpty) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      subtitle,
-                      style: const TextStyle(
-                        fontSize: 11,
-                        color: AppPalette.textDim,
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        subtitle,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: AppPalette.textDim,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
                 ],
               ),
-            ),
-
-            if (trailingAction != null) ...[
-              const SizedBox(width: 8),
-              trailingAction,
-            ],
-
-            // Edit options button
-            IconButton(
-              icon: const Icon(Icons.more_vert_rounded, size: 18, color: Colors.white38),
-              visualDensity: VisualDensity.compact,
-              tooltip: 'Ubah Kebiasaan',
-              onPressed: () => _openHabitEditor(habit),
             ),
           ],
         ),

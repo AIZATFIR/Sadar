@@ -16,8 +16,8 @@ void main() {
     test('Initial repository seeds starter habits', () async {
       final habits = await repo.getHabits();
       expect(habits.isNotEmpty, true);
-      expect(habits.any((h) => h.name.contains('Fokus / Deep Work')), true);
-      expect(habits.any((h) => h.name.contains('Olahraga / Exercise')), true);
+      expect(habits.any((h) => h.name.contains('Fokus Coding')), true);
+      expect(habits.any((h) => h.name.contains('Push Up & Workout')), true);
     });
 
     test('Can upsert a new habit and retrieve it', () async {

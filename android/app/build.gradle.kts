@@ -21,26 +21,26 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.aizatfir.focus_clock"
+        applicationId = "com.aizatfir.sadar"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         multiDexEnabled = true
-        manifestPlaceholders["appName"] = "Focus Clock"
+        manifestPlaceholders["appName"] = "Sadar"
     }
 
     flavorDimensions += "app"
     productFlavors {
-        create("fitrah") {
-            dimension = "app"
-            applicationId = "com.aizatfir.fitrah_launcher"
-            manifestPlaceholders["appName"] = "Fitrah Launcher"
-        }
         create("sadar") {
             dimension = "app"
             applicationId = "com.aizatfir.sadar"
             manifestPlaceholders["appName"] = "Sadar"
+        }
+        create("fitrah") {
+            dimension = "app"
+            applicationId = "com.aizatfir.fitrah_launcher"
+            manifestPlaceholders["appName"] = "Fitrah Launcher"
         }
         create("focus") {
             dimension = "app"

@@ -4,6 +4,7 @@
 *.pyc
 *.swp
 *.tar.gz
+*.apk
 .DS_Store
 .atom/
 .build/

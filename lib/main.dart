@@ -3,11 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:tray_manager/tray_manager.dart';
 
-import 'app.dart';
+import 'core/theme.dart';
 import 'data/isar_service.dart';
+import 'features/sadar/sadar_home_screen.dart';
 import 'firebase_options.dart';
 import 'providers/providers.dart';
 import 'services/notification_service.dart';
@@ -15,32 +16,28 @@ import 'services/notification_service.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase (Web, Mobile, Desktop)
+  // Initialize Firebase (if configured)
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    debugPrint('🔥 Firebase initialized successfully');
   } catch (e) {
-    debugPrint('Firebase initialization warning: $e');
+    debugPrint('Firebase init warning: $e');
   }
 
   // Initialize Desktop Window Manager
   if (!kIsWeb && (Platform.isLinux || Platform.isWindows || Platform.isMacOS)) {
     await windowManager.ensureInitialized();
-    WindowOptions windowOptions = const WindowOptions(
-      size: Size(1000, 700),
-      minimumSize: Size(800, 600),
+    const windowOptions = WindowOptions(
+      size: Size(820, 720),
+      minimumSize: Size(540, 600),
       center: true,
-      backgroundColor: Color(0xFF0F0F1A),
-      title: 'Focus Clock',
+      backgroundColor: AppPalette.bg,
+      title: 'Sadar — Way of Life',
     );
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
       await windowManager.focus();
-      try {
-        await windowManager.setPreventClose(true);
-      } catch (_) {}
     });
   }
 
@@ -48,7 +45,7 @@ Future<void> main() async {
   try {
     isarService = await IsarService.open();
   } catch (e) {
-    debugPrint('IsarService initialization error: $e');
+    debugPrint('IsarService init fallback: $e');
     isarService = IsarService.fallback();
   }
 
@@ -56,7 +53,7 @@ Future<void> main() async {
   try {
     await notifier.init();
   } catch (e) {
-    debugPrint('NotificationService initialization error: $e');
+    debugPrint('NotificationService init error: $e');
   }
 
   runApp(
@@ -65,130 +62,30 @@ Future<void> main() async {
         isarProvider.overrideWithValue(isarService.isar),
         notificationServiceProvider.overrideWithValue(notifier),
       ],
-      child: const FocusClockDesktopWrapper(child: FocusClockApp()),
+      child: const SadarStandaloneApp(),
     ),
   );
 }
 
-class FocusClockDesktopWrapper extends ConsumerStatefulWidget {
-  const FocusClockDesktopWrapper({super.key, required this.child});
-  final Widget child;
-
-  @override
-  ConsumerState<FocusClockDesktopWrapper> createState() => _FocusClockDesktopWrapperState();
-}
-
-class _FocusClockDesktopWrapperState extends ConsumerState<FocusClockDesktopWrapper> with WindowListener, TrayListener {
-  @override
-  void initState() {
-    super.initState();
-    if (!kIsWeb && (Platform.isLinux || Platform.isWindows || Platform.isMacOS)) {
-      windowManager.addListener(this);
-      trayManager.addListener(this);
-      _initTray();
-    }
-  }
-
-  @override
-  void dispose() {
-    if (!kIsWeb && (Platform.isLinux || Platform.isWindows || Platform.isMacOS)) {
-      windowManager.removeListener(this);
-      trayManager.removeListener(this);
-    }
-    super.dispose();
-  }
-
-  Future<void> _initTray() async {
-    await trayManager.setIcon(
-      Platform.isWindows ? 'assets/app_icon.ico' : 'assets/app_icon.png',
-    );
-
-    _updateTrayMenu();
-  }
-
-  Future<void> _updateTrayMenu() async {
-    final title = ref.read(activeTimerTitleProvider);
-    final endTime = ref.read(activeTimerEndTimeProvider);
-    final hasActive = endTime != null;
-
-    final items = <MenuItem>[
-      if (hasActive) ...[
-        MenuItem(
-          key: 'status',
-          label: '📍 BERLANGSUNG: $title',
-          disabled: true,
-        ),
-        MenuItem(
-          key: 'stop_timer',
-          label: '⏹️ Stop / Selesai Sesi Ini',
-        ),
-        MenuItem(
-          key: 'reschedule_15',
-          label: '⏩ Reschedule (+15 Menit)',
-        ),
-        MenuItem.separator(),
-      ] else ...[
-        MenuItem(
-          key: 'start_25m',
-          label: '⚡ Mulai Fokus 25m Sekarang',
-        ),
-        MenuItem.separator(),
-      ],
-      MenuItem(
-        key: 'show_window',
-        label: 'Tampilkan Focus Clock',
-      ),
-      MenuItem.separator(),
-      MenuItem(
-        key: 'exit_app',
-        label: 'Keluar',
-      ),
-    ];
-
-    await trayManager.setContextMenu(Menu(items: items));
-  }
-
-  @override
-  void onWindowClose() {
-    windowManager.hide();
-  }
-
-  @override
-  void onTrayIconMouseDown() {
-    windowManager.show();
-    windowManager.focus();
-  }
-
-  @override
-  void onTrayMenuItemClick(MenuItem menuItem) {
-    if (menuItem.key == 'show_window') {
-      windowManager.show();
-      windowManager.focus();
-    } else if (menuItem.key == 'start_25m') {
-      final now = DateTime.now();
-      ref.read(activeTimerTitleProvider.notifier).state = 'Focus Session 25m';
-      ref.read(activeTimerTotalSecondsProvider.notifier).state = 1500;
-      ref.read(activeTimerIsPausedProvider.notifier).state = false;
-      ref.read(activeTimerEndTimeProvider.notifier).state = now.add(const Duration(minutes: 25));
-      _updateTrayMenu();
-    } else if (menuItem.key == 'stop_timer') {
-      ref.read(activeTimerEndTimeProvider.notifier).state = null;
-      ref.read(activeTimerIsPausedProvider.notifier).state = false;
-      _updateTrayMenu();
-    } else if (menuItem.key == 'reschedule_15') {
-      final cur = ref.read(activeTimerEndTimeProvider);
-      if (cur != null) {
-        ref.read(activeTimerEndTimeProvider.notifier).state = cur.add(const Duration(minutes: 15));
-        ref.read(activeTimerTotalSecondsProvider.notifier).update((t) => t + 900);
-      }
-      _updateTrayMenu();
-    } else if (menuItem.key == 'exit_app') {
-      windowManager.destroy();
-    }
-  }
+class SadarStandaloneApp extends StatelessWidget {
+  const SadarStandaloneApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return widget.child;
+    return MaterialApp(
+      title: 'Sadar — Way of Life',
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.dark,
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: AppPalette.bg,
+        colorScheme: const ColorScheme.dark(
+          primary: AppPalette.accent,
+          surface: AppPalette.card,
+        ),
+        textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
+      ),
+      home: const SadarHomeScreen(),
+    );
   }
 }

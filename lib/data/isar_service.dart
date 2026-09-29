@@ -49,7 +49,7 @@ class IsarService {
     final isar = await Isar.open(
       schemas,
       directory: dir.path,
-      inspector: true,
+      inspector: kDebugMode,
     );
     await _seed(isar);
     return IsarService._(isar);
@@ -110,48 +110,56 @@ class IsarService {
       await isar.writeTxn(() async {
         await isar.habits.putAll([
           Habit()
-            ..name = 'Fokus / Deep Work'
+            ..name = 'Fokus Coding (LKS)'
             ..iconKey = '💻'
             ..target = 45
             ..unit = HabitUnit.min
+            ..habitType = 'timed'
             ..timerEnabled = true
             ..colorValue = 0xFF10B981 // Emerald
             ..orderIndex = 0
             ..createdAt = DateTime.now(),
           Habit()
-            ..name = 'Olahraga / Exercise'
-            ..iconKey = '🏃'
-            ..target = 30
-            ..unit = HabitUnit.min
-            ..timerEnabled = true
-            ..colorValue = 0xFFF97316 // Orange
+            ..name = 'Kalaam 1 Course'
+            ..iconKey = '📖'
+            ..target = 1
+            ..unit = HabitUnit.count
+            ..habitType = 'count'
+            ..timerEnabled = false
+            ..colorValue = 0xFF8B5CF6 // Purple
             ..orderIndex = 1
             ..createdAt = DateTime.now(),
           Habit()
-            ..name = 'Membaca / Reading'
-            ..iconKey = '📚'
+            ..name = 'Push Up & Workout'
+            ..iconKey = '🏋️'
             ..target = 20
-            ..unit = HabitUnit.min
-            ..timerEnabled = true
-            ..colorValue = 0xFF8B5CF6 // Purple
+            ..unit = HabitUnit.count
+            ..habitType = 'progression'
+            ..timerEnabled = false
+            ..colorValue = 0xFFEAB308 // Amber
             ..orderIndex = 2
             ..createdAt = DateTime.now(),
           Habit()
-            ..name = 'Meditasi / Mindfulness'
-            ..iconKey = '🧘'
-            ..target = 15
+            ..name = 'Plank & Core'
+            ..iconKey = '⚡'
+            ..target = 3
             ..unit = HabitUnit.min
+            ..habitType = 'hybrid'
+            ..hybridSets = 3
+            ..hybridDurationSeconds = 60
+            ..hybridRestSeconds = 30
             ..timerEnabled = true
-            ..colorValue = 0xFF06B6D4 // Cyan
+            ..colorValue = 0xFFEC4899 // Pink
             ..orderIndex = 3
             ..createdAt = DateTime.now(),
           Habit()
-            ..name = 'Belajar Bahasa'
-            ..iconKey = '🌐'
-            ..target = 20
-            ..unit = HabitUnit.min
-            ..timerEnabled = true
-            ..colorValue = 0xFF3B82F6 // Blue
+            ..name = 'Sapa Burung / Mindful'
+            ..iconKey = '🕊️'
+            ..target = 1
+            ..unit = HabitUnit.count
+            ..habitType = 'count'
+            ..timerEnabled = false
+            ..colorValue = 0xFF06B6D4 // Cyan
             ..orderIndex = 4
             ..createdAt = DateTime.now(),
         ]);

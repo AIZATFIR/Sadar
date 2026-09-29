@@ -1,7 +1,7 @@
 name: focus_clock
-description: "Time-blocking app with analog clock workspace."
+description: "Sadar — Way of Life habit awareness and intentional living app."
 publish_to: 'none'
-version: 0.3.0+3
+version: 1.4.0+14
 
 environment:
   sdk: ^3.11.4
