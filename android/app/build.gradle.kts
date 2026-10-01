@@ -6,8 +6,8 @@ plugins {
 }
 
 android {
-    namespace = "com.aizatfir.focus_clock"
-    compileSdk = flutter.compileSdkVersion
+    namespace = "com.aizatfir.sadar"
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -20,39 +20,25 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
+    signingConfigs {
+        getByName("debug") {
+            isV1SigningEnabled = true
+            isV2SigningEnabled = true
+        }
+    }
+
     defaultConfig {
         applicationId = "com.aizatfir.sadar"
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 24
+        targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         multiDexEnabled = true
         manifestPlaceholders["appName"] = "Sadar"
     }
 
-    flavorDimensions += "app"
-    productFlavors {
-        create("sadar") {
-            dimension = "app"
-            applicationId = "com.aizatfir.sadar"
-            manifestPlaceholders["appName"] = "Sadar"
-        }
-        create("fitrah") {
-            dimension = "app"
-            applicationId = "com.aizatfir.fitrah_launcher"
-            manifestPlaceholders["appName"] = "Fitrah Launcher"
-        }
-        create("focus") {
-            dimension = "app"
-            applicationId = "com.aizatfir.focus_clock"
-            manifestPlaceholders["appName"] = "Focus Clock"
-        }
-    }
-
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
         }
     }

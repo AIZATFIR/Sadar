@@ -1,4 +1,4 @@
-package com.aizatfir.focus_clock
+package com.aizatfir.sadar
 
 import android.content.Intent
 import android.content.pm.ApplicationInfo
