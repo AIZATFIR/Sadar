@@ -1,7 +1,9 @@
+import 'dart:ui' show ImageFilter;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// AppPalette — Obsidian Warm Bookpaper Aesthetic Design System
+/// AppPalette — Obsidian Warm Bookpaper & Apple Frosted Glass Aesthetic
 class AppPalette {
   // Dark Obsidian & Warm Bookpaper Tones
   static const bg = Color(0xFF18181F);
@@ -17,11 +19,21 @@ class AppPalette {
   static const bookpaperBorder = Color(0xFF403C4B);
   static const bookpaperText = Color(0xFFF4E8D1);
 
-  // Glassmorphism & Gemini design tokens
+  // Glassmorphism & Apple frosted design tokens
   static const glassSurface = Color(0xF21C1B24); // Frosted Warm Slate
   static const geminiGlassBg = Color(0xE6201F29); // Frosted Obsidian Container
   static const geminiGlassBorder = Color(0x33F0C987); // Soft Gold Frosted Stroke
   static const geminiGlow = Color(0x40F0C987); // Ambient warm gold glow
+
+  // Apple Design & Frosted Glass Tokens
+  static const appleGlassBg = Color(0xD91C1C22); // Apple frosted slate surface (sigma 16-24)
+  static const appleGlassSurface = Color(0xBF25242E); // Elevated frosted surface
+  static const appleGlassBorder = Color(0x14FFFFFF); // 0.5px ultra-delicate light-catching stroke
+  static const appleGlassPillBg = Color(0xCC181820); // Translucent floating pill bar
+  static const appleGlassPillActive = Color(0x29F0C987); // Warm amber active pill capsule
+  static const appleSuccess = Color(0xFF22C55E); // Apple Emerald
+  static const appleSuccessGlass = Color(0x1A22C55E); // Translucent emerald tint
+  static const appleSuccessBorder = Color(0x4D22C55E); // Delicate emerald stroke
 
   // Responsive Breakpoints
   static const double mobileBreakpoint = 600.0;
@@ -47,6 +59,129 @@ class GeminiMotion {
 
   static const Curve springCurve = Curves.easeOutCubic;
   static const Curve bouncyCurve = Curves.elasticOut;
+  static const Curve appleSpring = Curves.easeOutCubic;
+}
+
+/// Instant touch feedback widget (scale 0.97 + tactile haptic)
+class ApplePressable extends StatefulWidget {
+  const ApplePressable({
+    super.key,
+    required this.child,
+    this.onTap,
+    this.onLongPress,
+    this.scaleDown = 0.97,
+    this.haptic = true,
+    this.borderRadius,
+  });
+
+  final Widget child;
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
+  final double scaleDown;
+  final bool haptic;
+  final BorderRadius? borderRadius;
+
+  @override
+  State<ApplePressable> createState() => _ApplePressableState();
+}
+
+class _ApplePressableState extends State<ApplePressable> {
+  bool _isPressed = false;
+
+  void _handleTapDown(TapDownDetails _) {
+    if (widget.onTap != null || widget.onLongPress != null) {
+      if (widget.haptic) HapticFeedback.lightImpact();
+      setState(() => _isPressed = true);
+    }
+  }
+
+  void _handleTapUp(TapUpDetails _) {
+    if (_isPressed) setState(() => _isPressed = false);
+  }
+
+  void _handleTapCancel() {
+    if (_isPressed) setState(() => _isPressed = false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: _handleTapDown,
+      onTapUp: _handleTapUp,
+      onTapCancel: _handleTapCancel,
+      onTap: widget.onTap,
+      onLongPress: widget.onLongPress,
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedScale(
+        scale: _isPressed ? widget.scaleDown : 1.0,
+        duration: const Duration(milliseconds: 120),
+        curve: Curves.easeOutCubic,
+        child: widget.child,
+      ),
+    );
+  }
+}
+
+/// Apple-grade frosted glass container with BackdropFilter & 0.5px delicate border
+class AppleFrostedCard extends StatelessWidget {
+  const AppleFrostedCard({
+    super.key,
+    required this.child,
+    this.padding = const EdgeInsets.all(16),
+    this.borderRadius = 22,
+    this.backgroundColor,
+    this.borderColor,
+    this.borderWidth = 0.5,
+    this.blurSigma = 16.0,
+    this.onTap,
+  });
+
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+  final double borderRadius;
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final double borderWidth;
+  final double blurSigma;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final card = ClipRRect(
+      borderRadius: BorderRadius.circular(borderRadius),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: blurSigma, sigmaY: blurSigma),
+        child: Container(
+          padding: padding,
+          decoration: BoxDecoration(
+            color: backgroundColor ?? AppPalette.appleGlassBg,
+            borderRadius: BorderRadius.circular(borderRadius),
+            border: Border.all(
+              color: borderColor ?? AppPalette.appleGlassBorder,
+              width: borderWidth,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.16),
+                blurRadius: 18,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: child,
+        ),
+      ),
+    );
+
+    if (onTap != null) {
+      return ApplePressable(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(borderRadius),
+        child: card,
+      );
+    }
+    return card;
+  }
 }
 
 ThemeData buildDarkTheme([String palette = 'executive']) {
@@ -96,22 +231,52 @@ ThemeData buildDarkTheme([String palette = 'executive']) {
     textTheme: GoogleFonts.outfitTextTheme(base.textTheme).apply(
       bodyColor: AppPalette.text,
       displayColor: AppPalette.text,
+    ).copyWith(
+      displayLarge: const TextStyle(letterSpacing: -1.0, fontWeight: FontWeight.w800),
+      displayMedium: const TextStyle(letterSpacing: -0.8, fontWeight: FontWeight.w700),
+      displaySmall: const TextStyle(letterSpacing: -0.6, fontWeight: FontWeight.w700),
+      headlineLarge: const TextStyle(letterSpacing: -0.6, fontWeight: FontWeight.w700),
+      headlineMedium: const TextStyle(letterSpacing: -0.5, fontWeight: FontWeight.w600),
+      headlineSmall: const TextStyle(letterSpacing: -0.4, fontWeight: FontWeight.w600),
+      titleLarge: const TextStyle(letterSpacing: -0.4, fontWeight: FontWeight.w700),
+      titleMedium: const TextStyle(letterSpacing: -0.2, fontWeight: FontWeight.w600),
+      titleSmall: const TextStyle(letterSpacing: -0.1, fontWeight: FontWeight.w600),
+      bodyLarge: const TextStyle(letterSpacing: -0.1, height: 1.4),
+      bodyMedium: const TextStyle(letterSpacing: 0.0, height: 1.4),
+      bodySmall: const TextStyle(letterSpacing: 0.1, height: 1.3),
+    ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      backgroundColor: Colors.transparent,
+      modalBackgroundColor: Colors.transparent,
+      elevation: 0,
+      modalElevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+    ),
+    dialogTheme: DialogTheme(
+      backgroundColor: AppPalette.appleGlassBg,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+        side: const BorderSide(color: AppPalette.appleGlassBorder, width: 0.5),
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppPalette.bookpaperFieldBg,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: AppPalette.bookpaperBorder),
+        borderRadius: BorderRadius.circular(14),
+        borderSide: const BorderSide(color: AppPalette.bookpaperBorder, width: 0.5),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: AppPalette.bookpaperBorder),
+        borderRadius: BorderRadius.circular(14),
+        borderSide: const BorderSide(color: AppPalette.bookpaperBorder, width: 0.5),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: AppPalette.accent, width: 1.5),
+        borderRadius: BorderRadius.circular(14),
+        borderSide: const BorderSide(color: AppPalette.accent, width: 1.2),
       ),
       hintStyle: const TextStyle(color: AppPalette.textDim, fontSize: 14),
       labelStyle: const TextStyle(color: AppPalette.textDim, fontSize: 13),

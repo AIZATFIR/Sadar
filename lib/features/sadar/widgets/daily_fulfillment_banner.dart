@@ -1,4 +1,6 @@
+import 'dart:ui' show ImageFilter;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -29,147 +31,189 @@ class DailyFulfillmentBanner extends ConsumerWidget {
 
     final isToday = _isSameDay(selectedDate, DateTime.now());
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      decoration: BoxDecoration(
-        color: AppPalette.card,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppPalette.stroke),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Row: Date & Action Switcher
-          Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        dateFormatted,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                          color: AppPalette.text,
-                          letterSpacing: -0.3,
-                        ),
-                      ),
-                      if (isToday) ...[
-                        const SizedBox(width: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: AppPalette.accent.withValues(alpha: 0.15),
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: AppPalette.accent.withValues(alpha: 0.5)),
-                          ),
-                          child: const Text(
-                            'HARI INI',
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w900,
-                              color: AppPalette.accent,
-                              letterSpacing: 1.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  const Text(
-                    '"Did I live today in a way I can be proud of?"',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontStyle: FontStyle.italic,
-                      color: AppPalette.textDim,
-                    ),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              // Awareness Toggle Button
-              IconButton.filledTonal(
-                style: IconButton.styleFrom(
-                  backgroundColor: isShowingAwareness
-                      ? AppPalette.accent.withValues(alpha: 0.25)
-                      : AppPalette.bg,
-                  foregroundColor: isShowingAwareness ? AppPalette.accent : AppPalette.textDim,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    side: BorderSide(
-                      color: isShowingAwareness ? AppPalette.accent : AppPalette.stroke,
-                    ),
-                  ),
-                ),
-                tooltip: isShowingAwareness ? 'Tutup Pola Kesadaran' : 'Lihat Pola Kesadaran',
-                icon: Icon(
-                  isShowingAwareness ? Icons.calendar_view_week_rounded : Icons.insights_rounded,
-                  size: 20,
-                ),
-                onPressed: onToggleAwareness,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(22),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+          decoration: BoxDecoration(
+            color: AppPalette.appleGlassBg,
+            borderRadius: BorderRadius.circular(22),
+            border: Border.all(
+              color: AppPalette.appleGlassBorder,
+              width: 0.5,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.16),
+                blurRadius: 20,
+                offset: const Offset(0, 4),
               ),
             ],
           ),
-
-          const SizedBox(height: 16),
-
-          // Fulfillment Progress Track
-          fulfillmentAsync.when(
-            data: (summary) {
-              final ratio = summary.ratio;
-              final completed = summary.completedCount;
-              final total = summary.totalCount;
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Row: Date & Action Switcher
+              Row(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        total > 0
-                            ? '$completed / $total tindakan bermakna terlaksana'
-                            : 'Belum ada habit yang terdaftar',
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: AppPalette.text,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                dateFormatted,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w800,
+                                  color: AppPalette.text,
+                                  letterSpacing: -0.5,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            if (isToday) ...[
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2.5),
+                                decoration: BoxDecoration(
+                                  color: AppPalette.accent.withValues(alpha: 0.15),
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: AppPalette.accent.withValues(alpha: 0.4),
+                                    width: 0.5,
+                                  ),
+                                ),
+                                child: const Text(
+                                  'HARI INI',
+                                  style: TextStyle(
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w900,
+                                    color: AppPalette.accent,
+                                    letterSpacing: 1.2,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ],
                         ),
-                      ),
-                      Text(
-                        summary.isFulfilled
-                            ? 'Hari Terpenuhi 🌿'
-                            : (completed > 0 ? 'Membangun Hari' : 'Mulai dari satu aksi'),
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: summary.isFulfilled ? const Color(0xFF22C55E) : AppPalette.textDim,
+                        const SizedBox(height: 3),
+                        const Text(
+                          '"Did I live today in a way I can be proud of?"',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontStyle: FontStyle.italic,
+                            color: AppPalette.textDim,
+                            letterSpacing: -0.1,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 8),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
-                    child: LinearProgressIndicator(
-                      value: total > 0 ? ratio : 0.0,
-                      minHeight: 6,
-                      backgroundColor: AppPalette.bg,
-                      valueColor: AlwaysStoppedAnimation(
-                        summary.isFulfilled ? const Color(0xFF22C55E) : AppPalette.accent,
+                  const SizedBox(width: 12),
+                  // Awareness Toggle Button with Apple tactile feedback
+                  ApplePressable(
+                    onTap: () {
+                      HapticFeedback.selectionClick();
+                      onToggleAwareness();
+                    },
+                    borderRadius: BorderRadius.circular(12),
+                    child: Tooltip(
+                      message: isShowingAwareness ? 'Tutup Pola Kesadaran' : 'Lihat Pola Kesadaran',
+                      child: Container(
+                        width: 38,
+                        height: 38,
+                        decoration: BoxDecoration(
+                          color: isShowingAwareness
+                              ? AppPalette.accent.withValues(alpha: 0.2)
+                              : Colors.white.withValues(alpha: 0.05),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: isShowingAwareness
+                                ? AppPalette.accent.withValues(alpha: 0.4)
+                                : AppPalette.appleGlassBorder,
+                            width: 0.5,
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Icon(
+                          isShowingAwareness ? Icons.calendar_view_week_rounded : Icons.insights_rounded,
+                          size: 19,
+                          color: isShowingAwareness ? AppPalette.accent : AppPalette.textDim,
+                        ),
                       ),
                     ),
                   ),
                 ],
-              );
-            },
-            loading: () => const LinearProgressIndicator(minHeight: 6),
-            error: (_, _) => const SizedBox.shrink(),
+              ),
+
+              const SizedBox(height: 18),
+
+              // Fulfillment Progress Track
+              fulfillmentAsync.when(
+                data: (summary) {
+                  final ratio = summary.ratio;
+                  final completed = summary.completedCount;
+                  final total = summary.totalCount;
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            total > 0
+                                ? '$completed / $total tindakan bermakna terlaksana'
+                                : 'Belum ada kebiasaan yang terdaftar',
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: -0.2,
+                              color: AppPalette.text,
+                            ),
+                          ),
+                          Text(
+                            summary.isFulfilled
+                                ? 'Hari Terpenuhi 🌿'
+                                : (completed > 0 ? 'Membangun Hari' : 'Mulai dari satu aksi'),
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: -0.1,
+                              color: summary.isFulfilled ? AppPalette.appleSuccess : AppPalette.textDim,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          height: 7,
+                          color: Colors.white.withValues(alpha: 0.06),
+                          child: LinearProgressIndicator(
+                            value: total > 0 ? ratio : 0.0,
+                            backgroundColor: Colors.transparent,
+                            valueColor: AlwaysStoppedAnimation(
+                              summary.isFulfilled ? AppPalette.appleSuccess : AppPalette.accent,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                loading: () => const LinearProgressIndicator(minHeight: 6),
+                error: (_, _) => const SizedBox.shrink(),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

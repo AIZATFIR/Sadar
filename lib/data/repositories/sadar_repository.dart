@@ -459,7 +459,7 @@ class SadarRepository {
       ..unit = HabitUnit.min
       ..habitType = 'timed'
       ..timerEnabled = true
-      ..colorValue = 0xFF10B981 // Emerald
+      ..colorValue = 0xFF22C55E // Green
       ..orderIndex = 0
       ..createdAt = DateTime.now(),
     Habit()
@@ -470,18 +470,18 @@ class SadarRepository {
       ..unit = HabitUnit.count
       ..habitType = 'count'
       ..timerEnabled = false
-      ..colorValue = 0xFF8B5CF6 // Purple
+      ..colorValue = 0xFFA855F7 // Purple
       ..orderIndex = 1
       ..createdAt = DateTime.now(),
     Habit()
       ..id = 3
-      ..name = 'Push Up & Workout'
+      ..name = 'Senin • Push Up'
       ..iconKey = '🏋️'
       ..target = 20
       ..unit = HabitUnit.count
       ..habitType = 'progression'
       ..timerEnabled = false
-      ..colorValue = 0xFFEAB308 // Amber
+      ..colorValue = 0xFFEAB308 // Yellow
       ..orderIndex = 2
       ..createdAt = DateTime.now(),
     Habit()
@@ -489,11 +489,10 @@ class SadarRepository {
       ..name = 'Plank & Core'
       ..iconKey = '⚡'
       ..target = 3
-      ..unit = HabitUnit.min
+      ..unit = HabitUnit.count
       ..habitType = 'hybrid'
       ..hybridSets = 3
       ..hybridDurationSeconds = 60
-      ..hybridRestSeconds = 30
       ..timerEnabled = true
       ..colorValue = 0xFFEC4899 // Pink
       ..orderIndex = 3

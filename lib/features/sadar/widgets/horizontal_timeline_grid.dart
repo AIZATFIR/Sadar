@@ -206,9 +206,16 @@ class _HorizontalTimelineGridState extends ConsumerState<HorizontalTimelineGrid>
 
     return Container(
       decoration: BoxDecoration(
-        color: AppPalette.card,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppPalette.stroke),
+        color: AppPalette.appleGlassBg,
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: AppPalette.appleGlassBorder, width: 0.5),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.16),
+            blurRadius: 20,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
