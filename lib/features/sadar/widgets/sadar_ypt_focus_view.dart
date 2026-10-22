@@ -248,7 +248,7 @@ class _SadarYptFocusViewState extends ConsumerState<SadarYptFocusView>
                         shape: BoxShape.circle,
                         gradient: RadialGradient(
                           colors: [
-                            habitColor.withOpacity(0.18),
+                            habitColor.withValues(alpha: 0.18),
                             Colors.transparent,
                           ],
                         ),
@@ -278,7 +278,7 @@ class _SadarYptFocusViewState extends ConsumerState<SadarYptFocusView>
                             decoration: BoxDecoration(
                               color: const Color(0xFF141416),
                               borderRadius: BorderRadius.circular(20),
-                              border: Border.all(color: habitColor.withOpacity(0.4)),
+                              border: Border.all(color: habitColor.withValues(alpha: 0.4)),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -473,7 +473,7 @@ class _SadarYptFocusViewState extends ConsumerState<SadarYptFocusView>
                                     height: 52,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
-                                        colors: [habitColor, habitColor.withOpacity(0.8)],
+                                        colors: [habitColor, habitColor.withValues(alpha: 0.8)],
                                       ),
                                       borderRadius: BorderRadius.circular(16),
                                     ),
@@ -507,7 +507,7 @@ class _SadarYptFocusViewState extends ConsumerState<SadarYptFocusView>
                               decoration: BoxDecoration(
                                 color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Colors.red.withOpacity(0.35)),
+                                border: Border.all(color: Colors.red.withValues(alpha: 0.35)),
                               ),
                               child: Stack(
                                 children: [
@@ -517,7 +517,7 @@ class _SadarYptFocusViewState extends ConsumerState<SadarYptFocusView>
                                       widthFactor: _holdProgress,
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          color: Colors.red.withOpacity(0.3),
+                                          color: Colors.red.withValues(alpha: 0.3),
                                           borderRadius: BorderRadius.circular(12),
                                         ),
                                       ),

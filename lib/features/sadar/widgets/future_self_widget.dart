@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../../core/theme.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -74,12 +76,12 @@ class FutureSelfWidget extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFF16151D),
+        color: AppPalette.card,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFF2B2937), width: 1.2),
+        border: Border.all(color: AppPalette.stroke, width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.35),
+            color: Colors.black.withValues(alpha: 0.35),
             blurRadius: 14,
             offset: const Offset(0, 4),
           ),
@@ -105,7 +107,7 @@ class FutureSelfWidget extends ConsumerWidget {
               fontFamily: 'Inter',
               fontSize: 11,
               fontWeight: FontWeight.w600,
-              color: Color(0xFFD6D3E1),
+              color: AppPalette.text,
               height: 1.2,
             ),
           ),
@@ -128,12 +130,12 @@ class FutureSelfWidget extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF16151D),
+        color: AppPalette.card,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: const Color(0xFF2B2937), width: 1.2),
+        border: Border.all(color: AppPalette.stroke, width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.35),
+            color: Colors.black.withValues(alpha: 0.35),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -158,7 +160,7 @@ class FutureSelfWidget extends ConsumerWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.auto_awesome_rounded, size: 14, color: Color(0xFFF0C987)),
+                    const Icon(Icons.auto_awesome_rounded, size: 14, color: AppPalette.accent),
                     const SizedBox(width: 5),
                     Expanded(
                       child: Text(
@@ -169,7 +171,7 @@ class FutureSelfWidget extends ConsumerWidget {
                           fontFamily: 'Inter',
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFFF0C987),
+                          color: AppPalette.accent,
                           letterSpacing: 0.2,
                         ),
                       ),
@@ -180,7 +182,7 @@ class FutureSelfWidget extends ConsumerWidget {
                 if (displayActivities.isEmpty)
                   const Text(
                     'Belum ada kegiatan hari ini.',
-                    style: TextStyle(fontSize: 12, color: Color(0xFF8E8B99)),
+                    style: TextStyle(fontSize: 12, color: AppPalette.textDim),
                   )
                 else
                   ...displayActivities.map((act) => _buildCompactActivityRow(context, ref, snapshot.dateString, act)),
@@ -208,7 +210,7 @@ class FutureSelfWidget extends ConsumerWidget {
             Icon(
               act.isCompleted ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
               size: 16,
-              color: act.isCompleted ? const Color(0xFF10B981) : const Color(0xFF5A5868),
+              color: act.isCompleted ? AppPalette.accent : AppPalette.outline,
             ),
             const SizedBox(width: 7),
             Text(act.iconKey, style: const TextStyle(fontSize: 12)),
@@ -222,7 +224,7 @@ class FutureSelfWidget extends ConsumerWidget {
                   fontFamily: 'Inter',
                   fontSize: 12,
                   fontWeight: act.isCompleted ? FontWeight.w500 : FontWeight.w600,
-                  color: act.isCompleted ? const Color(0xFF7A7887) : const Color(0xFFE4E2EC),
+                  color: act.isCompleted ? AppPalette.textDim : AppPalette.text,
                   decoration: act.isCompleted ? TextDecoration.lineThrough : null,
                 ),
               ),
@@ -246,17 +248,17 @@ class FutureSelfWidget extends ConsumerWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFF18171E),
+        color: AppPalette.card,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
           color: snapshot.isFulfilled
-              ? const Color(0xFF10B981).withOpacity(0.4)
-              : const Color(0xFFF0C987).withOpacity(0.28),
+              ? AppPalette.accent.withValues(alpha: 0.4)
+              : AppPalette.accent.withValues(alpha: 0.28),
           width: 1.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.35),
+            color: Colors.black.withValues(alpha: 0.35),
             blurRadius: 20,
             offset: const Offset(0, 6),
           ),
@@ -291,8 +293,8 @@ class FutureSelfWidget extends ConsumerWidget {
                         fontSize: 13,
                         fontWeight: FontWeight.w700,
                         color: snapshot.isFulfilled
-                            ? const Color(0xFF10B981)
-                            : const Color(0xFFF0C987),
+                            ? AppPalette.accent
+                            : AppPalette.accent,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -301,18 +303,18 @@ class FutureSelfWidget extends ConsumerWidget {
                       style: const TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 12,
-                        color: Color(0xFF9E9BAA),
+                        color: AppPalette.textDim,
                         height: 1.3,
                       ),
                     ),
                     const SizedBox(height: 8),
                     LinearProgressIndicator(
                       value: snapshot.completionRatio,
-                      backgroundColor: const Color(0xFF26252E),
+                      backgroundColor: AppPalette.stroke,
                       valueColor: AlwaysStoppedAnimation<Color>(
                         snapshot.isFulfilled
-                            ? const Color(0xFF10B981)
-                            : const Color(0xFFF0C987),
+                            ? AppPalette.accent
+                            : AppPalette.accent,
                       ),
                       minHeight: 5,
                       borderRadius: BorderRadius.circular(4),
@@ -324,7 +326,7 @@ class FutureSelfWidget extends ConsumerWidget {
           ),
 
           const SizedBox(height: 18),
-          const Divider(height: 1, color: Color(0xFF2B2937)),
+          const Divider(height: 1, color: AppPalette.stroke),
           const SizedBox(height: 14),
 
           // 3. Today's Activities List
@@ -338,7 +340,7 @@ class FutureSelfWidget extends ConsumerWidget {
                   fontSize: 11,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 0.8,
-                  color: Color(0xFF8E8B99),
+                  color: AppPalette.textDim,
                 ),
               ),
               Text(
@@ -346,7 +348,7 @@ class FutureSelfWidget extends ConsumerWidget {
                 style: const TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 11,
-                  color: Color(0xFF8E8B99),
+                  color: AppPalette.textDim,
                 ),
               ),
             ],
@@ -364,7 +366,7 @@ class FutureSelfWidget extends ConsumerWidget {
           ],
 
           const SizedBox(height: 14),
-          const Divider(height: 1, color: Color(0xFF2B2937)),
+          const Divider(height: 1, color: AppPalette.stroke),
           const SizedBox(height: 12),
 
           // 4. Gratitude Practice Bar (Mensyukuri)
@@ -390,10 +392,10 @@ class FutureSelfWidget extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.all(7),
               decoration: BoxDecoration(
-                color: const Color(0xFFF0C987).withOpacity(0.12),
+                color: AppPalette.accent.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Icon(Icons.flag_rounded, size: 16, color: Color(0xFFF0C987)),
+              child: const Icon(Icons.flag_rounded, size: 16, color: AppPalette.accent),
             ),
             const SizedBox(width: 10),
             Expanded(
@@ -407,7 +409,7 @@ class FutureSelfWidget extends ConsumerWidget {
                       fontSize: 10,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 0.7,
-                      color: Color(0xFF8E8B99),
+                      color: AppPalette.textDim,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -425,7 +427,7 @@ class FutureSelfWidget extends ConsumerWidget {
               ),
             ),
             const SizedBox(width: 8),
-            const Icon(Icons.edit_outlined, size: 16, color: Color(0xFF7A7887)),
+            const Icon(Icons.edit_outlined, size: 16, color: AppPalette.textDim),
           ],
         ),
       ),
@@ -444,7 +446,7 @@ class FutureSelfWidget extends ConsumerWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
       decoration: BoxDecoration(
-        color: isDone ? const Color(0xFF131219) : const Color(0xFF1D1C26),
+        color: isDone ? const Color(0xFF131219) : AppPalette.card,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isDone ? const Color(0xFF242330) : const Color(0xFF2C2B3B),
@@ -461,7 +463,7 @@ class FutureSelfWidget extends ConsumerWidget {
               child: Icon(
                 isDone ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
                 size: 20,
-                color: isDone ? const Color(0xFF10B981) : const Color(0xFF6B687C),
+                color: isDone ? AppPalette.accent : const Color(0xFF6B687C),
               ),
             ),
           ),
@@ -478,7 +480,7 @@ class FutureSelfWidget extends ConsumerWidget {
                     fontFamily: 'Inter',
                     fontSize: 13,
                     fontWeight: isDone ? FontWeight.w500 : FontWeight.w700,
-                    color: isDone ? const Color(0xFF7A7887) : const Color(0xFFEDEDF2),
+                    color: isDone ? AppPalette.textDim : const Color(0xFFEDEDF2),
                     decoration: isDone ? TextDecoration.lineThrough : null,
                   ),
                 ),
@@ -487,7 +489,7 @@ class FutureSelfWidget extends ConsumerWidget {
                   style: const TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 11,
-                    color: Color(0xFF8E8B99),
+                    color: AppPalette.textDim,
                   ),
                 ),
               ],
@@ -501,14 +503,14 @@ class FutureSelfWidget extends ConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF0C987).withOpacity(0.12),
+                  color: AppPalette.accent.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color(0xFFF0C987).withOpacity(0.3)),
+                  border: Border.all(color: AppPalette.accent.withValues(alpha: 0.3)),
                 ),
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.play_arrow_rounded, size: 14, color: Color(0xFFF0C987)),
+                    Icon(Icons.play_arrow_rounded, size: 14, color: AppPalette.accent),
                     SizedBox(width: 4),
                     Text(
                       'Timer',
@@ -516,7 +518,7 @@ class FutureSelfWidget extends ConsumerWidget {
                         fontFamily: 'Inter',
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFFF0C987),
+                        color: AppPalette.accent,
                       ),
                     ),
                   ],
@@ -552,7 +554,7 @@ class FutureSelfWidget extends ConsumerWidget {
                 color: isDone ? const Color(0xFF131219) : const Color(0xFF1F1E29),
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(
-                  color: isDone ? const Color(0xFF10B981).withValues(alpha: 0.4) : const Color(0xFF2C2B3B),
+                  color: isDone ? AppPalette.accent.withValues(alpha: 0.4) : const Color(0xFF2C2B3B),
                   width: 1.2,
                 ),
               ),
@@ -566,7 +568,7 @@ class FutureSelfWidget extends ConsumerWidget {
                       Icon(
                         isDone ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
                         size: 16,
-                        color: isDone ? const Color(0xFF10B981) : const Color(0xFF6B687C),
+                        color: isDone ? AppPalette.accent : const Color(0xFF6B687C),
                       ),
                     ],
                   ),
@@ -579,7 +581,7 @@ class FutureSelfWidget extends ConsumerWidget {
                       fontFamily: 'Inter',
                       fontSize: 11,
                       fontWeight: isDone ? FontWeight.w500 : FontWeight.w700,
-                      color: isDone ? const Color(0xFF7A7887) : const Color(0xFFEDEDF2),
+                      color: isDone ? AppPalette.textDim : const Color(0xFFEDEDF2),
                       decoration: isDone ? TextDecoration.lineThrough : null,
                     ),
                   ),
@@ -589,7 +591,7 @@ class FutureSelfWidget extends ConsumerWidget {
                     style: const TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 9,
-                      color: Color(0xFF8E8B99),
+                      color: AppPalette.textDim,
                     ),
                   ),
                 ],
@@ -615,7 +617,7 @@ class FutureSelfWidget extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(vertical: 4),
         child: Row(
           children: [
-            const Icon(Icons.volunteer_activism_outlined, size: 16, color: Color(0xFF10B981)),
+            const Icon(Icons.volunteer_activism_outlined, size: 16, color: AppPalette.accent),
             const SizedBox(width: 8),
             Expanded(
               child: Column(
@@ -628,7 +630,7 @@ class FutureSelfWidget extends ConsumerWidget {
                       fontSize: 10,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 0.6,
-                      color: Color(0xFF8E8B99),
+                      color: AppPalette.textDim,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -642,7 +644,7 @@ class FutureSelfWidget extends ConsumerWidget {
                       fontFamily: 'Inter',
                       fontSize: 12,
                       fontWeight: hasGratitude ? FontWeight.w600 : FontWeight.w500,
-                      color: hasGratitude ? const Color(0xFFD6D3E1) : const Color(0xFF7A7887),
+                      color: hasGratitude ? AppPalette.text : AppPalette.textDim,
                       fontStyle: hasGratitude ? FontStyle.normal : FontStyle.italic,
                     ),
                   ),
@@ -650,7 +652,7 @@ class FutureSelfWidget extends ConsumerWidget {
               ),
             ),
             const SizedBox(width: 6),
-            const Icon(Icons.chevron_right_rounded, size: 18, color: Color(0xFF7A7887)),
+            const Icon(Icons.chevron_right_rounded, size: 18, color: AppPalette.textDim),
           ],
         ),
       ),
@@ -671,7 +673,7 @@ class FutureSelfWidget extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: const Color(0xFF16151D).withOpacity(0.92),
+        color: AppPalette.card.withValues(alpha: 0.92),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFF2F2D3D), width: 1),
       ),
@@ -691,7 +693,7 @@ class FutureSelfWidget extends ConsumerWidget {
               fontFamily: 'Inter',
               fontSize: 12,
               fontWeight: FontWeight.w800,
-              color: Color(0xFFF0C987),
+              color: AppPalette.accent,
             ),
           ),
           const SizedBox(width: 10),
@@ -790,7 +792,7 @@ class FutureSelfWidget extends ConsumerWidget {
               const SizedBox(height: 6),
               const Text(
                 'Tuliskan satu kalimat gambaran hidup yang sedang kamu bangun.',
-                style: TextStyle(fontSize: 13, color: Color(0xFF9E9BAA)),
+                style: TextStyle(fontSize: 13, color: AppPalette.textDim),
               ),
               const SizedBox(height: 16),
               TextField(
@@ -815,11 +817,11 @@ class FutureSelfWidget extends ConsumerWidget {
                 children: [
                   TextButton(
                     onPressed: () => Navigator.pop(ctx),
-                    child: const Text('Batal', style: TextStyle(color: Color(0xFF9E9BAA))),
+                    child: const Text('Batal', style: TextStyle(color: AppPalette.textDim)),
                   ),
                   const SizedBox(width: 8),
                   FilledButton(
-                    style: FilledButton.styleFrom(backgroundColor: const Color(0xFFF0C987)),
+                    style: FilledButton.styleFrom(backgroundColor: AppPalette.accent),
                     onPressed: () async {
                       final newGoal = controller.text.trim();
                       if (newGoal.isNotEmpty) {
@@ -857,7 +859,7 @@ class FutureSelfWidget extends ConsumerWidget {
             children: [
               const Row(
                 children: [
-                  Icon(Icons.volunteer_activism_outlined, size: 20, color: Color(0xFF10B981)),
+                  Icon(Icons.volunteer_activism_outlined, size: 20, color: AppPalette.accent),
                   SizedBox(width: 8),
                   Text(
                     'Ruang Syukur Hari Ini',
@@ -868,7 +870,7 @@ class FutureSelfWidget extends ConsumerWidget {
               const SizedBox(height: 6),
               const Text(
                 'Mensyukuri apa yang sudah ada saat ini menenangkan hati sebelum mengejar apa yang belum tercapai.',
-                style: TextStyle(fontSize: 13, color: Color(0xFF9E9BAA)),
+                style: TextStyle(fontSize: 13, color: AppPalette.textDim),
               ),
               const SizedBox(height: 16),
               TextField(
@@ -894,11 +896,11 @@ class FutureSelfWidget extends ConsumerWidget {
                 children: [
                   TextButton(
                     onPressed: () => Navigator.pop(ctx),
-                    child: const Text('Tutup', style: TextStyle(color: Color(0xFF9E9BAA))),
+                    child: const Text('Tutup', style: TextStyle(color: AppPalette.textDim)),
                   ),
                   const SizedBox(width: 8),
                   FilledButton(
-                    style: FilledButton.styleFrom(backgroundColor: const Color(0xFF10B981)),
+                    style: FilledButton.styleFrom(backgroundColor: AppPalette.accent),
                     onPressed: () async {
                       final text = controller.text.trim();
                       if (text.isNotEmpty) {
@@ -927,7 +929,7 @@ class FutureSelfWidget extends ConsumerWidget {
       child: const Center(
         child: Text(
           'Belum ada kegiatan yang dijadwalkan hari ini.',
-          style: TextStyle(fontSize: 12, color: Color(0xFF8E8B99)),
+          style: TextStyle(fontSize: 12, color: AppPalette.textDim),
         ),
       ),
     );
@@ -937,14 +939,14 @@ class FutureSelfWidget extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFF18171E),
+        color: AppPalette.card,
         borderRadius: BorderRadius.circular(22),
       ),
       child: const Center(
         child: SizedBox(
           width: 24,
           height: 24,
-          child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFFF0C987)),
+          child: CircularProgressIndicator(strokeWidth: 2, color: AppPalette.accent),
         ),
       ),
     );
@@ -954,23 +956,23 @@ class FutureSelfWidget extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF18171E),
+        color: AppPalette.card,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFF2B2937)),
+        border: Border.all(color: AppPalette.stroke),
       ),
       child: Row(
         children: [
-          const Icon(Icons.info_outline, size: 18, color: Color(0xFF8E8B99)),
+          const Icon(Icons.info_outline, size: 18, color: AppPalette.textDim),
           const SizedBox(width: 10),
           const Expanded(
             child: Text(
               'Menyiapkan tampilan Future Self...',
-              style: TextStyle(fontSize: 12, color: Color(0xFF8E8B99)),
+              style: TextStyle(fontSize: 12, color: AppPalette.textDim),
             ),
           ),
           TextButton(
             onPressed: () => ref.refresh(futureSelfSnapshotStreamProvider(todayStr)),
-            child: const Text('Muat Ulang', style: TextStyle(fontSize: 12, color: Color(0xFFF0C987))),
+            child: const Text('Muat Ulang', style: TextStyle(fontSize: 12, color: AppPalette.accent)),
           ),
         ],
       ),

@@ -196,60 +196,57 @@ class _SadarHomeScreenState extends ConsumerState<SadarHomeScreen> {
     // 3. Main Multi-Screen Tab Interface
     return Scaffold(
       backgroundColor: AppPalette.bg,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 680),
-            child: AppBar(
-              backgroundColor: AppPalette.bg,
-              elevation: 0,
-              leading: widget.onBack != null
-                  ? IconButton(
-                      icon: const Icon(Icons.arrow_back_rounded, color: AppPalette.accent, size: 20),
-                      tooltip: 'Kembali',
-                      onPressed: widget.onBack,
-                    )
-                  : null,
-              title: const Column(
-                children: [
-                  Text(
-                    'SADAR',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 3.5,
-                      color: AppPalette.text,
-                    ),
-                  ),
-                  Text(
-                    'Way of Life',
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 0.8,
-                      color: AppPalette.textDim,
-                    ),
-                  ),
-                ],
+      appBar: AppBar(
+        backgroundColor: AppPalette.bg,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        titleSpacing: 16,
+        automaticallyImplyLeading: false,
+        leading: widget.onBack != null
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back_rounded, color: AppPalette.accent),
+                tooltip: 'Kembali',
+                onPressed: widget.onBack,
+              )
+            : null,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'SADAR',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 2.0,
+                color: AppPalette.text,
               ),
-              centerTitle: true,
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.info_outline_rounded, color: AppPalette.textDim, size: 20),
-                  tooltip: 'Filosofi Sadar',
-                  onPressed: _showPhilosophyDialog,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.add_rounded, color: AppPalette.accent, size: 22),
-                  tooltip: 'Tambah Kebiasaan',
-                  onPressed: () => _openHabitEditor(),
-                ),
-                const SizedBox(width: 8),
-              ],
             ),
-          ),
+            Text(
+              'Way of Life',
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.3,
+                color: AppPalette.textDim,
+              ),
+            ),
+          ],
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline_rounded, size: 20),
+            color: AppPalette.textDim,
+            tooltip: 'Filosofi Sadar',
+            onPressed: _showPhilosophyDialog,
+          ),
+          IconButton(
+            icon: const Icon(Icons.add_rounded, size: 22),
+            color: AppPalette.accent,
+            tooltip: 'Tambah Kebiasaan',
+            onPressed: () => _openHabitEditor(),
+          ),
+        ],
       ),
       body: SafeArea(
         child: LayoutBuilder(
@@ -271,68 +268,39 @@ class _SadarHomeScreenState extends ConsumerState<SadarHomeScreen> {
           },
         ),
       ),
-      bottomNavigationBar: Container(
-        height: 64,
+      bottomNavigationBar: DecoratedBox(
         decoration: const BoxDecoration(
-          color: AppPalette.card,
-          border: Border(top: BorderSide(color: AppPalette.stroke, width: 1.0)),
+          border: Border(top: BorderSide(color: AppPalette.stroke, width: 0.8)),
         ),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 680),
-            child: NavigationBarTheme(
-              data: NavigationBarThemeData(
-                backgroundColor: AppPalette.card,
-                indicatorColor: AppPalette.accent.withValues(alpha: 0.2),
-                labelTextStyle: WidgetStateProperty.resolveWith((states) {
-                  final isSelected = states.contains(WidgetState.selected);
-                  return TextStyle(
-                    fontSize: 11,
-                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                    color: isSelected ? AppPalette.accent : AppPalette.textDim,
-                  );
-                }),
-                iconTheme: WidgetStateProperty.resolveWith((states) {
-                  final isSelected = states.contains(WidgetState.selected);
-                  return IconThemeData(
-                    size: 20,
-                    color: isSelected ? AppPalette.accent : AppPalette.textDim,
-                  );
-                }),
-              ),
-              child: NavigationBar(
-                selectedIndex: _currentTabIndex,
-                height: 62,
-                elevation: 0,
-                onDestinationSelected: (index) {
-                  HapticFeedback.selectionClick();
-                  setState(() => _currentTabIndex = index);
-                },
-                destinations: const [
-                  NavigationDestination(
-                    icon: Icon(Icons.wb_sunny_outlined),
-                    selectedIcon: Icon(Icons.wb_sunny_rounded),
-                    label: 'Hari Ini',
-                  ),
-                  NavigationDestination(
-                    icon: Icon(Icons.calendar_view_week_outlined),
-                    selectedIcon: Icon(Icons.calendar_view_week_rounded),
-                    label: 'Linimasa',
-                  ),
-                  NavigationDestination(
-                    icon: Icon(Icons.repeat_rounded),
-                    selectedIcon: Icon(Icons.repeat_on_rounded),
-                    label: 'Repetisi',
-                  ),
-                  NavigationDestination(
-                    icon: Icon(Icons.insights_outlined),
-                    selectedIcon: Icon(Icons.insights_rounded),
-                    label: 'Kesadaran',
-                  ),
-                ],
-              ),
+        child: NavigationBar(
+          selectedIndex: _currentTabIndex,
+          elevation: 0,
+          onDestinationSelected: (index) {
+            HapticFeedback.selectionClick();
+            setState(() => _currentTabIndex = index);
+          },
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.wb_twilight_outlined),
+              selectedIcon: Icon(Icons.wb_twilight_rounded),
+              label: 'Hari Ini',
             ),
-          ),
+            NavigationDestination(
+              icon: Icon(Icons.calendar_view_week_outlined),
+              selectedIcon: Icon(Icons.calendar_view_week_rounded),
+              label: 'Linimasa',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.loop_outlined),
+              selectedIcon: Icon(Icons.loop_rounded),
+              label: 'Repetisi',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.spa_outlined),
+              selectedIcon: Icon(Icons.spa_rounded),
+              label: 'Kesadaran',
+            ),
+          ],
         ),
       ),
     );

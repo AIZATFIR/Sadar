@@ -178,23 +178,52 @@ class _TodayViewState extends ConsumerState<TodayView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 1. Salutation & Low-Cortisol Strategic Prompt
-            Text(
-              _greeting(),
-              style: const TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.w800,
-                color: AppPalette.text,
-                letterSpacing: -0.6,
-              ),
-            ),
-            const SizedBox(height: 6),
-            const Text(
-              'Alokasi Energi Hari Ini • Tenang, Sadar, Bermakna',
-              style: TextStyle(
-                fontSize: 14,
-                color: AppPalette.textDim,
-                fontWeight: FontWeight.w500,
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _greeting(),
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                          color: AppPalette.text,
+                          letterSpacing: -0.5,
+                          height: 1.1,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      const Text(
+                        'Alokasi energi · Tenang · Bermakna',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: AppPalette.textDim,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: AppPalette.card,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: AppPalette.stroke),
+                  ),
+                  child: Text(
+                    timeFormatted,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.5,
+                      color: AppPalette.textDim,
+                    ),
+                  ),
+                ),
+              ],
             ),
 
             const SizedBox(height: 20),
@@ -234,20 +263,28 @@ class _TodayViewState extends ConsumerState<TodayView> {
                     // Section Divider
                     Row(
                       children: [
+                        const Icon(Icons.check_circle_outline_rounded, size: 13, color: AppPalette.accentDim),
+                        const SizedBox(width: 6),
                         const Text(
                           'KEBIASAAN HARI INI',
                           style: TextStyle(
                             fontSize: 10,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 1.2,
-                            color: AppPalette.accent,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 1.0,
+                            color: AppPalette.accentDim,
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        const SizedBox(width: 8),
                         Expanded(
-                          child: Container(
-                            height: 1,
-                            color: AppPalette.stroke,
+                          child: Container(height: 0.8, color: AppPalette.stroke),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${completedHabits.length}/${habits.length}',
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: AppPalette.textDim,
                           ),
                         ),
                       ],
@@ -281,24 +318,26 @@ class _TodayViewState extends ConsumerState<TodayView> {
                     // + Add & Progress Line
                     Row(
                       children: [
-                        TextButton.icon(
-                          onPressed: () => _openHabitEditor(),
-                          icon: const Icon(Icons.add_rounded, size: 18, color: AppPalette.accent),
-                          label: const Text(
-                            'Add',
-                            style: TextStyle(
-                              color: AppPalette.accent,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 13,
+                        Flexible(
+                          child: TextButton.icon(
+                            onPressed: () => _openHabitEditor(),
+                            icon: const Icon(Icons.add_rounded, size: 16, color: AppPalette.accent),
+                            label: const Text(
+                              'Kebiasaan Baru',
+                              style: TextStyle(
+                                color: AppPalette.accent,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                              ),
                             ),
                           ),
                         ),
-                        const Spacer(),
+                        const SizedBox(width: 8),
                         Text(
-                          '${completedHabits.length} / ${habits.length} selesai',
+                          '${completedHabits.length}/${habits.length} selesai',
                           style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
                             color: AppPalette.textDim,
                           ),
                         ),
@@ -310,10 +349,6 @@ class _TodayViewState extends ConsumerState<TodayView> {
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (e, _) => Text('Error: $e', style: const TextStyle(color: Color(0xFFEF4444))),
             ),
-
-            const SizedBox(height: 24),
-            const Divider(color: AppPalette.stroke, height: 1),
-            const SizedBox(height: 24),
 
             // 4. Today's Reflection Card
             reflectionAsync.when(
@@ -386,21 +421,7 @@ class _TodayViewState extends ConsumerState<TodayView> {
               error: (_, _) => const SizedBox.shrink(),
             ),
 
-            const SizedBox(height: 48),
-
-            // 5. Calm Clock Display at bottom
-            Center(
-              child: Text(
-                timeFormatted,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 1.5,
-                  color: AppPalette.textDim,
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
           ],
         ),
       ),
@@ -533,7 +554,7 @@ class _TodayViewState extends ConsumerState<TodayView> {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
-                color: isDone ? const Color(0xFF22C55E) : Colors.white,
+                color: isDone ? const Color(0xFF0A2518) : AppPalette.textDim,
               ),
             ),
             IconButton(
@@ -570,13 +591,14 @@ class _TodayViewState extends ConsumerState<TodayView> {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
           color: isDone
-              ? const Color(0xFF22C55E).withValues(alpha: 0.08)
+              ? AppPalette.accentDim.withValues(alpha: 0.12)
               : AppPalette.card,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(14),
           border: Border.all(
             color: isDone
-                ? const Color(0xFF22C55E).withValues(alpha: 0.35)
+                ? AppPalette.accent.withValues(alpha: 0.40)
                 : AppPalette.stroke,
+            width: isDone ? 1.2 : 1.0,
           ),
         ),
         child: Column(
@@ -593,15 +615,15 @@ class _TodayViewState extends ConsumerState<TodayView> {
                     width: 24,
                     height: 24,
                     decoration: BoxDecoration(
-                      color: isDone ? const Color(0xFF22C55E) : Colors.transparent,
+                      color: isDone ? AppPalette.accent : Colors.transparent,
                       borderRadius: BorderRadius.circular(7),
                       border: Border.all(
-                        color: isDone ? const Color(0xFF22C55E) : AppPalette.stroke,
+                        color: isDone ? AppPalette.accent : AppPalette.outline,
                         width: 1.6,
                       ),
                     ),
                     child: isDone
-                        ? const Icon(Icons.check_rounded, size: 16, color: Colors.white)
+                        ? const Icon(Icons.check_rounded, size: 15, color: Color(0xFF0A2518))
                         : null,
                   ),
                 ),
