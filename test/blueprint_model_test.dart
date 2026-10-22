@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:focus_clock/models/routine_blueprint.dart';
-import 'package:focus_clock/core/time_math.dart';
+import 'package:sadar/models/routine_blueprint.dart';
+import 'package:sadar/core/time_math.dart';
 
 void main() {
   group('RoutineBlueprint and BlueprintBlock', () {

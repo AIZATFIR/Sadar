@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_large_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Top row: Future Self Goal & Ratio Badge -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.08"
+                android:text="FUTURE SELF ANCHOR"
+                android:textColor="#8E8B99"
+                android:textSize="9sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/widget_large_goal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Membangun Kehidupan Mandiri"
+                android:textColor="#EDEDF2"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/widget_large_ratio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#23212C"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:text="3/5 Selesai"
+            android:textColor="#F0C987"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="10dp"
+        android:background="#2B2937" />
+
+    <!-- Activities List -->
+    <TextView
+        android:id="@+id/widget_large_item_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="✓ 📖 Belajar Coding (45m)"
+        android:textColor="#D6D3E1"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/widget_large_item_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="✓ 🕌 1 Ayat Al-Quran (15m)"
+        android:textColor="#D6D3E1"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/widget_large_item_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="○ 🏃 Olahraga (30m)"
+        android:textColor="#8E8B99"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/widget_large_item_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="○ 🪽 Kalaam Harian (15m)"
+        android:textColor="#8E8B99"
+        android:textSize="11sp" />
+
+    <!-- Gratitude Preview -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="8dp"
+        android:background="#2B2937" />
+
+    <TextView
+        android:id="@+id/widget_large_gratitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="🙏 Mensyukuri nikmat sehat &amp; ketenangan hari ini"
+        android:textColor="#10B981"
+        android:textSize="10.5sp"
+        android:textStyle="italic" />
+
+</LinearLayout>

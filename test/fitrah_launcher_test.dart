@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:focus_clock/features/launcher/fitrah_launcher_shell.dart';
-import 'package:focus_clock/features/launcher/models/launcher_settings.dart';
-import 'package:focus_clock/features/launcher/services/app_launcher_service.dart';
-import 'package:focus_clock/features/launcher/widgets/fitrah_home_view.dart';
-import 'package:focus_clock/features/launcher/widgets/minimalist_app_drawer.dart';
+import 'package:sadar/features/launcher/fitrah_launcher_shell.dart';
+import 'package:sadar/features/launcher/models/launcher_settings.dart';
+import 'package:sadar/features/launcher/services/app_launcher_service.dart';
+import 'package:sadar/features/launcher/widgets/fitrah_home_view.dart';
+import 'package:sadar/features/launcher/widgets/minimalist_app_drawer.dart';
 
 void main() {
   group('Fitrah Launcher Tests', () {

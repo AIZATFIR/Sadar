@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:focus_clock/features/sadar/sadar_home_screen.dart';
-import 'package:focus_clock/services/secure_storage_service.dart';
+import 'package:sadar/features/sadar/sadar_home_screen.dart';
+import 'package:sadar/services/secure_storage_service.dart';
 
 class MockSecureStorage extends SecureStorageService {
   @override

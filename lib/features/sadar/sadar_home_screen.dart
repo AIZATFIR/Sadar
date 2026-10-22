@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,12 +31,14 @@ class SadarHomeScreen extends ConsumerStatefulWidget {
 
 class _SadarHomeScreenState extends ConsumerState<SadarHomeScreen> {
   int _currentTabIndex = 0;
-  bool? _isOnboardingDone;
+  bool? _isOnboardingDone = kIsWeb ? true : null;
 
   @override
   void initState() {
     super.initState();
-    _checkOnboardingStatus();
+    if (!kIsWeb) {
+      _checkOnboardingStatus();
+    }
   }
 
   Future<void> _checkOnboardingStatus() async {
@@ -249,17 +252,27 @@ class _SadarHomeScreenState extends ConsumerState<SadarHomeScreen> {
         ),
       ),
       body: SafeArea(
-        child: IndexedStack(
-          index: _currentTabIndex,
-          children: [
-            const TodayView(),
-            _buildTimelineTab(),
-            const WhatIRepeatView(),
-            const AwarenessView(),
-          ],
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SizedBox(
+              width: constraints.maxWidth,
+              height: constraints.maxHeight,
+              child: IndexedStack(
+                sizing: StackFit.expand,
+                index: _currentTabIndex,
+                children: [
+                  const TodayView(),
+                  _buildTimelineTab(),
+                  const WhatIRepeatView(),
+                  const AwarenessView(),
+                ],
+              ),
+            );
+          },
         ),
       ),
       bottomNavigationBar: Container(
+        height: 64,
         decoration: const BoxDecoration(
           color: AppPalette.card,
           border: Border(top: BorderSide(color: AppPalette.stroke, width: 1.0)),

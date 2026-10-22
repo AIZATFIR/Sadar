@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:focus_clock/core/time_math.dart';
-import 'package:focus_clock/services/gcal_service.dart';
+import 'package:sadar/core/time_math.dart';
+import 'package:sadar/services/gcal_service.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

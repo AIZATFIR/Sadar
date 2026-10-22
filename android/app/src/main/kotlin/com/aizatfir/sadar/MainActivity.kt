@@ -1,5 +1,10 @@
 package com.aizatfir.sadar
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -8,15 +13,53 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.WindowManager
+import com.aizatfir.sadar.widget.FutureSelfAppWidgetProvider
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "fitrah_launcher/apps"
+    private val WIDGET_CHANNEL = "com.aizatfir.sadar/widget"
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, WIDGET_CHANNEL).setMethodCallHandler { call, result ->
+            when (call.method) {
+                "updateWidget" -> {
+                    val snapshotJson = call.argument<String>("snapshotJson")
+                    if (snapshotJson != null) {
+                        try {
+                            val prefs = getSharedPreferences(FutureSelfAppWidgetProvider.PREFS_NAME, Context.MODE_PRIVATE)
+                            prefs.edit().putString(FutureSelfAppWidgetProvider.KEY_SNAPSHOT_JSON, snapshotJson).apply()
+                            FutureSelfAppWidgetProvider.updateAllWidgets(this)
+                            result.success(true)
+                        } catch (e: Exception) {
+                            result.error("ERROR_UPDATING_WIDGET", e.message, null)
+                        }
+                    } else {
+                        result.error("INVALID_ARGUMENT", "snapshotJson is null", null)
+                    }
+                }
+                "updateLockscreenGlance" -> {
+                    val enabled = call.argument<Boolean>("enabled") ?: false
+                    val goal = call.argument<String>("goal") ?: "Future Self"
+                    val ratio = call.argument<String>("ratio") ?: ""
+                    val details = call.argument<String>("details") ?: ""
+                    try {
+                        updateLockscreenNotification(enabled, goal, ratio, details)
+                        result.success(true)
+                    } catch (e: Exception) {
+                        result.error("ERROR_LOCKSCREEN_GLANCE", e.message, null)
+                    }
+                }
+                "isWidgetSupported" -> {
+                    result.success(true)
+                }
+                else -> result.notImplemented()
+            }
+        }
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             when (call.method) {
@@ -284,4 +327,68 @@ class MainActivity : FlutterActivity() {
             }
         }
     }
+
+    private fun updateLockscreenNotification(enabled: Boolean, goal: String, ratio: String, details: String) {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notifId = 2026
+
+        if (!enabled) {
+            notificationManager.cancel(notifId)
+            return
+        }
+
+        val channelId = "sadar_future_self_glance"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                "Future Self Glance",
+                NotificationManager.IMPORTANCE_LOW
+            ).apply {
+                description = "Glanceable view of your future self goal on lockscreen"
+                setShowBadge(false)
+                enableVibration(false)
+                enableLights(false)
+                setSound(null, null)
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            }
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        val openIntent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            data = Uri.parse("sadar://future-self")
+        }
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            openIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Notification.Builder(this, channelId)
+        } else {
+            @Suppress("DEPRECATION")
+            Notification.Builder(this)
+        }
+
+        val contentText = if (ratio.isNotEmpty()) "$ratio  •  $details" else details
+
+        builder.setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle("🌱 $goal")
+            .setContentText(contentText)
+            .setOngoing(true)
+            .setAutoCancel(false)
+            .setContentIntent(pendingIntent)
+            .setVisibility(Notification.VISIBILITY_PUBLIC)
+            .setCategory(Notification.CATEGORY_STATUS)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            @Suppress("DEPRECATION")
+            builder.setPriority(Notification.PRIORITY_LOW)
+        }
+
+        notificationManager.notify(notifId, builder.build())
+    }
 }
+

@@ -9,6 +9,7 @@ import '../../../models/daily_reflection.dart';
 import '../../../models/habit.dart';
 import '../../../models/habit_entry.dart';
 import '../../../providers/sadar_providers.dart';
+import 'future_self_widget.dart';
 import 'habit_editor_sheet.dart';
 import 'reflection_sheet.dart';
 import 'sadar_ypt_focus_view.dart';
@@ -176,7 +177,7 @@ class _TodayViewState extends ConsumerState<TodayView> {
           child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. Salutation & Core Philosophy Prompt
+            // 1. Salutation & Low-Cortisol Strategic Prompt
             Text(
               _greeting(),
               style: const TextStyle(
@@ -188,73 +189,71 @@ class _TodayViewState extends ConsumerState<TodayView> {
             ),
             const SizedBox(height: 6),
             const Text(
-              'How do you want to live today?',
+              'Alokasi Energi Hari Ini • Tenang, Sadar, Bermakna',
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 14,
                 color: AppPalette.textDim,
                 fontWeight: FontWeight.w500,
               ),
             ),
 
-            const SizedBox(height: 28),
+            const SizedBox(height: 20),
 
-            // 2. TODAY Header Line
-            Row(
-              children: [
-                const Text(
-                  'TODAY',
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 2.0,
-                    color: AppPalette.accent,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Container(
-                    height: 1,
-                    color: AppPalette.stroke,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-
-            // 3. List of Things
+            // 2. Strategic Cue Card & List of Things
             habitsAsync.when(
               data: (habits) {
                 if (habits.isEmpty) {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(vertical: 36),
-                    alignment: Alignment.center,
-                    child: Column(
-                      children: [
-                        const Text(
-                          'No things chosen for today yet.',
-                          style: TextStyle(fontSize: 13, color: AppPalette.textDim),
-                        ),
-                        const SizedBox(height: 12),
-                        OutlinedButton.icon(
-                          onPressed: () => _openHabitEditor(),
-                          icon: const Icon(Icons.add_rounded, size: 18),
-                          label: const Text('Pilih yang Bermakna Hari Ini'),
-                        ),
-                      ],
-                    ),
+                  return Column(
+                    children: [
+                      FutureSelfWidget(
+                        size: FutureSelfWidgetSize.large,
+                        dateString: _todayStr,
+                      ),
+                      const SizedBox(height: 20),
+                      OutlinedButton.icon(
+                        onPressed: () => _openHabitEditor(),
+                        icon: const Icon(Icons.add_rounded, size: 18),
+                        label: const Text('Pilih yang Bermakna Hari Ini'),
+                      ),
+                    ],
                   );
                 }
 
-                int completedCount = 0;
-                for (final h in habits) {
-                  final entry = entriesMap[h.id];
-                  if (entry?.status == HabitStatus.yes) {
-                    completedCount++;
-                  }
-                }
-
+                final completedHabits = habits.where((h) => entriesMap[h.id]?.status == HabitStatus.yes).toList();
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // FUTURE SELF LIVING WIDGET
+                    FutureSelfWidget(
+                      size: FutureSelfWidgetSize.large,
+                      dateString: _todayStr,
+                    ),
+
+                    const SizedBox(height: 28),
+
+                    // Section Divider
+                    Row(
+                      children: [
+                        const Text(
+                          'KEBIASAAN HARI INI',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 1.2,
+                            color: AppPalette.accent,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Container(
+                            height: 1,
+                            color: AppPalette.stroke,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+
                     ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -296,7 +295,7 @@ class _TodayViewState extends ConsumerState<TodayView> {
                         ),
                         const Spacer(),
                         Text(
-                          '$completedCount / ${habits.length} done',
+                          '${completedHabits.length} / ${habits.length} selesai',
                           style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
@@ -437,7 +436,7 @@ class _TodayViewState extends ConsumerState<TodayView> {
       final whitelistStr = habit.allowedPackages.isNotEmpty
           ? ' • ${habit.allowedPackages.length} app'
           : '';
-      subtitle = '${habit.target} min$whitelistStr';
+      subtitle = '${habit.target} min • 📍 Meja Belajar / Laptop$whitelistStr';
       if (!isDone) {
         trailingAction = FilledButton.tonal(
           style: FilledButton.styleFrom(
@@ -453,7 +452,7 @@ class _TodayViewState extends ConsumerState<TodayView> {
             children: [
               Icon(Icons.play_arrow_rounded, size: 15),
               SizedBox(width: 2),
-              Text('Mulai', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+              Text('Play Timer', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
             ],
           ),
         );

@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:focus_clock/data/repositories/sadar_repository.dart';
-import 'package:focus_clock/models/habit.dart';
-import 'package:focus_clock/models/timer_session.dart';
-import 'package:focus_clock/services/sadar_timer_engine.dart';
+import 'package:sadar/data/repositories/sadar_repository.dart';
+import 'package:sadar/models/habit.dart';
+import 'package:sadar/models/timer_session.dart';
+import 'package:sadar/services/sadar_timer_engine.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

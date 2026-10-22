@@ -93,7 +93,7 @@ ThemeData buildDarkTheme([String palette = 'executive']) {
     ),
     cardColor: card,
     dividerColor: stroke,
-    textTheme: GoogleFonts.outfitTextTheme(base.textTheme).apply(
+    textTheme: GoogleFonts.interTextTheme(base.textTheme).apply(
       bodyColor: AppPalette.text,
       displayColor: AppPalette.text,
     ),

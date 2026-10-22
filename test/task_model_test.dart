@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:focus_clock/models/task.dart';
+import 'package:sadar/models/task.dart';
 
 void main() {
   group('Task Model & Eisenhower Logic Tests', () {

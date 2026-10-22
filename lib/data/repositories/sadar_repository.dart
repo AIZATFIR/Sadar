@@ -5,6 +5,7 @@ import '../../models/habit.dart';
 import '../../models/habit_entry.dart';
 import '../../models/daily_reflection.dart';
 import '../../models/timer_session.dart';
+import '../../models/future_self.dart';
 
 class RepetitionStat {
   final Habit habit;
@@ -48,10 +49,13 @@ class AwarenessStats {
 }
 
 class SadarRepository {
-  SadarRepository(this._isar) {
+  SadarRepository(this._isar, {bool seedSampleEntries = false}) {
     if (_isar == null) {
       for (final h in _defaultHabits()) {
         _memHabits[h.id] = h;
+      }
+      if (seedSampleEntries) {
+        _seedSampleEntries();
       }
     }
   }
@@ -67,6 +71,8 @@ class SadarRepository {
 
   final StreamController<void> _habitsStreamCtrl = StreamController<void>.broadcast();
   final StreamController<void> _entriesStreamCtrl = StreamController<void>.broadcast();
+  final StreamController<void> _futureSelfStreamCtrl = StreamController<void>.broadcast();
+  String _futureSelfGoal = 'Membangun kehidupan bermakna dengan disiplin & kesadaran.';
 
   // ──────────────────────────────────────────────────────────────────────────
   // Habits
@@ -121,9 +127,12 @@ class SadarRepository {
       }
       _memHabits[habit.id] = habit;
       _habitsStreamCtrl.add(null);
+      _futureSelfStreamCtrl.add(null);
       return habit.id;
     }
-    return _isar.writeTxn(() => _isar.habits.put(habit));
+    final id = await _isar.writeTxn(() => _isar.habits.put(habit));
+    _futureSelfStreamCtrl.add(null);
+    return id;
   }
 
   Future<bool> deleteHabit(int id, {bool hardDelete = false}) async {
@@ -135,17 +144,21 @@ class SadarRepository {
         if (h != null) h.isArchived = true;
       }
       _habitsStreamCtrl.add(null);
+      _futureSelfStreamCtrl.add(null);
       return true;
     }
 
     if (hardDelete) {
-      return _isar.writeTxn(() => _isar.habits.delete(id));
+      final res = await _isar.writeTxn(() => _isar.habits.delete(id));
+      _futureSelfStreamCtrl.add(null);
+      return res;
     } else {
       final h = await _isar.habits.get(id);
       if (h != null) {
         h.isArchived = true;
         h.updatedAt = DateTime.now();
         await _isar.writeTxn(() => _isar.habits.put(h));
+        _futureSelfStreamCtrl.add(null);
         return true;
       }
       return false;
@@ -232,10 +245,11 @@ class SadarRepository {
 
       _memEntries[key] = entry;
       _entriesStreamCtrl.add(null);
+      _futureSelfStreamCtrl.add(null);
       return entry;
     }
 
-    return _isar.writeTxn(() async {
+    final res = await _isar.writeTxn(() async {
       final existing = await _isar.habitEntrys
           .filter()
           .habitIdEqualTo(habitId)
@@ -259,6 +273,8 @@ class SadarRepository {
       await _isar.habitEntrys.put(entry);
       return entry;
     });
+    _futureSelfStreamCtrl.add(null);
+    return res;
   }
 
   Future<void> advanceProgression(int habitId) async {
@@ -334,9 +350,106 @@ class SadarRepository {
     reflection.updatedAt = DateTime.now();
     if (_isar == null) {
       _memReflections[reflection.dateString] = reflection;
+      _futureSelfStreamCtrl.add(null);
       return;
     }
     await _isar.writeTxn(() => _isar.dailyReflections.put(reflection));
+    _futureSelfStreamCtrl.add(null);
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Future Self Widget & Gratitude Operations
+  // ──────────────────────────────────────────────────────────────────────────
+
+  Future<String> getFutureSelfGoal() async => _futureSelfGoal;
+
+  Future<void> setFutureSelfGoal(String goal) async {
+    _futureSelfGoal = goal.trim();
+    _futureSelfStreamCtrl.add(null);
+  }
+
+  Future<void> addGratitudeEntry(String gratitude, [String? dateString]) async {
+    final ds = dateString ?? _formatDate(DateTime.now());
+    final trimmed = gratitude.trim();
+    if (trimmed.isEmpty) return;
+
+    final existing = await getDailyReflection(ds);
+    final reflection = existing ?? (DailyReflection()
+      ..dateString = ds
+      ..feeling = ReflectionFeeling.good
+      ..updatedAt = DateTime.now());
+
+    if (reflection.proudOfToday.isEmpty) {
+      reflection.proudOfToday = trimmed;
+    } else {
+      reflection.note = reflection.note.isEmpty
+          ? '• $trimmed'
+          : '${reflection.note}\n• $trimmed';
+    }
+
+    await saveDailyReflection(reflection);
+  }
+
+  Future<FutureSelfSnapshot> getFutureSelfSnapshot([String? dateString]) async {
+    final ds = dateString ?? _formatDate(DateTime.now());
+    final habits = await getHabits();
+    final entries = await getEntriesForDateRange(ds, ds);
+    final entriesMap = {for (final e in entries) e.habitId: e};
+    final reflection = await getDailyReflection(ds);
+
+    final activities = habits.map((h) {
+      final entry = entriesMap[h.id];
+      final isDone = entry?.status == HabitStatus.yes;
+      return FutureSelfActivityItem(
+        id: h.id,
+        title: h.name,
+        iconKey: h.iconKey,
+        target: h.target,
+        unit: h.unit,
+        habitType: h.habitType,
+        colorValue: h.colorValue,
+        isCompleted: isDone,
+        valueCompleted: entry?.valueCompleted ?? 0,
+        actualDurationMinutes: entry?.actualDurationMinutes ?? 0,
+        preferredTime: h.preferredTime,
+      );
+    }).toList();
+
+    final gratitudeList = <String>[];
+    if (reflection != null) {
+      if (reflection.proudOfToday.trim().isNotEmpty) {
+        gratitudeList.add(reflection.proudOfToday.trim());
+      }
+      if (reflection.note.trim().isNotEmpty) {
+        final lines = reflection.note.split('\n');
+        for (final l in lines) {
+          final trimmed = l.trim();
+          if (trimmed.startsWith('• ') || trimmed.startsWith('- ') || trimmed.startsWith('🙏 ')) {
+            final cleaned = trimmed.replaceFirst(RegExp(r'^[•\-\s🙏]+'), '').trim();
+            if (cleaned.isNotEmpty && !gratitudeList.contains(cleaned)) {
+              gratitudeList.add(cleaned);
+            }
+          }
+        }
+      }
+    }
+
+    return FutureSelfSnapshot(
+      dateString: ds,
+      futureSelfGoal: _futureSelfGoal,
+      activities: activities,
+      gratitudeSnippet: gratitudeList.isNotEmpty ? gratitudeList.first : null,
+      gratitudeEntries: gratitudeList,
+      updatedAt: DateTime.now(),
+    );
+  }
+
+  Stream<FutureSelfSnapshot> watchFutureSelfSnapshot([String? dateString]) async* {
+    final ds = dateString ?? _formatDate(DateTime.now());
+    yield await getFutureSelfSnapshot(ds);
+    await for (final _ in _futureSelfStreamCtrl.stream) {
+      yield await getFutureSelfSnapshot(ds);
+    }
   }
 
   Future<List<RepetitionStat>> getWhatIRepeat() async {
@@ -510,4 +623,27 @@ class SadarRepository {
       ..orderIndex = 4
       ..createdAt = DateTime.now(),
   ];
+
+  void _seedSampleEntries() {
+    final now = DateTime.now();
+    for (int dayOffset = -6; dayOffset <= 0; dayOffset++) {
+      final date = now.add(Duration(days: dayOffset));
+      final ds = _formatDate(date);
+      for (final h in _memHabits.values) {
+        final isCompleted = ((h.id + dayOffset).abs() % 2 == 0) || (dayOffset == 0 && h.id <= 2);
+        final entry = HabitEntry()
+          ..id = _memEntryIdCounter++
+          ..habitId = h.id
+          ..dateString = ds
+          ..status = isCompleted ? HabitStatus.yes : (dayOffset == 0 ? HabitStatus.unmarked : HabitStatus.skip)
+          ..valueCompleted = isCompleted ? h.target : 0
+          ..targetSnapshot = h.target
+          ..actualDurationMinutes = isCompleted ? h.target : 0
+          ..completedAt = isCompleted ? date : null
+          ..source = 'system_seed'
+          ..updatedAt = date;
+        _memEntries['${h.id}-$ds'] = entry;
+      }
+    }
+  }
 }

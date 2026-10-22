@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:focus_clock/core/time_math.dart';
-import 'package:focus_clock/data/repositories/activity_repository.dart';
-import 'package:focus_clock/data/repositories/blueprint_repository.dart';
-import 'package:focus_clock/models/routine_blueprint.dart';
-import 'package:focus_clock/services/blueprint_applier_service.dart';
-import 'package:focus_clock/services/notification_service.dart';
+import 'package:sadar/core/time_math.dart';
+import 'package:sadar/data/repositories/activity_repository.dart';
+import 'package:sadar/data/repositories/blueprint_repository.dart';
+import 'package:sadar/models/routine_blueprint.dart';
+import 'package:sadar/services/blueprint_applier_service.dart';
+import 'package:sadar/services/notification_service.dart';
 
 void main() {
   group('BlueprintApplierService & BlueprintRepository', () {

@@ -5,6 +5,8 @@ import '../models/habit.dart';
 import '../models/habit_entry.dart';
 import '../models/daily_reflection.dart';
 import '../models/timer_session.dart';
+import '../models/future_self.dart';
+import '../services/future_self_bridge_service.dart';
 import 'providers.dart';
 
 final sadarRepoProvider = Provider<SadarRepository>((ref) {
@@ -67,4 +69,17 @@ final dailyReflectionProvider =
 
 final activeTimerSessionProvider = FutureProvider<TimerSession?>((ref) {
   return ref.watch(sadarRepoProvider).getActiveTimerSession();
+});
+
+final futureSelfSnapshotStreamProvider =
+    StreamProvider.family<FutureSelfSnapshot, String>((ref, dateString) {
+  final stream = ref.watch(sadarRepoProvider).watchFutureSelfSnapshot(dateString);
+  return stream.map((snapshot) {
+    FutureSelfBridgeService.syncSnapshot(snapshot);
+    return snapshot;
+  });
+});
+
+final futureSelfGoalProvider = FutureProvider<String>((ref) {
+  return ref.watch(sadarRepoProvider).getFutureSelfGoal();
 });
