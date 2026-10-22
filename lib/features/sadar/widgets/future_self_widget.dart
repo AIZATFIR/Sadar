@@ -355,8 +355,13 @@ class FutureSelfWidget extends ConsumerWidget {
 
           if (snapshot.activities.isEmpty)
             _buildEmptyActivitiesPrompt()
-          else
-            ...snapshot.activities.map((act) => _buildLargeActivityItem(context, ref, snapshot.dateString, act)),
+          else ...[
+            _buildSketchActivityTiles(context, ref, snapshot.dateString, snapshot.activities),
+            if (snapshot.activities.length > 3) ...[
+              const SizedBox(height: 12),
+              ...snapshot.activities.skip(3).map((act) => _buildLargeActivityItem(context, ref, snapshot.dateString, act)),
+            ],
+          ],
 
           const SizedBox(height: 14),
           const Divider(height: 1, color: Color(0xFF2B2937)),
@@ -520,6 +525,79 @@ class FutureSelfWidget extends ConsumerWidget {
             ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSketchActivityTiles(
+    BuildContext context,
+    WidgetRef ref,
+    String dateString,
+    List<FutureSelfActivityItem> activities,
+  ) {
+    final topThree = activities.take(3).toList();
+    if (topThree.isEmpty) return const SizedBox.shrink();
+
+    return Row(
+      children: topThree.map((act) {
+        final isDone = act.isCompleted;
+
+        return Expanded(
+          child: InkWell(
+            onTap: () => _toggleHabit(ref, act, dateString),
+            borderRadius: BorderRadius.circular(14),
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+              decoration: BoxDecoration(
+                color: isDone ? const Color(0xFF131219) : const Color(0xFF1F1E29),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                  color: isDone ? const Color(0xFF10B981).withValues(alpha: 0.4) : const Color(0xFF2C2B3B),
+                  width: 1.2,
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(act.iconKey, style: const TextStyle(fontSize: 16)),
+                      Icon(
+                        isDone ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
+                        size: 16,
+                        color: isDone ? const Color(0xFF10B981) : const Color(0xFF6B687C),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    act.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 11,
+                      fontWeight: isDone ? FontWeight.w500 : FontWeight.w700,
+                      color: isDone ? const Color(0xFF7A7887) : const Color(0xFFEDEDF2),
+                      decoration: isDone ? TextDecoration.lineThrough : null,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    '${act.target} ${act.unit.name}',
+                    style: const TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 9,
+                      color: Color(0xFF8E8B99),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }).toList(),
     );
   }
 
