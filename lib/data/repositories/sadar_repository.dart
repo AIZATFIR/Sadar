@@ -119,6 +119,41 @@ class SadarRepository {
         .findAll();
   }
 
+  Future<List<Habit>> getArchivedHabits() async {
+    if (_isar == null) {
+      final list = _memHabits.values.where((h) => h.isArchived).toList();
+      list.sort((a, b) => (b.updatedAt ?? b.createdAt).compareTo(a.updatedAt ?? a.createdAt));
+      return list;
+    }
+    return _isar.habits
+        .filter()
+        .isArchivedEqualTo(true)
+        .sortByUpdatedAtDesc()
+        .findAll();
+  }
+
+  Future<void> reorderHabits(List<int> habitIds) async {
+    if (_isar == null) {
+      for (int i = 0; i < habitIds.length; i++) {
+        final h = _memHabits[habitIds[i]];
+        if (h != null) {
+          h.orderIndex = i;
+        }
+      }
+      _habitsStreamCtrl.add(null);
+      return;
+    }
+    await _isar.writeTxn(() async {
+      for (int i = 0; i < habitIds.length; i++) {
+        final h = await _isar.habits.get(habitIds[i]);
+        if (h != null) {
+          h.orderIndex = i;
+          await _isar.habits.put(h);
+        }
+      }
+    });
+  }
+
   Future<int> upsertHabit(Habit habit) async {
     habit.updatedAt = DateTime.now();
     if (_isar == null) {

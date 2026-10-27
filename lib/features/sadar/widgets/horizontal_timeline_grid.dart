@@ -722,27 +722,19 @@ class _HorizontalTimelineGridState extends ConsumerState<HorizontalTimelineGrid>
   Color _getCellColor(HabitStatus status, bool isToday) {
     switch (status) {
       case HabitStatus.yes:
-        return const Color(0xFF22C55E); // Green
+        return const Color(0xFF48C774); // Vibrant Green like Screenshot 1
       case HabitStatus.no:
-        return const Color(0xFFEF4444); // Red
+        return const Color(0xFFEF5350); // Vibrant Red like Screenshot 1
       case HabitStatus.skip:
-        return const Color(0xFF0EA5E9); // Blue
+        return const Color(0xFF2C322E);
       case HabitStatus.unmarked:
-        return isToday ? const Color(0xFF1E293B) : const Color(0xFF0F172A);
+        return isToday ? const Color(0xFF1E2820) : const Color(0xFF141A15);
     }
   }
 
   Widget _buildCellIcon(HabitStatus status) {
-    switch (status) {
-      case HabitStatus.yes:
-        return const Icon(Icons.check_rounded, color: Colors.white, size: 20);
-      case HabitStatus.no:
-        return const Icon(Icons.close_rounded, color: Colors.white, size: 18);
-      case HabitStatus.skip:
-        return const Icon(Icons.redo_rounded, color: Colors.white, size: 16);
-      case HabitStatus.unmarked:
-        return const SizedBox.shrink();
-    }
+    // Pure flat solid blocks without icons inside matching user screenshots
+    return const SizedBox.shrink();
   }
 
   String _formatUnit(HabitUnit unit) {
