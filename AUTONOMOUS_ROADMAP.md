@@ -6186,3 +6186,70 @@ Replaces timeline icon wrappers and border DOM nodes with an absolute semantic t
 ```
 skipped: Complex SVG connectors or separate timeline track markup.  
 add when: nodes require interactive milestone states or distinct semantic icons.
+
+
+### Cycle #83 Directive (2026-11-03 04:54)
+### 1. Zero-JS Auto-Expanding Entry (Kill textarea resize scripts)
+
+```css
+/* Replace JS resize observers on log input with native CSS */
+.log-input {
+  field-sizing: content;
+  min-height: 2.5lh;
+  max-height: 15lh;
+  line-height: 1.6;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+}
+```
+→ skipped: JS height recalculation listeners and hidden clone divs.  
+→ add when: Firefox/Safari drop support below your critical baseline (use 3-line inline scroll fallback until then).
+
+---
+
+### 2. Typographic Baseline Grid for Timeline Logs
+
+```css
+/* Precise vertical baseline alignment between timestamps and entry text */
+.log-row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: first baseline;
+  column-gap: 1.25rem;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.log-row time {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.45;
+}
+```
+→ skipped: Absolute positioning, flex-align hacks, and manual margin nudging.  
+→ add when: Multi-column metadata (tags, mood metrics) exceeds a single baseline.
+
+---
+
+### 3. Native Zero-State Conscious Prompt Drawer
+
+```html
+<!-- Kill modal/dialog JS for metacognitive prompts -->
+<details class="prompt-drawer">
+  <summary class="zen-prompt">add reflection layer</summary>
+  <div class="prompt-body">
+    <input type="text" name="bias" placeholder="Noticed cognitive distortion?" autocomplete="off" />
+  </div>
+</details>
+
+<style>
+.prompt-drawer summary { list-style: none; cursor: pointer; opacity: 0.4; font-size: 0.8125rem; }
+.prompt-drawer summary::-webkit-details-marker { display: none; }
+.prompt-drawer[open] summary { opacity: 0.8; margin-bottom: 0.5rem; }
+</style>
+```
+→ skipped: React/JS state toggles, backdrop overlays, and focus traps.  
+→ add when: Prompts require multi-step branching validation.
