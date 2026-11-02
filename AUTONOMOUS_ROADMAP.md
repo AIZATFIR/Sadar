@@ -480,3 +480,74 @@ document.querySelector("#conscious-form")?.addEventListener("keydown", (e) => {
 ```
 → skipped: UI submit buttons, custom hotkey libraries, and debounced input managers.  
 → add when: rich text / multi-paragraph Markdown formatting is added.
+
+
+### Cycle #6 Directive (2026-11-02 21:40)
+### 1. Frictionless Stream-of-Consciousness Input (Zero-JS Auto-Resize)
+
+```css
+/* Replace fixed textareas/JS auto-resizers */
+.conscious-log-input {
+  inline-size: 100%;
+  field-sizing: content; /* ponytail: native auto-expand; fallback is standard 3-row textarea */
+  min-block-size: 3lh;
+  max-block-size: 45vh;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--zen-fg, #2c2825);
+}
+```
+`[code] → skipped: [JS textarea autosize listeners], add when [browsers lacking field-sizing support become hard requirement].`
+
+---
+
+### 2. Baseline-Snapped Vertical Alignment for Logs
+
+```css
+/* Eliminates vertical alignment wobble between timestamp and text */
+.log-row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  column-gap: 1.25rem;
+  align-items: first baseline;
+  padding-block: 0.625rem;
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--zen-muted, #8c827a);
+  user-select: none;
+}
+
+.log-body {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--zen-fg, #2c2825);
+  margin: 0;
+}
+```
+`[code] → skipped: [flexbox vertical-offset magic margins], add when [columns require multi-tier metadata blocks].`
+
+---
+
+### 3. Streamlined Center Spine Layout
+
+```css
+/* Single column constraint for warm, distraction-free focus */
+.sadar-canvas {
+  max-inline-size: 62ch;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  padding-block: clamp(3rem, 10vh, 7rem);
+  display: flex;
+  flex-direction: column;
+  row-gap: 2.5rem;
+}
+```
+`[code] → skipped: [sidebar/dashboard grid shells], add when [dense analytics/history search is explicitly required].`
