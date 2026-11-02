@@ -5433,3 +5433,76 @@ Replaces cards, shadows, and heavy dividers with a single warm, low-contrast thr
 }
 ```
 `→ skipped: Card containers, elevation tokens, tags, and category pills; add structured groupings when daily volume exceeds 50 entries/day.`
+
+
+### Cycle #72 Directive (2026-11-03 03:53)
+### 1. Optical Baseline Timeline (Vertical Alignment)
+
+```css
+/* Precise optical baseline alignment without JS */
+.log-stream {
+  display: grid;
+  grid-template-columns: auto 1px 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+}
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  color: #78716c; /* stone-500 */
+}
+.log-rail {
+  align-self: stretch;
+  background: #e7e5e4; /* stone-200 */
+  position: relative;
+}
+.log-rail::after {
+  content: "";
+  position: absolute;
+  top: 0.55em; /* optical alignment with cap-height */
+  left: 50%;
+  translate: -50% -50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: #a8a29e; /* stone-400 */
+}
+```
+→ skipped: JS-based offset calculators and SVG connector lines.  
+→ add when: variable dynamic font sizes require runtime baseline tracking.
+
+---
+
+### 2. Zero-Friction Log Input (Conscious Living Logs)
+
+```html
+<form id="log-form" class="border-b border-stone-200/80 pb-3">
+  <!-- ponytail: field-sizing: content requires modern browsers; fallback is standard 1-row textarea -->
+  <textarea
+    name="entry"
+    rows="1"
+    placeholder="Log a thought or observation..."
+    class="w-full resize-none bg-transparent text-stone-800 placeholder:text-stone-400 outline-none leading-relaxed [field-sizing:content]"
+    onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.form.requestSubmit();}"
+  ></textarea>
+</form>
+```
+→ skipped: auto-expanding textarea JS dependencies and rich-text toolbars.  
+→ add when: markdown preview or media attachments are explicitly required.
+
+---
+
+### 3. Warm Zen Surface (Streamlined UI)
+
+```css
+/* Apple-grade warm ambient card: eliminates border-soup and heavy drop shadows */
+.zen-card {
+  background: rgba(250, 250, 249, 0.75); /* stone-50 with warm translucency */
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid rgba(28, 25, 23, 0.04);
+  box-shadow: 0 1px 1px -0.5px rgba(28, 25, 23, 0.03);
+}
+```
+→ skipped: heavy theme configuration frameworks and multi-layered CSS shadow stacks.  
+→ add when: supporting custom high-contrast accessibility modes.
