@@ -2070,3 +2070,105 @@ add when: Non-linear or multi-day grouped branch visualizations are introduced.
 ```
 skipped: State store, toggle handlers, and custom accordion animation libraries.  
 add when: Nested contextual filtering (e.g., tags, emotion vectors) requires deep search queries.
+
+
+### Cycle #29 Directive (2026-11-02 23:51)
+### 1. Auto-Expanding Input via Native CSS (Streamlined UI)
+Replace JS resize listeners with standard CSS line-height auto-sizing.
+
+```css
+/* sadar-input.css */
+.metacog-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 10lh;
+  line-height: 1.5;
+  width: 100%;
+  resize: none;
+  background: transparent;
+  border: 1px solid var(--border, #e6e4df);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-family: inherit;
+  color: #1a1a18;
+}
+.metacog-input:focus {
+  outline: none;
+  border-color: #9c978b;
+}
+```
+`field-sizing: content` → skipped: auto-resize JS library or `input` event scrollHeight recalculations, add when: targeting Safari < 17.4 or legacy browsers.
+
+---
+
+### 2. Baseline-Aligned Optical Grid (Vertical Alignment)
+Enforce typographical vertical alignment between timestamps and journal entries.
+
+```css
+/* sadar-stream.css */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.log-item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  column-gap: 1.5rem;
+  align-items: baseline;
+  padding-block: 0.75rem;
+  border-bottom: 1px solid var(--divider, #f3f2ee);
+}
+
+.log-item time {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: #8c8980;
+  user-select: none;
+}
+
+.log-item p {
+  margin: 0;
+  line-height: 1.5;
+  color: #242320;
+}
+```
+`grid-template-columns: 4.5rem 1fr; align-items: baseline;` → skipped: flexbox margin hacks or table layouts, add when: column widths must be user-resizable.
+
+---
+
+### 3. Rapid Single-Frame Capture & Storage (Conscious Living Logs)
+Zero-dependency log persistence with `Ctrl/Cmd + Enter` dispatch.
+
+```javascript
+// sadar-log.js
+// ponytail: localStorage array ceiling (~5MB). Upgrade to IndexedDB when storing audio/images.
+export function initLogger(textarea, listEl) {
+  textarea.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && textarea.value.trim()) {
+      const entry = { t: Date.now(), body: textarea.value.trim() };
+      const logs = JSON.parse(localStorage.getItem('sadar_logs') || '[]');
+      localStorage.setItem('sadar_logs', JSON.stringify([entry, ...logs]));
+
+      listEl.insertAdjacentHTML('afterbegin', `
+        <li class="log-item">
+          <time>${new Date(entry.t).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</time>
+          <p>${entry.body.replace(/</g, '&lt;')}</p>
+        </li>
+      `);
+      textarea.value = '';
+    }
+  });
+}
+
+// Self-check
+(() => {
+  const mock = [];
+  mock.unshift({ t: 1, body: 'test' });
+  console.assert(mock[0].body === 'test', 'Log capture failed');
+})();
+```
+`initLogger` → skipped: state management frameworks and IndexedDB wrappers, add when: local entry counts exceed 10,000 items or multi-device sync is requested.
