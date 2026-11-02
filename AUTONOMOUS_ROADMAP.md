@@ -1459,3 +1459,111 @@ Compact conscious state logger using native radio group and CSS `:has()` for zer
 }
 ```
 `→ skipped: segmented-control JavaScript components; add ARIA roving-tabindex only if multi-dimensional navigation is added.`
+
+
+### Cycle #21 Directive (2026-11-02 23:06)
+### 1. Unified Vertical Spine & Tabular Alignment
+
+Eliminates flex misalignment between entry timestamps, rail markers, and text across variable font sizes.
+
+```css
+/* Layout: sadar-stream.css */
+.log-stream {
+  display: grid;
+  grid-template-columns: minmax(3.5rem, auto) 1px 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1.75rem;
+  align-items: baseline;
+}
+
+.log-time {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  color: var(--zen-muted, #737373);
+  text-align: right;
+}
+
+.log-rail {
+  align-self: stretch;
+  background-color: var(--zen-line, #e5e5e5);
+  position: relative;
+}
+
+.log-rail::after {
+  content: "";
+  position: absolute;
+  top: 0.35rem; /* Optical baseline lock with 0.875rem body */
+  left: -2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--zen-accent, #171717);
+}
+
+.log-body {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--zen-ink, #1f1f1f);
+}
+```
+* Skipped: Complex CSS subgrid polyfills and JS-based vertical centering calculations.
+* Add when: Supporting legacy browsers without native CSS Grid column/row gap support.
+
+---
+
+### 2. Zero-JS Auto-Sizing Conscious Log Field
+
+Uses native CSS `field-sizing` for anti-slop, distraction-free capture without autosize libraries or layout shifts.
+
+```css
+/* Input: conscious-entry.css */
+.log-textarea {
+  field-sizing: content;
+  width: 100%;
+  min-height: 1.5rem;
+  max-height: 40vh;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--zen-ink, #1f1f1f);
+  box-shadow: none;
+  /* ponytail: ceiling is modern chromium/safari 18; upgrade to hidden-div mirror only if legacy cross-browser auto-expand is mandated */
+}
+
+.log-textarea::placeholder {
+  color: var(--zen-muted, #a3a3a3);
+  font-style: normal;
+}
+```
+* Skipped: Hidden DOM calculation clones, mutation observers, and textarea resizing packages.
+* Add when: Hard business requirement to auto-expand on pre-Safari 18 or older Firefox versions.
+
+---
+
+### 3. Native Intent-Tagger (Prefix Extraction)
+
+Captures state of mind directly via native input without extra dropdowns, modal pickers, or tagging UI.
+
+```javascript
+// log-parser.js
+// ponytail: ceiling is leading bracket state; upgrade to regex tokenizer if compound tags are demanded
+export function parseConsciousLog(raw) {
+  const input = raw.trim();
+  const match = input.match(/^\[([a-zA-Z\s]{1,16})\]\s*([\s\S]*)$/);
+  
+  return match
+    ? { state: match[1].trim().toLowerCase(), note: match[2].trim() }
+    : { state: "aware", note: input };
+}
+
+// Self-check
+console.assert(parseConsciousLog("[calm] Breathing deeply").state === "calm");
+console.assert(parseConsciousLog("Just sitting").state === "aware");
+```
+* Skipped: Natural language parsing engines, client-side NLP libraries, and custom tag picker widgets.
+* Add when: Users require arbitrary key-value metadata schemas beyond baseline conscious states.
