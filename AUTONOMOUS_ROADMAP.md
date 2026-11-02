@@ -6872,3 +6872,97 @@ Zero-JS focus state that dims past logs to isolate the active train of thought d
 }
 ```
 CSS `:has()` state isolation → skipped: UI toggles or overlay modal state; add when: keyboard navigation mode requires explicit item selection.
+
+
+### Cycle #91 Directive (2026-11-03 05:39)
+### 1. Zero-JS Auto-Expanding Log Input
+Eliminates text-area resizing scripts and modal friction for micro-reflections.
+
+```html
+<form action="/api/entries" method="POST" class="log-capture">
+  <textarea 
+    name="content" 
+    placeholder="Notice without judging..." 
+    rows="1" 
+    required
+    onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.form.requestSubmit();}"
+  ></textarea>
+</form>
+
+<style>
+.log-capture textarea {
+  width: 100%;
+  field-sizing: content; /* ponytail: native auto-grow, falls back to rows=1 in legacy engines */
+  min-height: 1.5lh;
+  max-height: 40vh;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  resize: none;
+  line-height: 1.6;
+}
+</style>
+```
+skipped: Custom autosize JS libraries and rich-text editors.  
+add when: Markdown rendering or rich media attachments are strictly required.
+
+---
+
+### 2. Optical Center & Reading Rhythm
+Restores Zen vertical rhythm and fixes optical balance across screen sizes without layout shifts.
+
+```css
+.journal-canvas {
+  display: flex;
+  flex-direction: column;
+  max-width: 58ch;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  padding-block: clamp(3rem, 8vh, 6rem);
+  gap: clamp(2rem, 5vh, 4rem);
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  column-gap: 1.5rem;
+  align-items: baseline;
+}
+
+.log-entry p {
+  text-wrap: pretty;
+  line-height: 1.65;
+  margin: 0;
+}
+```
+skipped: CSS framework layout grids, spacers, and breakpoint-heavy utility wrappers.  
+add when: Supporting multi-column split views on ultrawide viewports.
+
+---
+
+### 3. Native Sticky Temporal Spine
+Replaces complex timeline components with an ultra-light floating time marker.
+
+```html
+<div class="spine-group">
+  <time datetime="2025-05-18" class="spine-time">07:30</time>
+  <div class="spine-body">Morning sitting: settling the breath.</div>
+</div>
+
+<style>
+.spine-group {
+  display: contents;
+}
+.spine-time {
+  position: sticky;
+  top: 1.5rem;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, currentColor 45%, transparent);
+}
+</style>
+```
+skipped: Scroll-spies, JS timeline observers, and relative-time ticker libraries.  
+add when: Live time-ago updates ("2m ago") are explicitly requested.
