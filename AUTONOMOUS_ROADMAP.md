@@ -3988,3 +3988,100 @@ console.assert(typeof CSS.supports('field-sizing', 'content') === 'boolean', 'CS
 skipped: dynamic time ticking (`#stamp`), add when real-time seconds precision is requested.
 skipped: IndexedDB / schema migrations, add when conscious log exceeds 5MB localStorage threshold.
 skipped: custom popover/tag selector, add when multidimensional taxonomy (beyond plain reflection) is required.
+
+
+### Cycle #54 Directive (2026-11-03 02:13)
+### 1. Zero-JS Auto-Expanding Capture Area
+
+```css
+.log-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 10lh;
+  padding: 0.5lh 0;
+  line-height: 1.5;
+  border: none;
+  border-bottom: 1px solid var(--border, #e5e5e5);
+  background: transparent;
+  width: 100%;
+  resize: none;
+  outline: none;
+}
+```
+skipped: textarea auto-resize JS/wrappers.  
+add when: supporting legacy Safari (<17.4) / Firefox (<131).
+
+---
+
+### 2. Timeline Grid for Vertical Alignment
+
+```html
+<section class="journal-timeline">
+  <time datetime="2025-05-18T08:15">08:15</time>
+  <div class="log-body">Noticed early morning friction; breath reset before screen time.</div>
+</section>
+```
+```css
+.journal-timeline {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  column-gap: 1.5rem;
+  row-gap: 1.25lh;
+  align-items: baseline;
+}
+.journal-timeline time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--muted, #71717a);
+  /* ponytail: optical vertical baseline nudge */
+  transform: translateY(1px);
+}
+.journal-timeline .log-body {
+  border-inline-start: 1px solid var(--border-subtle, #f4f4f5);
+  padding-inline-start: 1.5rem;
+  line-height: 1.6;
+}
+```
+skipped: complex pseudo-element timeline nodes and nested SVG bullets.  
+add when: state transitions require iconography on the vertical rail.
+
+---
+
+### 3. Native Pill-Selector for Conscious Living State
+
+```html
+<fieldset class="awareness-pills">
+  <label><input type="radio" name="awareness" value="flow" checked><span>Flow</span></label>
+  <label><input type="radio" name="awareness" value="grounded"><span>Grounded</span></label>
+  <label><input type="radio" name="awareness" value="reactive"><span>Reactive</span></label>
+</fieldset>
+```
+```css
+.awareness-pills {
+  display: flex;
+  gap: 0.375rem;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.awareness-pills input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.awareness-pills span {
+  display: inline-block;
+  padding: 0.2lh 0.75rem;
+  font-size: 0.75rem;
+  border-radius: 999px;
+  background: var(--surface, #f4f4f5);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.awareness-pills input:checked + span {
+  background: var(--ink, #18181b);
+  color: #fff;
+}
+```
+skipped: custom dropdown component and JS state manager.  
+add when: logging dimensions scale past 4 discrete awareness states.
