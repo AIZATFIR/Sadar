@@ -1357,3 +1357,105 @@ body {
 ```
 → skipped: Theme-switching state stores and LocalStorage keys.  
 → add when: Manual in-app toggle overrides system preference.
+
+
+### Cycle #19 Directive (2026-11-02 22:54)
+### 1. Auto-Growing Log Input (Native CSS, Zero JS)
+Replaces manual JS height recalculations and textarea bloat.
+
+```css
+/* sadar-input.css */
+.metacog-input {
+  width: 100%;
+  field-sizing: content;
+  min-height: 1.6lh;
+  max-height: 10lh;
+  line-height: 1.6;
+  padding-block: 0.25lh;
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: none;
+  font-family: inherit;
+  /* ponytail: relies on Chromium 123+/Safari 17.4+; add JS resize fallback only if supporting legacy Safari */
+}
+```
+`→ skipped: JS textarea auto-resize listener; add fallback when older browser metrics require it.`
+
+---
+
+### 2. Optical Vertical Alignment for Log Stream
+Replaces loose flex containers with baseline grid rhythm and tabular time stamps.
+
+```css
+/* sadar-feed.css */
+.log-stream {
+  display: grid;
+  row-gap: 0.75lh;
+  padding: 0;
+  list-style: none;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.5ch 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+}
+
+.log-entry time {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--zen-muted, #8e8d8a);
+  letter-spacing: -0.01em;
+}
+
+.log-entry p {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--zen-ink, #242423);
+}
+```
+`→ skipped: custom date formatter libraries; add when relative date rollups ("2h ago") are requested.`
+
+---
+
+### 3. Native Tri-State Awareness Selector
+Compact conscious state logger using native radio group and CSS `:has()` for zero-dependency toggle.
+
+```html
+<!-- sadar-state.html -->
+<fieldset class="zen-toggle">
+  <label><input type="radio" name="focus" value="present" checked><span>Present</span></label>
+  <label><input type="radio" name="focus" value="wandering"><span>Wandering</span></label>
+  <label><input type="radio" name="focus" value="anchor"><span>Anchor</span></label>
+</fieldset>
+```
+
+```css
+/* sadar-state.css */
+.zen-toggle {
+  border: none;
+  padding: 0;
+  display: inline-flex;
+  gap: 0.25rem;
+  background: var(--zen-bg-subtle, rgba(0, 0, 0, 0.04));
+  padding: 2px;
+  border-radius: 999px;
+}
+.zen-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+.zen-toggle label {
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--zen-muted, #737373);
+  transition: background 120ms ease, color 120ms ease;
+}
+.zen-toggle label:has(:checked) {
+  background: var(--zen-surface, #fff);
+  color: var(--zen-ink, #171717);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+```
+`→ skipped: segmented-control JavaScript components; add ARIA roving-tabindex only if multi-dimensional navigation is added.`
