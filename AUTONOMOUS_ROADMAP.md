@@ -5371,3 +5371,65 @@ Track awareness states (Reactive, Observing, Present) with pure semantic inputs 
 }
 ```
 skipped: Custom dropdowns, ARIA combobox state logic, and external icon assets; add when tag lists exceed 5 entries or become user-configurable.
+
+
+### Cycle #71 Directive (2026-11-03 03:48)
+### 1. Optical Baseline & Tabular Time Alignment
+Align timestamps and log text to the optical typographic baseline without manual margin nudging.
+
+```css
+.log-item {
+  display: flex;
+  align-items: baseline;
+  gap: 1ch;
+  line-height: 1.5;
+}
+
+.log-item time {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, currentColor 40%, transparent);
+  flex-shrink: 0;
+}
+```
+`→ skipped: JS timestamp formatters/date libraries; add Intl.DateTimeFormat when supporting user-defined locales.`
+
+---
+
+### 2. Zero-JS Auto-Growing Thought Input
+Eliminate auto-resize textarea scripts; rely on native engine sizing for frictionless logging.
+
+```css
+.conscious-input {
+  /* ponytail: Chromium/Safari 18+ native auto-grow; falls back to static min-height */
+  field-sizing: content;
+  min-height: 1.5lh;
+  max-height: 25lh;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  line-height: 1.5;
+  width: 100%;
+  padding: 0;
+}
+```
+`→ skipped: Hidden dummy <div> mirror resize hacks; add JS height-sync fallback only if legacy iOS <18 support is strictly required.`
+
+---
+
+### 3. Zen Spine Rhythm for Continuous Logs
+Replaces cards, shadows, and heavy dividers with a single warm, low-contrast thread.
+
+```css
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  border-left: 1.5px solid color-mix(in srgb, var(--accent, #a68a68) 20%, transparent);
+  padding-left: 1.25rem;
+  margin-left: 0.5rem;
+}
+```
+`→ skipped: Card containers, elevation tokens, tags, and category pills; add structured groupings when daily volume exceeds 50 entries/day.`
