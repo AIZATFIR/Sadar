@@ -6118,3 +6118,71 @@ form.addEventListener("submit", (e) => {
 ```
 → skipped: Controlled state layers, reactive keystroke tracking, and draft debouncing.  
 → add when: live word-counts, autocomplete, or markdown previews are requested.
+
+
+### Cycle #82 Directive (2026-11-03 04:48)
+### 1. Native Auto-Growing Journal Input
+Eliminates JS textarea auto-resize hooks; sets typographic vertical rhythm.
+
+```css
+.journal-entry-input {
+  /* ponytail: field-sizing needs Safari 18+; fallback is min-height scroll */
+  field-sizing: content;
+  min-height: 2lh;
+  line-height: 1.6;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+}
+```
+skipped: JS resize listeners and hidden clone divs.  
+add when: supporting pre-2024 legacy browsers without basic scrolling fallback.
+
+---
+
+### 2. Micro-Timeline Vertical Alignment
+Locks timestamp metadata strictly to the first baseline of log text, removing float/padding hacks.
+
+```css
+.conscious-log-row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: first baseline;
+  gap: 1rem;
+}
+
+.conscious-log-row time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+```
+skipped: Flexbox margins and vertical offset manual tuning.  
+add when: multiline custom tags or badges share the timestamp column.
+
+---
+
+### 3. CSS-Only Log Stream Rail
+Replaces timeline icon wrappers and border DOM nodes with an absolute semantic track.
+
+```css
+.conscious-log-list {
+  position: relative;
+  padding-left: 1rem;
+  list-style: none;
+}
+
+.conscious-log-list::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75lh;
+  bottom: 0.75lh;
+  width: 1px;
+  background: var(--border-subtle, rgba(0, 0, 0, 0.06));
+}
+```
+skipped: Complex SVG connectors or separate timeline track markup.  
+add when: nodes require interactive milestone states or distinct semantic icons.
