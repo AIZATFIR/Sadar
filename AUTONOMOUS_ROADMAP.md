@@ -188,3 +188,94 @@ textarea.log-input {
 
 skipped: JS-based autosize libraries, complex timeline wrapper DOM, custom date parsing.  
 add when: supporting legacy browsers without `field-sizing`, or grouping logs across multi-day calendar boundaries.
+
+
+### Cycle #2 Directive (2026-11-02 21:17)
+### 1. Optical Baseline Alignment for Log Entries
+Align timestamps and conscious thoughts to the typography baseline instead of flex-center approximations, locking vertical rhythm.
+
+```css
+.log-stream {
+  list-style: none;
+  padding-left: 1.25rem;
+  border-left: 1px solid color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.5ch 1fr;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  scroll-margin-block: 2rem;
+}
+
+.log-time {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.4;
+}
+```
+* Skipped: Custom timeline component, icon glyphs, absolute-positioned decorative rail dots.
+* Add when: User requests multi-track concurrent event logs or rich tag filters.
+
+---
+
+### 2. Zero-JS Fluid Note Composer
+Eliminates resize observers, auto-grow JavaScript bundles, and box borders for raw thought capture.
+
+```html
+<textarea
+  id="quick-capture"
+  class="zen-capture"
+  placeholder="Observe thought..."
+  rows="1"
+  maxlength="1000"
+></textarea>
+```
+
+```css
+.zen-capture {
+  width: 100%;
+  field-sizing: content; /* ponytail: native in Chromium/Safari 18.2+; degrades to 1-line scroll in older engines */
+  min-height: 1.6lh;
+  max-height: 12lh;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  line-height: 1.6;
+  font-family: inherit;
+  color: inherit;
+}
+```
+* Skipped: `textarea` scroll-height resize loops, Markdown live previewers, rich-text toolbars.
+* Add when: Logs require multi-block rich media or block embeds.
+
+---
+
+### 3. Native Metacognition Log Persistence & Rollback
+Atomic append directly against `localStorage` with corrupted-state defense.
+
+```js
+export const logStore = {
+  get: () => {
+    try { return JSON.parse(localStorage.getItem('sadar_logs') || '[]'); }
+    catch { return []; }
+  },
+  append: (text) => {
+    const clean = text?.trim();
+    if (!clean) return null;
+    const entry = { id: crypto.randomUUID(), t: Date.now(), b: clean };
+    const logs = [...logStore.get(), entry];
+    localStorage.setItem('sadar_logs', JSON.stringify(logs));
+    return entry;
+  }
+};
+
+// Self-check
+console.assert(logStore.append(" ") === null, "Rejects blank logs");
+console.assert(logStore.append("Breath awareness")?.b === "Breath awareness", "Appends valid log");
+```
+* Skipped: IndexedDB wrappers, Redux/Zustand state slices, remote sync orchestration.
+* Add when: Storage exceeds 5MB or multi-device sync is explicitly scheduled.
