@@ -339,3 +339,71 @@ skipped: Flexbox vertical centering and manual padding tweaks, add when: rows co
 }
 ```
 skipped: Focus state management in React/Svelte stores, add when: log entries require rich inline action toolbars.
+
+
+### Cycle #4 Directive (2026-11-02 21:28)
+### 1. Zero-JS Auto-Expanding Conscious Input
+
+```css
+/* Replace JS textarea resize observers */
+.journal-input {
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 30lh;
+  width: 100%;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  line-height: 1.65;
+  font-family: inherit;
+}
+```
+skipped: ResizeObserver/input listener script.  
+add when: Legacy Safari (<17.4) polyfill is strictly required.
+
+---
+
+### 2. Zen Optical Column & Vertical Alignment
+
+```css
+/* Enforce strict vertical rhythm and 42ch reading width */
+.journal-canvas {
+  display: grid;
+  grid-template-columns: minmax(0, 42ch);
+  justify-content: center;
+  align-content: start;
+  min-height: 100svh;
+  padding-block: clamp(3rem, 8svh, 6rem);
+  row-gap: 2.75rem;
+}
+```
+skipped: Flexbox spacers, calc wrappers, and media-query height ladders.  
+add when: Supporting multi-pane or side-by-side split screens.
+
+---
+
+### 3. Baseline-Aligned Semantic Log Entry
+
+```html
+<!-- Flat DOM for conscious living stream -->
+<li class="log-entry">
+  <time datetime="2025-05-14T06:30">06:30</time>
+  <p>Awareness settled. Reduced noise before first action.</p>
+</li>
+```
+```css
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.5ch 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+}
+.log-entry time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, currentColor 45%, transparent);
+}
+```
+skipped: Nested flex badge wrappers and pill containers.  
+add when: Interactive filter tags or edit menus are bound directly to the timestamp.
