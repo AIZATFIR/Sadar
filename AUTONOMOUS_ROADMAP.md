@@ -407,3 +407,76 @@ add when: Supporting multi-pane or side-by-side split screens.
 ```
 skipped: Nested flex badge wrappers and pill containers.  
 add when: Interactive filter tags or edit menus are bound directly to the timestamp.
+
+
+### Cycle #5 Directive (2026-11-02 21:34)
+### 1. Baseline Vertical Rhythm for Log Stream
+
+```css
+.journal-stream {
+  display: flex;
+  flex-direction: column;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  align-items: baseline;
+  column-gap: 1.25rem;
+  padding-block: 0.625rem;
+  border-inline-start: 1px solid var(--zen-border, rgba(0, 0, 0, 0.08));
+  padding-inline-start: 1rem;
+}
+
+.log-entry time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  color: var(--zen-muted, #8e8e93);
+}
+
+.log-entry p {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--zen-text, #1c1c1e);
+}
+```
+→ skipped: JS timestamp formatters and custom timeline rail graphics.  
+→ add when: multi-day grouping or time-zone conversions are explicitly required.
+
+---
+
+### 2. Auto-Expanding Conscious Input (Native CSS)
+
+```css
+/* ponytail: field-sizing covers modern browsers; upgrade with fallback if legacy Safari support is requested */
+textarea.conscious-log {
+  field-sizing: content;
+  min-height: 2lh;
+  line-height: 1.6;
+  resize: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font-family: inherit;
+  outline: none;
+  width: 100%;
+}
+```
+→ skipped: `resize` event listeners, auto-grow height recalculation scripts, and hidden ghost `div` measuring hacks.  
+→ add when: target environment mandates Safari < 17.4.
+
+---
+
+### 3. Streamlined Enter-to-Log Keyboard Binding
+
+```js
+// ponytail: single-key dispatch ceiling; upgrade to Cmd+Enter when long-form essaying is introduced
+document.querySelector("#conscious-form")?.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    e.currentTarget.requestSubmit();
+  }
+});
+```
+→ skipped: UI submit buttons, custom hotkey libraries, and debounced input managers.  
+→ add when: rich text / multi-paragraph Markdown formatting is added.
