@@ -130,3 +130,61 @@ textarea.log-entry {
 </form>
 ```
 → skipped: Custom hotkey dispatchers and shortcut libraries, add when multiple modifier key chords are needed.
+
+
+### Cycle #1 Directive (2026-11-02 21:12)
+```css
+/* 1. Native auto-expanding log entry without JS */
+textarea.log-input {
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 35vh;
+  line-height: 1.6;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  resize: none;
+  /* ponytail: field-sizing relies on modern Chromium/Safari; upgrade to minimal JS if legacy support needed */
+}
+
+/* 2. Strict optical vertical rhythm */
+.journal-stream {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2lh;
+  max-width: 65ch;
+  margin-inline: auto;
+  margin-block: 3lh;
+}
+
+/* 3. Baseline-aligned micro-entry stream */
+.log-item {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+}
+
+.log-item time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--color-muted, #86868b);
+}
+
+.log-item p {
+  margin: 0;
+  line-height: 1.6;
+}
+```
+
+```html
+<section class="journal-stream">
+  <textarea class="log-input" placeholder="Observe without judging..."></textarea>
+  <article class="log-item">
+    <time>07:15</time>
+    <p>Noticed shallow breathing before checking email. Paused for three cycles.</p>
+  </article>
+</section>
+```
+
+skipped: JS-based autosize libraries, complex timeline wrapper DOM, custom date parsing.  
+add when: supporting legacy browsers without `field-sizing`, or grouping logs across multi-day calendar boundaries.
