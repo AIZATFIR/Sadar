@@ -3513,3 +3513,62 @@ add when: Browser targeting requires Safari 17 full auto-expand parity (use 3-li
 ```
 → skipped: React portals, overlay context managers, and custom ESC/click-outside listeners.  
 → add when: multi-step state persistence or drag-to-dismiss sheet gestures are explicitly needed.
+
+
+### Cycle #48 Directive (2026-11-03 01:39)
+```css
+/* 1. Fluid auto-expanding thought capture (zero JS) */
+.log-input {
+  field-sizing: content;
+  min-height: 2.5lh;
+  max-height: 12lh;
+  width: 100%;
+  resize: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  font: inherit;
+  line-height: 1.6;
+  color: light-dark(#2c2a29, #e8e6e3);
+  caret-color: #c97a56; /* Zen warmth */
+}
+
+/* 2. Absolute baseline alignment for timeline log entries */
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid light-dark(#f0ede8, #262423);
+}
+
+.log-time {
+  font-family: ui-monospace, monospace;
+  font-size: 0.75rem;
+  color: light-dark(#8f8a84, #736e68);
+  font-variant-numeric: tabular-nums;
+}
+
+.log-content {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+```
+
+```html
+<!-- 3. Minimal markup for conscious living entry stream -->
+<section class="journal-flow" aria-label="Conscious Logs">
+  <article class="log-entry">
+    <time class="log-time" datetime="2025-05-14T07:30">07:30 AM</time>
+    <div class="log-content">
+      Noticed tension in shoulders before opening inbox. Paused for three conscious breaths.
+    </div>
+  </article>
+</section>
+```
+
+```text
+skipped: JS textarea resizing observers, custom scroll listeners, utility CSS classes.
+add when: Supporting legacy browsers without `field-sizing: content` (wrap in `@supports not (field-sizing: content)`).
+```
