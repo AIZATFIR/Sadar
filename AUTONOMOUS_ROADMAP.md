@@ -3726,3 +3726,108 @@ textarea.log-input {
 }
 ```
 → skipped: [Multi-layered shadow utilities and heavy CSS palettes], add when [multi-theme elevation tokens become mandatory].
+
+
+### Cycle #51 Directive (2026-11-03 01:56)
+### 1. Zero-JS Auto-Expanding Input with Cmd+Enter Submit
+
+```html
+<form class="quick-log" onkeydown="if(event.key==='Enter'&&(event.metaKey||event.ctrlKey))this.requestSubmit()">
+  <textarea name="reflection" placeholder="Notice thought, trigger, or cognitive pattern..." rows="1" required></textarea>
+  <button type="submit">Log</button>
+</form>
+
+<style>
+  .quick-log {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-end;
+  }
+  .quick-log textarea {
+    flex: 1;
+    field-sizing: content; /* ponytail: native auto-grow; upgrade to JS scrollHeight hook if legacy iOS < 18 needed */
+    min-height: 2.5lh;
+    max-height: 12lh;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--line, #e7e2da);
+    border-radius: 8px;
+    background: transparent;
+    font: inherit;
+    line-height: 1.5;
+    resize: none;
+  }
+</style>
+```
+skipped: Custom autosize JS libraries and rich-text toolbars.
+add when: Markdown rendering or block-level attachments are explicitly required.
+
+---
+
+### 2. Optical Baseline Alignment for Timeline Stream
+
+```css
+.journal-stream {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1.5rem;
+}
+
+.log-entry {
+  display: contents;
+}
+
+.log-time {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted, #8c837a);
+  padding-top: 0.15lh; /* optical alignment with text baseline */
+}
+
+.log-body {
+  position: relative;
+  border-left: 1px solid var(--line, #ece7e0);
+  padding-left: 1.25rem;
+}
+
+.log-body::before {
+  content: "";
+  position: absolute;
+  left: -3px;
+  top: 0.45lh;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent, #9e6b47);
+}
+```
+skipped: JS layout measurements, icon fonts, and nested timeline wrapper markup.
+add when: Grouping entries across multi-day views or dynamic column reordering.
+
+---
+
+### 3. Apple Warm-Palette & Typographic Floor
+
+```css
+:root {
+  --bg: #faf8f5;
+  --text: #2d2926;
+  --text-muted: #7a7269;
+  --line: #ebe5dc;
+  --accent: #8c5e3c;
+  color-scheme: light;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  line-height: 1.55;
+}
+```
+skipped: Theming engines, CSS-in-JS abstractions, and multi-token color libraries.
+add when: Explicit OS-level dark mode preference override requested.
