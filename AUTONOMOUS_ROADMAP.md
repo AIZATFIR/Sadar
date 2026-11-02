@@ -5584,3 +5584,71 @@ function submitEntry(form) {
 }
 ```
 `[code]` → skipped: rich-text toolbar and multi-step state tagging, add when quantitative mood metrics are explicitly requested.
+
+
+### Cycle #74 Directive (2026-11-03 04:04)
+```html
+<!-- 1. Conscious Log Input (Zero-JS auto-resize) -->
+<textarea 
+  class="sadar-input" 
+  rows="1" 
+  placeholder="Log current mental state…" 
+  autofocus
+></textarea>
+
+<!-- 2. Streamlined Log Feed (Strict baseline vertical alignment) -->
+<ol class="sadar-feed">
+  <li class="sadar-log">
+    <time datetime="2025-05-14T07:15">07:15</time>
+    <p>Noticed tension in shoulders; released before opening editor.</p>
+  </li>
+</ol>
+```
+
+```css
+/* 1. Native auto-sizing: no resize observer, no JS clones */
+.sadar-input {
+  field-sizing: content; /* ponytail: fallback to JS autosize if Safari < 17.4 */
+  min-height: 1.5lh;
+  max-height: 8lh;
+  width: 100%;
+  line-height: 1.5;
+  background: transparent;
+  border: 0;
+  border-block-end: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  padding: 0 0 0.5lh 0;
+  outline: none;
+  font: inherit;
+}
+
+/* 2 & 3. Rigid optical baseline grid & Zen borderless layout */
+.sadar-feed {
+  display: grid;
+  gap: 1lh;
+  padding: 0;
+  margin: 2lh 0 0 0;
+  list-style: none;
+}
+
+.sadar-log {
+  display: grid;
+  grid-template-columns: 5ch 1fr;
+  align-items: baseline;
+  column-gap: 2ch;
+  line-height: 1.5;
+}
+
+.sadar-log time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, currentColor 40%, transparent);
+}
+
+.sadar-log p {
+  margin: 0;
+}
+```
+
+skipped: dynamic scrollbar customizers and JS textarea autosize listeners; add only if targeting Safari < 17.4.  
+skipped: card containers/box-shadows; add only if logs become drag-and-drop units.  
+skipped: category tagging filters; add when log frequency exceeds 20 items per day.
