@@ -4356,3 +4356,64 @@ Eliminate always-visible edit/delete visual noise to preserve metacognitive focu
 }
 ```
 → skipped: drawer menus, action sheets, and modal wrappers. Add when: entry actions exceed 2 primitives (e.g., delete & edit).
+
+
+### Cycle #58 Directive (2026-11-03 02:35)
+### 1. Auto-Expanding Streamlined Input
+
+```css
+/* Zero-JS autosizing for conscious logs */
+.journal-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 60vh;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  line-height: 1.6;
+  font-family: inherit;
+  /* ponytail: modern chromium/safari only; fallback is standard scrollable textarea */
+}
+```
+→ skipped: JS height recalculation / hidden mirror divs  
+→ add when: explicit requirement for legacy Safari (<17.4) / Firefox without flags  
+
+---
+
+### 2. Baseline-Aligned Log Timestamps
+
+```css
+/* Strict typographic vertical alignment */
+.entry-row {
+  display: grid;
+  grid-template-columns: minmax(3.5rem, auto) 1fr;
+  align-items: baseline;
+  column-gap: 1.5rem;
+  padding-block: 0.625rem;
+  border-block-end: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.entry-row time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  opacity: 0.45;
+}
+```
+→ skipped: flexbox margin hacks and alignment micro-adjustments  
+→ add when: multiline metadata tags require subgrid columns  
+
+---
+
+### 3. Ambient Flow Dimming (Zen Focus)
+
+```css
+/* Pure CSS metacognitive presence */
+.journal-stream:has(:focus-within) .entry-row:not(:focus-within) {
+  opacity: 0.3;
+  filter: blur(0.2px);
+  transition: opacity 150ms ease, filter 150ms ease;
+}
+```
+→ skipped: active-index JS state, React/Svelte blur-filter bindings  
+→ add when: individual entry action menus need persistent contrast on hover
