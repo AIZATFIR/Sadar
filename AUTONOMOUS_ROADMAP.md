@@ -4085,3 +4085,121 @@ add when: state transitions require iconography on the vertical rail.
 ```
 skipped: custom dropdown component and JS state manager.  
 add when: logging dimensions scale past 4 discrete awareness states.
+
+
+### Cycle #55 Directive (2026-11-03 02:19)
+### 1. Optical Baseline Alignment & Native Auto-Expanding Log
+
+Replace custom JS textarea auto-resize and misaligned log headers with native `field-sizing` and baseline flex alignment.
+
+```css
+/* sadar-log.css */
+.log-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding-block: 0.75rem;
+  border-block-end: 1px solid color-mix(in srgb, currentColor 7%, transparent);
+}
+
+.log-time {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  color: color-mix(in srgb, currentColor 45%, transparent);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+/* ponytail: assumes modern Chromium/Safari 17.4+; fallback is scrollable native textarea */
+.log-input {
+  field-sizing: content;
+  min-height: 1.5lh;
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  outline: none;
+  resize: none;
+}
+
+.log-input:focus-visible {
+  outline: none;
+}
+```
+`→ skipped: resize event listeners and JS measurement loops; add fallback JS polyfill only when Safari <17 support is explicitly reported.`
+
+---
+
+### 2. Zen Typographic Rhythm & Readability Constraint
+
+Metacognitive stream-of-thought needs strict optical reading constraints (`65ch`), muted borders, and warm neutral background mixing without bloated theme engines.
+
+```css
+:root {
+  --sand-bg: #faf9f6;
+  --sand-text: #2c2825;
+  --sand-accent: #8c7355;
+}
+
+.journal-container {
+  max-inline-size: 65ch;
+  margin-inline: auto;
+  padding: clamp(2rem, 5vw, 4rem) 1.5rem;
+  color: var(--sand-text);
+  background-color: var(--sand-bg);
+  line-height: 1.6;
+  /* Eliminates accidental margin collapses while holding rhythmic vertical cadence */
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+}
+```
+`→ skipped: comprehensive design token CSS variables; add when token extraction crosses >3 views.`
+
+---
+
+### 3. Zero-JS Metacognitive Valence Selector (CSS-Only Native Radios)
+
+Log emotional state or conscious presence (e.g., *Reactive*, *Observing*, *Present*) inline without popups or JS dropdown overhead.
+
+```html
+<fieldset class="valence-picker">
+  <legend class="sr-only">Conscious State</legend>
+  <label><input type="radio" name="state" value="reactive" checked><span>Reactive</span></label>
+  <label><input type="radio" name="state" value="observing"><span>Observing</span></label>
+  <label><input type="radio" name="state" value="present"><span>Present</span></label>
+</fieldset>
+```
+
+```css
+.valence-picker {
+  display: inline-flex;
+  gap: 0.25rem;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.valence-picker label {
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 4%, transparent);
+  transition: background 120ms ease;
+}
+
+.valence-picker input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.valence-picker label:has(input:checked) {
+  background: var(--sand-accent);
+  color: #fff;
+}
+```
+`→ skipped: accessible custom keyboard roving tabindex logic; add when standard native radio tab navigation is insufficient for screen-reader power users.`
