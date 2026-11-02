@@ -279,3 +279,63 @@ console.assert(logStore.append("Breath awareness")?.b === "Breath awareness", "A
 ```
 * Skipped: IndexedDB wrappers, Redux/Zustand state slices, remote sync orchestration.
 * Add when: Storage exceeds 5MB or multi-device sync is explicitly scheduled.
+
+
+### Cycle #3 Directive (2026-11-02 21:23)
+### 1. Auto-Expanding Conscious Entry (Native CSS, zero JS)
+
+```css
+/* Replace JS textarea autoresize logic */
+.journal-input {
+  field-sizing: content;
+  min-height: 2lh;
+  line-height: 1.6;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+}
+```
+skipped: ResizeObserver/JS height recalculation, add when: legacy browser support (< Chrome 123 / Safari 18.2) is mandatory.
+
+---
+
+### 2. Optical Baseline Alignment for Log Entries
+
+```css
+/* Precise vertical sync between timestamp and reflection */
+.log-row {
+  display: grid;
+  grid-template-columns: 4.5ch 1fr;
+  align-items: first baseline;
+  column-gap: 1.25rem;
+  padding-block: 0.5lh;
+  /* ponytail: margin-trim handles container bounds without :last-child hacks */
+  margin-trim: block;
+}
+
+.log-row time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--color-subtle, #8a8580);
+}
+```
+skipped: Flexbox vertical centering and manual padding tweaks, add when: rows contain multi-line tags beside the timestamp.
+
+---
+
+### 3. Ambient Writing Mode (CSS Native Focus-dimming)
+
+```css
+/* Dims historical noise during active introspection */
+.log-stream:has(.journal-input:focus) .log-row {
+  opacity: 0.35;
+  transition: opacity 180ms ease-out;
+}
+
+.log-stream .log-row:focus-within {
+  opacity: 1;
+}
+```
+skipped: Focus state management in React/Svelte stores, add when: log entries require rich inline action toolbars.
