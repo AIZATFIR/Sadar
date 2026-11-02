@@ -825,3 +825,87 @@ skipped: textarea auto-grow JS event listeners; add when supporting Safari < 17.
 </details>
 ```
 skipped: animated JS accordion manager; add when fluid height interpolation via `@starting-style` is budgeted.
+
+
+### Cycle #11 Directive (2026-11-02 22:09)
+### 1. Zero-JS Dynamic Canvas & Baseline Rhythm
+
+```css
+/* Optical baseline alignment and native expanding input */
+.journal-canvas {
+  display: grid;
+  gap: 1.5lh;
+  max-width: 62ch;
+  margin-inline: auto;
+  padding-block: 6lh 4lh;
+}
+
+.journal-input {
+  field-sizing: content;
+  min-height: 2lh;
+  line-height: 1.65;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 1.05rem;
+  color: var(--text-primary, oklch(0.2 0.01 45));
+}
+```
+→ skipped: JS-based autosize listeners and wrappers, add when: legacy browser support (< Safari 17.4) is explicitly required.
+
+---
+
+### 2. Conscious Living Stream (Zen Spine & Aligned Nodes)
+
+```css
+/* Monolithic timeline spine aligned precisely to text cap-height */
+.conscious-stream {
+  list-style: none;
+  padding-inline-start: 1.25rem;
+  border-inline-start: 1px solid var(--spine, oklch(0.88 0.01 50));
+  display: flex;
+  flex-direction: column;
+  gap: 2lh;
+}
+
+.conscious-stream > li {
+  position: relative;
+  line-height: 1.5;
+}
+
+.conscious-stream > li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: calc(-1.25rem - 3.5px);
+  inset-block-start: 0.45lh;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dot, oklch(0.6 0.03 45));
+}
+```
+→ skipped: SVG track components and complex flex-alignment wrappers, add when: branching logs or non-linear timeline paths are introduced.
+
+---
+
+### 3. Flat Fast-Capture Storage
+
+```typescript
+// ponytail: Synchronous LocalStorage ceiling ~5MB; swap to SQLite/WASM if entries exceed 5,000
+export type ConsciousLog = { t: number; impulse: string; witness: string };
+
+export const logStore = {
+  add: (log: Omit<ConsciousLog, "t">): ConsciousLog => {
+    const entry: ConsciousLog = { t: Date.now(), ...log };
+    const list: ConsciousLog[] = JSON.parse(localStorage.getItem("sadar_stream") || "[]");
+    localStorage.setItem("sadar_stream", JSON.stringify([entry, ...list]));
+    return entry;
+  }
+};
+
+// Self-check
+console.assert(logStore.add({ impulse: "rushing", witness: "felt tight chest" }).t > 0);
+```
+→ skipped: State machines, validation libraries, and ORM abstractions, add when: background cloud synchronization is actively provisioned.
