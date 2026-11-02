@@ -4902,3 +4902,73 @@ export function recordConsciousLog(text) {
 console.assert(typeof recordConsciousLog === 'function', 'recordConsciousLog should be defined');
 ```
 skipped: Virtual DOM / IndexedDB abstraction; add when log size exceeds ~2,000 entries or requires full-text search.
+
+
+### Cycle #65 Directive (2026-11-03 03:14)
+### 1. Zero-JS Auto-Expanding Input (Vertical Rhythm)
+
+```css
+/* Replace manual textarea resize scripts and jumpy height snapping */
+.journal-entry-input {
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 18lh;
+  line-height: 1.65;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, serif;
+  /* ponytail: field-sizing requires Chromium 123+ / Safari 18.2+; fallback is standard scrollable textarea */
+}
+```
+skipped: JS auto-resize listeners, virtual DOM mirrors.
+add when: supporting legacy Safari (<18.2) without scrollbars.
+
+---
+
+### 2. Micro-Timeline Vertical Baseline Alignment
+
+```css
+/* Align timestamp, status glyph, and reflection to the same font baseline */
+.log-stream {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1.5rem;
+  align-items: baseline;
+}
+
+.log-time {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--zen-subtle, #8a8175);
+  user-select: none;
+}
+
+.log-content {
+  margin: 0;
+  line-height: 1.65;
+  color: var(--zen-ink, #242220);
+}
+```
+skipped: absolute positioning, timeline SVG tracks, flexbox alignment hacks.
+add when: logs require multi-level threaded nesting.
+
+---
+
+### 3. Native Cmd/Ctrl+Enter Capture
+
+```javascript
+// Pure standard form shortcut; avoids capture bloat and keeps store sync native
+document.querySelector('#journal-form')?.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    e.preventDefault();
+    e.currentTarget.requestSubmit();
+  }
+});
+```
+skipped: global keyboard manager library, custom event emitter.
+add when: multi-pane modal navigation requires hierarchical key delegation.
