@@ -5506,3 +5506,81 @@ Replaces cards, shadows, and heavy dividers with a single warm, low-contrast thr
 ```
 → skipped: heavy theme configuration frameworks and multi-layered CSS shadow stacks.  
 → add when: supporting custom high-contrast accessibility modes.
+
+
+### Cycle #73 Directive (2026-11-03 03:59)
+### 1. Zero-JS Auto-Expanding Capture (`field-sizing`)
+
+```css
+/* Replaces auto-resize JS; enforces baseline line-height harmony */
+.entry-input {
+  field-sizing: content;
+  min-height: 1.5lh;
+  max-height: 25lh;
+  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  border: 0;
+  outline: 0;
+  resize: none;
+  background: transparent;
+  padding: 0;
+  /* ponytail: modern chromium/safari only; add JS scrollHeight fallback if supporting legacy webviews */
+}
+```
+`[code]` → skipped: JS height recalculation listeners, add when targeting browsers without `field-sizing` support.
+
+---
+
+### 2. Strict Baseline Rhythm & Temporal Alignment
+
+```css
+/* Optical vertical alignment between timestamp and journal body */
+.log-stream {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1.25lh;
+  align-items: baseline;
+  max-inline-size: 64ch;
+  margin-inline: auto;
+}
+
+.log-timestamp {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, currentColor 45%, transparent);
+  user-select: none;
+}
+```
+`[code]` → skipped: CSS subgrid and timeline divider lines, add when entry items introduce nested multi-column metadata.
+
+---
+
+### 3. Frictionless Capture via Native Form Submit
+
+```html
+<form class="log-stream" onsubmit="event.preventDefault(); submitEntry(this);">
+  <time class="log-timestamp" datetime="now">now</time>
+  <textarea 
+    name="entry" 
+    class="entry-input" 
+    placeholder="State of mind..." 
+    autofocus 
+    required
+    onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.form.requestSubmit();}"
+  ></textarea>
+</form>
+```
+```js
+// Native self-check
+function submitEntry(form) {
+  const data = new FormData(form);
+  const text = data.get('entry')?.toString().trim();
+  if (!text) return;
+  console.assert(text.length > 0, "Log entry must not be empty");
+  form.reset();
+}
+```
+`[code]` → skipped: rich-text toolbar and multi-step state tagging, add when quantitative mood metrics are explicitly requested.
