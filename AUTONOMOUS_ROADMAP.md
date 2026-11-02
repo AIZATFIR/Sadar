@@ -3389,3 +3389,46 @@ export function recordConsciousLog(formEl, key = 'sadar_logs') {
 ```
 skipped: state management store and IndexedDB abstraction.
 add when: log size crosses 5MB or background sync is introduced.
+
+
+### Cycle #46 Directive (2026-11-03 01:28)
+```css
+/* 1. Zero-JS Auto-Expanding Input: native breathing canvas */
+.metacog-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 35vh;
+  line-height: 1.6;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  /* ponytail: Safari < 18 lacks field-sizing; gracefully degrades to native scrollbar */
+}
+
+/* 2. Optical Baseline Alignment: locks timestamps directly to text baseline */
+.log-row {
+  display: grid;
+  grid-template-columns: minmax(3.5rem, max-content) 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+  padding-block: 0.5lh;
+}
+
+.log-meta {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--zen-muted, #8a8782);
+}
+
+/* 3. Streamlined Minimal Spine: drops card-border bloat for single-rule margins */
+.log-stream {
+  border-left: 1px solid var(--zen-border, rgba(0, 0, 0, 0.08));
+  margin-left: 1rem;
+  padding-left: 1.25rem;
+}
+```
+
+skipped: Autosize JS plugins, card wrappers, and absolute-positioned timeline SVG icons.  
+add when: Browser targeting requires Safari 17 full auto-expand parity (use 3-line `scrollHeight` sync).
