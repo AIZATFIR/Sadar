@@ -4492,3 +4492,66 @@ Provides visual continuity for conscious stream logs without decorative DOM wrap
 }
 ```
 `skipped: SVG paths and individual timeline node markers, add when: branching logs or visual tag icons are explicitly requested.`
+
+
+### Cycle #60 Directive (2026-11-03 02:46)
+### 1. Fluid Zero-JS Auto-Expanding Entry
+
+```css
+/* sadar/ui/entry.css */
+.conscious-log-input {
+  width: 100%;
+  field-sizing: content; /* ponytail: native auto-expand; fallback to JS resize observer for legacy Safari */
+  min-height: 3lh;
+  line-height: 1.6;
+  text-wrap: pretty;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  resize: none;
+}
+```
+skipped: JS resize listeners and ghost shadow DOM clones.  
+add when: Safari < 17.4 support is an explicit project requirement.
+
+---
+
+### 2. First-Baseline Log Rhythm Alignment
+
+```css
+/* sadar/ui/timeline.css */
+.log-row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: first baseline; /* ponytail: locks metadata directly to journal typographic spine */
+  column-gap: 1.5rem;
+  padding-block: 0.625rem;
+}
+
+.log-meta {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--zen-subtle);
+}
+```
+skipped: Flexbox vertical centering and manual top-margin nudging.  
+add when: Multi-line metadata badges require dynamic vertical centering.
+
+---
+
+### 3. Frictionless Native Auto-Persist
+
+```javascript
+// sadar/log/auto_save.js
+export const bindLogAutoSave = (form, saveUrl) => {
+  form.addEventListener('focusout', (e) => {
+    if (!form.contains(e.relatedTarget) && form.checkValidity()) {
+      navigator.sendBeacon(saveUrl, new FormData(form)); // ponytail: drop-and-forget background sync
+    }
+  });
+};
+```
+skipped: Manual save buttons, state managers, and visual spinner overlays.  
+add when: Offline conflict resolution or retry queues are required.
