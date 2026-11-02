@@ -1703,3 +1703,76 @@ console.assert(addLog('Recognized thought loop')?.text === 'Recognized thought l
 ```
 → skipped: IndexedDB wrapper, reactive state stores, multi-device syncing.  
 → add when: log volume exceeds ~5MB or offline multi-tab conflict resolution is required.
+
+
+### Cycle #24 Directive (2026-11-02 23:23)
+### 1. Zero-JS Auto-Expanding Log Input
+
+```css
+textarea.journal-input {
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 40vh;
+  resize: none;
+  line-height: 1.6;
+  border: none;
+  outline: none;
+  background: transparent;
+  /* ponytail: relies on native field-sizing; fallback remains standard scrollable box */
+}
+```
+→ skipped: JS height recalculation listeners and hidden clone measuring DOMs.  
+→ add when: Safari < 17.4 fallback is explicitly demanded by analytics.
+
+---
+
+### 2. First-Baseline Optical Alignment for Timeline Logs
+
+```css
+.log-stream-item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: first baseline;
+  column-gap: 1.25rem;
+  padding-block: 0.625rem;
+}
+
+.log-stream-item time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  letter-spacing: -0.01em;
+}
+```
+→ skipped: Flexbox offset-nudging (`translateY`), tag wrappers, and manual pixel spacing.  
+→ add when: Column drops to vertical stack on screen widths `< 320px`.
+
+---
+
+### 3. Native Zen Micro-Reflection Sheet
+
+```html
+<dialog id="reflection-sheet" class="zen-sheet">
+  <form method="dialog">
+    <textarea class="journal-input" placeholder="State without judgment..." autofocus></textarea>
+    <footer class="sheet-actions">
+      <button type="submit">Record</button>
+    </footer>
+  </form>
+</dialog>
+```
+
+```css
+.zen-sheet {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background: var(--surface-zen, #fafaf9);
+}
+
+.zen-sheet::backdrop {
+  backdrop-filter: blur(12px);
+  background: rgba(28, 25, 23, 0.2);
+}
+```
+→ skipped: Custom focus-trap packages, portal layers, and modal state libraries.  
+→ add when: Route-driven deep linking to opened logs is required.
