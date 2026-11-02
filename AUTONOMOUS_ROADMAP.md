@@ -3831,3 +3831,90 @@ body {
 ```
 skipped: Theming engines, CSS-in-JS abstractions, and multi-token color libraries.
 add when: Explicit OS-level dark mode preference override requested.
+
+
+### Cycle #52 Directive (2026-11-03 02:02)
+### 1. Auto-Expanding Journal Input (Zero-JS)
+
+```css
+/* sadar-input.css */
+.thought-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 16lh;
+  line-height: 1.6;
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: none;
+  width: 100%;
+  font-family: inherit;
+  font-size: 1.125rem;
+  /* ponytail: fallback to rows="3" on Firefox until field-sizing lands; upgrade when FF flags flip */
+}
+```
+skipped: JS `textarea.scrollHeight` resize observers and ghost mirror divs.  
+add when: Browser support for Safari < 17.4 or Firefox non-flagged is strictly required.
+
+---
+
+### 2. Tabular Log Stream Alignment (Baseline Lock)
+
+```css
+/* sadar-stream.css */
+.log-stream {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1.25lh;
+  align-items: baseline;
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.log-stream time {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, currentColor 45%, transparent);
+  user-select: none;
+}
+
+.log-stream p {
+  margin: 0;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+```
+skipped: Flexbox wrappers, border-heavy card UI, and complex relative-time JS tickers.  
+add when: Logs require nested threaded replies or multi-day grouped accordions.
+
+---
+
+### 3. Native Metacognition State Pill (Zero-State Popover)
+
+```html
+<!-- state-pill.html -->
+<div class="state-selector">
+  <button type="button" popovertarget="states" class="pill-trigger">● State</button>
+  <div id="states" popover class="pill-popover">
+    <button type="button" onclick="this.closest('form').state.value='calm'">Calm</button>
+    <button type="button" onclick="this.closest('form').state.value='reactive'">Reactive</button>
+    <button type="button" onclick="this.closest('form').state.value='clarity'">Clarity</button>
+  </div>
+  <input type="hidden" name="state" value="calm">
+</div>
+```
+```css
+.pill-popover {
+  margin: 0.25rem 0 0 0;
+  padding: 0.35rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  inset: unset;
+}
+```
+skipped: React/Alpine dropdown primitives, click-outside hooks, and z-index managers.  
+add when: State taxonomy exceeds 6 items and requires inline search filtering.
