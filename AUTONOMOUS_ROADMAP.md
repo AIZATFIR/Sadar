@@ -2234,3 +2234,84 @@ document.addEventListener('keydown', (e) => {
 });
 ```
 skipped: command menu overlays and keybinding managers, add when action density exceeds 3 global shortcuts.
+
+
+### Cycle #31 Directive (2026-11-03 00:03)
+```css
+/* 1. Auto-expanding zero-chrome metacognitive input */
+.journal-input {
+  field-sizing: content;
+  min-height: 2.5lh;
+  max-height: 40vh;
+  width: 100%;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: 1.0625rem/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  color: #242220;
+  caret-color: #8c7355;
+  /* ponytail: field-sizing needs JS fallback if Safari < 18 or older Firefox is required */
+}
+```
+skipped: JS auto-resize listeners, contenteditable wrappers.  
+add when: supporting browsers older than Safari 18 / Chrome 123.
+
+```css
+/* 2. Optical baseline lock for timeline logs */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.75lh;
+  max-width: 62ch;
+  margin-inline: auto;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  align-items: baseline;
+  column-gap: 1.25rem;
+}
+
+.log-entry time {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: #8f8881;
+}
+
+.log-entry p {
+  margin: 0;
+  text-wrap: pretty;
+  line-height: 1.6;
+}
+```
+skipped: flex wrappers with manual padding hacks, separate metadata banners.  
+add when: log items require inline multi-action toolbars.
+
+```html
+<!-- 3. Native zero-chrome metacognitive state tag -->
+<label class="state-chip">
+  <select name="state" aria-label="Metacognitive state">
+    <option value="observing">Observing</option>
+    <option value="reactive">Reactive</option>
+    <option value="flow">Flow</option>
+    <option value="fog">Fog</option>
+  </select>
+</label>
+```
+```css
+.state-chip select {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #78716a;
+  cursor: pointer;
+}
+```
+skipped: custom popovers, headless comboboxes, floating indicator badges.  
+add when: multiple concurrent tags or color-coded telemetry are requested.
