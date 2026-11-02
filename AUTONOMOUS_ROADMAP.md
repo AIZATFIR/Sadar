@@ -768,3 +768,60 @@ Native semantic disclosure without UI state management.
 }
 ```
 → skipped: [Accordion toggle libraries and animated collapse state], add when [animated micro-interactions are scheduled for polish].
+
+
+### Cycle #10 Directive (2026-11-02 22:03)
+### 1. Baseline-Aligned Vertical Timeline
+
+```css
+.log-stream {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  row-gap: 1.5lh;
+  align-items: baseline; /* Locks timestamp baselines to entry text */
+}
+
+.log-stream time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--zen-muted, #7c7c80);
+}
+```
+skipped: custom SVG connector rails and node dots; add when non-linear thread branching is requested.
+
+---
+
+### 2. Zero-JS Frictionless Thought Capture
+
+```css
+.thought-capture {
+  field-sizing: content; /* ponytail: native auto-expand; fallback requires resize observer */
+  min-height: 1.5lh;
+  max-height: 18lh;
+  width: 100%;
+  resize: none;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  background: transparent;
+  line-height: 1.6;
+}
+```
+skipped: textarea auto-grow JS event listeners; add when supporting Safari < 17.4 or legacy webviews.
+
+---
+
+### 3. Native Exclusive Log Folding
+
+```html
+<details name="daily-log" class="day-fold" open>
+  <summary class="select-none font-medium text-sm tracking-tight cursor-pointer">
+    Today
+  </summary>
+  <div class="log-stream mt-3">
+    <time datetime="2025-05-18T08:30">08:30</time>
+    <p>Morning awareness: breath settled, mind clear.</p>
+  </div>
+</details>
+```
+skipped: animated JS accordion manager; add when fluid height interpolation via `@starting-style` is budgeted.
