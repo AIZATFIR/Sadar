@@ -1038,3 +1038,81 @@ document.querySelector('#log-form textarea')?.addEventListener('keydown', (e) =>
 ```
 skipped: Hotkey managers, rich-text markdown libraries, bespoke validation managers.  
 add when: Sadar gains a global Command-K palette.
+
+
+### Cycle #14 Directive (2026-11-02 22:26)
+### 1. Frictionless Auto-Growing Journal Input (CSS Native)
+
+```css
+/* Replace JS auto-resize hacks with native CSS */
+.log-input {
+  field-sizing: content;
+  min-height: 1.6lh;
+  max-height: 12lh;
+  line-height: 1.6;
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-family: inherit;
+  color: inherit;
+}
+```
+→ skipped: JS auto-resize listeners/cloned canvas calculations, add when: legacy browser support (< Safari 17.4) is strictly mandated.
+
+---
+
+### 2. Tabular Timeline & Baseline Alignment
+
+```css
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 4ch 1fr;
+  align-items: first baseline;
+  column-gap: 1.25rem;
+}
+
+.log-entry time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  letter-spacing: -0.01em;
+  color: color-mix(in srgb, currentColor 40%, transparent);
+  user-select: none;
+}
+```
+→ skipped: Complex SVG timeline lines and absolute-positioned anchor nodes, add when: non-linear tree branching or edit-histories are introduced.
+
+---
+
+### 3. Keyboard-First Log Append (Cmd/Ctrl + Enter)
+
+```js
+// ponytail: ceiling is direct DOM injection; upgrade path is indexedDB + sync engine
+const input = document.querySelector('.log-input');
+const stream = document.querySelector('.log-stream');
+
+input?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey) && input.value.trim()) {
+    e.preventDefault();
+    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+    const p = document.createElement('p');
+    p.textContent = input.value.trim();
+    
+    const entry = document.createElement('div');
+    entry.className = 'log-entry';
+    entry.innerHTML = `<time>${time}</time>`;
+    entry.appendChild(p);
+
+    stream.prepend(entry);
+    input.value = '';
+  }
+});
+```
+→ skipped: State store abstractions and form wrapper boilerplate, add when: offline persistence or multi-field metadata tags are introduced.
