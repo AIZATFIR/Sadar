@@ -3085,3 +3085,78 @@ Eliminate extra wrappers and spacing recalculations for the conscious living tim
 </form>
 ```
 `[code]` → skipped: Keybinding state manager/listener libraries; add when non-submit multi-key chord shortcuts are required.
+
+
+### Cycle #42 Directive (2026-11-03 01:05)
+### 1. Native Auto-Expanding Log Area (Zero-JS vertical rhythm)
+
+Replace custom resize listeners and fixed-height wrappers with native CSS auto-sizing tied directly to line-height units.
+
+```css
+.journal-entry-input {
+  width: 100%;
+  field-sizing: content; /* native auto-expand */
+  min-height: 2lh;
+  max-height: 20lh;
+  line-height: 1.65;
+  padding: 0.5lh 0;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-family: inherit;
+  color: var(--color-ink, #232220);
+  /* ponytail: field-sizing needs JS fallback only if Safari < 17.4 must be supported */
+}
+```
+→ skipped: JS auto-grow listeners and scroll-height recalculations, add when cross-browser legacy coverage (<2024 engines) is explicitly mandated.
+
+---
+
+### 2. Flat Grid Baseline Alignment for Conscious Living Stream
+
+Use `display: contents` to align micro-timestamps, emotional state cues, and journal reflections along a single shared typographic baseline without nesting markup.
+
+```html
+<ol class="log-feed">
+  <li class="log-row">
+    <time datetime="08:15">08:15</time>
+    <span class="log-state">settled</span>
+    <p class="log-text">Breath caught high in the chest before the standup. Settled via 3 exhales.</p>
+  </li>
+</ol>
+```
+
+```css
+.log-feed {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  column-gap: 0.85rem;
+  row-gap: 0.75lh;
+  align-items: baseline;
+  list-style: none;
+  padding: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.log-row {
+  display: contents;
+}
+
+.log-feed time {
+  font-size: 0.8rem;
+  opacity: 0.45;
+}
+
+.log-state {
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  opacity: 0.75;
+}
+
+.log-text {
+  margin: 0;
+  line-height: 1.5;
+}
+```
+→ skipped: flexbox wrappers and card containers per entry, add when cards require individual borders or gesture-driven swiping.
