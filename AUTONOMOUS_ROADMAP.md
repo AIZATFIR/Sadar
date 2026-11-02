@@ -5930,3 +5930,66 @@ export function recordConsciousLog(formEl, onPersist) {
 }
 ```
 `[code] → skipped: [IndexedDB and sync workers], add when [payload exceeds 5MB or background sync is wired].`
+
+
+### Cycle #79 Directive (2026-11-03 04:32)
+### 1. Optical Baseline Alignment for Timeline Logs
+
+```css
+.log-row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  padding-block: 0.625rem;
+  border-bottom: 1px solid var(--sand-3, #eeebe6);
+}
+
+.log-row time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--sand-9, #8d857d);
+}
+```
+→ skipped: JS-driven layout sync and bulky table markup.  
+→ add when: entries require multi-tag filtering or user-configurable columns.
+
+---
+
+### 2. Zero-JS Auto-Expanding Log Composer
+
+```css
+.conscious-input {
+  width: 100%;
+  field-sizing: content;
+  min-height: 1.6lh;
+  max-height: 12lh;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--sand-12, #1c1917);
+  /* ponytail: relies on CSS field-sizing (Chromium 123+, Safari 18.2+) */
+}
+```
+→ skipped: Auto-resizing `<textarea>` DOM measurement scripts.  
+→ add when: explicit Firefox support without degradation is mandated.
+
+---
+
+### 3. Native Low-Friction Entry Block
+
+```html
+<article class="log-row">
+  <time datetime="07:30">07:30</time>
+  <div 
+    contenteditable="plaintext-only" 
+    class="conscious-input" 
+    role="textbox"
+    aria-label="Present observation"
+  ></div>
+</article>
+```
+→ skipped: WYSIWYG/Markdown heavy editor state stores.  
+→ add when: logs require nested blocks or inline attachments.
