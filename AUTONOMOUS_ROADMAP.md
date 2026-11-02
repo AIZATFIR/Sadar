@@ -4203,3 +4203,71 @@ Log emotional state or conscious presence (e.g., *Reactive*, *Observing*, *Prese
 }
 ```
 `→ skipped: accessible custom keyboard roving tabindex logic; add when standard native radio tab navigation is insufficient for screen-reader power users.`
+
+
+### Cycle #56 Directive (2026-11-03 02:24)
+### 1. Frictionless Log Input (Native Auto-Grow)
+Replaces manual height JS or fixed textareas with native browser line-height sizing.
+
+```css
+.metacog-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 15lh;
+  inline-size: 100%;
+  max-inline-size: 62ch;
+  line-height: 1.65;
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: none;
+  font-family: inherit;
+  color: var(--text-warm, #2a2523);
+}
+```
+`field-sizing: content` → skipped: JS autosize resize observers, add when: legacy Safari compatibility is strictly mandated.
+
+---
+
+### 2. First-Line Baseline Log Alignment
+Pins timestamps and introspective tags strictly to the first text baseline of multi-line journal reflections.
+
+```css
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.5ch 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+  padding-block: 0.35lh;
+}
+
+.log-entry time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+  opacity: 0.4;
+}
+
+.log-entry p {
+  margin: 0;
+  line-height: 1.65;
+}
+```
+`grid-template-columns: 4.5ch 1fr; align-items: baseline;` → skipped: flexbox `align-items: flex-start` with manual `padding-top` nudges, add when: entry headers require multi-row layouts.
+
+---
+
+### 3. Vertical Cadence using Font-Relative Units (`lh`)
+Standardizes vertical rhythm throughout the journal stream without magic number margins.
+
+```css
+.journal-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1lh;
+  max-inline-size: 62ch;
+  margin-inline: auto;
+  padding-block: 2lh;
+}
+```
+`gap: 1lh` → skipped: pixel/rem vertical rhythm calc maps, add when: multi-font dynamic scales break relative cadence.
