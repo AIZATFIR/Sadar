@@ -3226,3 +3226,83 @@ document.querySelector('#log-form')?.addEventListener('keydown', (e) => {
 });
 ```
 skipped: Draft auto-saving to IndexedDB/LocalStorage; add when multi-paragraph entry support is needed.
+
+
+### Cycle #44 Directive (2026-11-03 01:17)
+### 1. Baseline-Locked Log Metadata (Vertical Alignment)
+
+Align time stamps, state glyphs, and log titles directly along the typographic baseline to eliminate visual jitter across mixed font sizes and weights.
+
+```css
+.log-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.log-time {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+.log-title {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0;
+}
+```
+→ skipped: flexbox centering hacks (`align-items: center` with line-height offsets), add when: glyphs are non-text graphical icons with abnormal descent lines.
+
+---
+
+### 2. Zero-JS Auto-Growing Metacognition Input (Conscious Logs)
+
+Drop text-area expansion scripts. Modern browser engines support native auto-sizing while retaining smooth document flow and natural vertical rhythm.
+
+```css
+.reflection-input {
+  width: 100%;
+  field-sizing: content;
+  min-height: 3lh;
+  line-height: 1.6;
+  padding: 0.5lh 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  resize: none;
+  font-size: 1rem;
+  /* ponytail: Safari < 18 fallback requires JS resize; add only if legacy iOS/macOS metrics require it */
+}
+
+.reflection-input:focus {
+  outline: none;
+  border-bottom-color: currentColor;
+}
+```
+→ skipped: `input` event scrollHeight listeners and clone-mirror divs, add when: targeting Safari versions prior to 18.0.
+
+---
+
+### 3. Typographic Spacing Using `lh` Units (Streamlined UI)
+
+Anchor spacing directly to the text rhythm rather than arbitrary pixels or rems, creating Apple-style visual calm in the log stream.
+
+```css
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 2lh;
+  max-width: 42ch;
+  margin-inline: auto;
+  padding-block: 3lh;
+}
+
+.log-item + .log-item {
+  border-top: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+  padding-top: 2lh;
+}
+```
+→ skipped: complex grid systems or spacer components, add when: rendering multi-column desktop dashboard layouts.
