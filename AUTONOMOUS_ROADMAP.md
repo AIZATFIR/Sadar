@@ -2172,3 +2172,65 @@ export function initLogger(textarea, listEl) {
 })();
 ```
 `initLogger` → skipped: state management frameworks and IndexedDB wrappers, add when: local entry counts exceed 10,000 items or multi-device sync is requested.
+
+
+### Cycle #30 Directive (2026-11-02 23:57)
+### 1. Auto-Expanding Streamlined Input (Zero-JS Resize)
+
+```css
+/* sadar.css */
+.log-input {
+  field-sizing: content; /* ponytail: manual scrollHeight tracking if iOS <18 support required */
+  min-height: 1.6lh;
+  line-height: 1.6;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+}
+```
+skipped: textarea auto-grow JS event handlers, add when legacy browser targets are required.
+
+---
+
+### 2. Tabular Timeline Alignment (Apple-Calibrated Baseline)
+
+```css
+/* sadar.css */
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  column-gap: 1.25rem;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 6%, transparent);
+}
+
+.log-entry time {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.45;
+  user-select: none;
+}
+```
+skipped: complex flex wrappers and absolute-positioned timeline tracks, add when entries support branching threads.
+
+---
+
+### 3. Frictionless Capture Shortcut
+
+```javascript
+// sadar.js
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    const input = document.activeElement;
+    if (input?.matches('.log-input') && input.value.trim()) {
+      input.form ? input.form.requestSubmit() : input.dispatchEvent(new CustomEvent('save', { bubbles: true }));
+    }
+  }
+});
+```
+skipped: command menu overlays and keybinding managers, add when action density exceeds 3 global shortcuts.
