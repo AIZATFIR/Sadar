@@ -6600,3 +6600,102 @@ Provides vertical orientation without breaking focus or adding fixed overlay chr
 ```
 * Skipped: IntersectionObserver scroll spies and pinned state classes.
 * Add when: Custom pin-and-dock header animations are explicitly needed.
+
+
+### Cycle #88 Directive (2026-11-03 05:22)
+### 1. Zero-JS Auto-Expanding Log Input
+Replace textarea resize listeners or auto-height wrapper components with native CSS `field-sizing`.
+
+```css
+.conscious-log-input {
+  field-sizing: content;
+  min-height: 2.5lh;
+  max-height: 25lh;
+  resize: none;
+  line-height: 1.6;
+  text-wrap: pretty;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  color: inherit;
+  /* ponytail: falls back to default scrollbar on Firefox/older Safari; add JS scrollHeight sync only if pre-17.4 iOS is a hard constraint */
+}
+```
+`→ skipped: JS height recalculation loop, add when supporting non-Chromium browsers older than 2024.`
+
+---
+
+### 2. Micro-Timeline Baseline Lock
+Fix vertical drift between entry timestamps, mood markers, and dynamic reflection copy using baseline grid alignment.
+
+```html
+<div class="log-stream">
+  <article class="log-item">
+    <time datetime="2025-05-18T07:30" class="log-meta">07:30</time>
+    <div class="log-body">
+      <p>Noticed tension in traps before opening Slack. Paused for three cycles.</p>
+    </div>
+  </article>
+</div>
+
+<style>
+.log-stream {
+  display: flex;
+  flex-direction: column;
+}
+.log-item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  padding-block: 0.625rem;
+  border-bottom: 1px solid var(--zen-line);
+}
+.log-meta {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  letter-spacing: -0.01em;
+  color: var(--zen-subtle);
+}
+.log-body {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+</style>
+```
+`→ skipped: Subgrid layout, add when multi-column metadata (tags, mood glyphs) requires dynamic cell tracking.`
+
+---
+
+### 3. Anti-Slop Zen Warmth Palette Tokens
+Eliminate cold, generic grays (`slate`/`zinc`) in favor of organic paper/stone tints with fluid optical margins.
+
+```css
+:root {
+  --zen-bg: #fcfbf9;
+  --zen-surface: #f5f2eb;
+  --zen-text: #24221f;
+  --zen-subtle: #858076;
+  --zen-line: rgba(36, 34, 31, 0.07);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --zen-bg: #141311;
+    --zen-surface: #1c1b18;
+    --zen-text: #ece8e1;
+    --zen-subtle: #7a766e;
+    --zen-line: rgba(236, 232, 225, 0.08);
+  }
+}
+
+.journal-frame {
+  max-width: 62ch;
+  margin-inline: auto;
+  min-height: 100dvh;
+  padding: clamp(2rem, 6vh, 5rem) 1.5rem;
+  background-color: var(--zen-bg);
+  color: var(--zen-text);
+}
+```
+`→ skipped: Theme-toggle state management, add when user explicitly overrides system `prefers-color-scheme`.`
