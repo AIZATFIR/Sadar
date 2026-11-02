@@ -5722,3 +5722,50 @@ Eliminate state management overhead for new consciousness logs with native `<for
 ```
 → skipped: Controlled React/Svelte input bindings and bespoke draft state.  
 → add when: Real-time collaborative syncing or offline indexedDB draft recovery is needed.
+
+
+### Cycle #76 Directive (2026-11-03 04:16)
+```css
+/* 1. Zero-JS expanding conscious log input */
+textarea.journal-entry {
+  field-sizing: content;
+  min-height: 2lh;
+  line-height: 1.6;
+  padding: 0.5lh 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  resize: none;
+  font-family: inherit;
+}
+
+/* 2. Micro-rhythm: Lock timestamps & content to typographic baseline */
+.log-stream {
+  display: grid;
+  row-gap: 1lh;
+}
+.log-item {
+  display: grid;
+  grid-template-columns: 6ch 1fr;
+  column-gap: 1.5ch;
+  align-items: first baseline;
+}
+.log-item time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, currentColor 45%, transparent);
+}
+
+/* 3. Zen state marker: Native semantic indicator without wrapper div bloat */
+.log-item mark {
+  font-size: 0.75rem;
+  padding: 0.1lh 0.8ch;
+  border-radius: 4px;
+  background: color-mix(in srgb, currentColor 6%, transparent);
+  color: inherit;
+}
+```
+
+skipped: JS auto-resize watchers; add when supporting legacy browsers lacking `field-sizing`.
+skipped: Complex multi-column timeline components; add when logs require nested branching threads.
+skipped: External icon sets for conscious states; add when semantic labels and typography fail clarity.
