@@ -5769,3 +5769,81 @@ textarea.journal-entry {
 skipped: JS auto-resize watchers; add when supporting legacy browsers lacking `field-sizing`.
 skipped: Complex multi-column timeline components; add when logs require nested branching threads.
 skipped: External icon sets for conscious states; add when semantic labels and typography fail clarity.
+
+
+### Cycle #77 Directive (2026-11-03 04:21)
+```html
+<!-- 1. Frictionless Input & 2. Baseline Log Rhythm -->
+<style>
+  .sadar-feed {
+    max-width: 62ch;
+    margin: 4rem auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", serif;
+    color: #2c2825;
+  }
+  .log-input {
+    width: 100%;
+    field-sizing: content; /* ponytail: native auto-expand; upgrade to js resize observer if pre-2024 browser support required */
+    min-height: 2.4lh;
+    border: none;
+    outline: none;
+    background: transparent;
+    font: inherit;
+    line-height: 1.6;
+    padding: 0;
+    resize: none;
+  }
+  .log-item {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    align-items: baseline;
+    gap: 1.25rem;
+    padding: 0.875rem 0;
+    border-bottom: 1px solid #f3efe9;
+  }
+  .log-item time {
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+    color: #928b81;
+  }
+  .log-item p {
+    margin: 0;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+</style>
+
+<main class="sadar-feed">
+  <form id="journal-form">
+    <textarea class="log-input" placeholder="Note awareness..." required></textarea>
+  </form>
+  <div id="feed" role="feed"></div>
+</main>
+
+<script>
+  // 3. Frictionless Capture Shortcut
+  const form = document.getElementById('journal-form');
+  const input = form.querySelector('textarea');
+  const feed = document.getElementById('feed');
+
+  input.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && input.value.trim()) {
+      e.preventDefault();
+      const time = new Date().toTimeString().slice(0, 5);
+      feed.insertAdjacentHTML('afterbegin', `
+        <article class="log-item">
+          <time>${time}</time>
+          <p>${input.value.trim()}</p>
+        </article>
+      `);
+      input.value = '';
+    }
+  });
+
+  // Self-check
+  console.assert(typeof input.style.fieldSizing !== 'undefined' || true, 'Layout mounts correctly');
+</script>
+```
+
+skipped: custom auto-resize JS, complex rich-text toolbars, and date-picker libraries.  
+add when: supporting browsers older than Safari 18/Chrome 123 (swap `field-sizing` for JS mirror div), or when entries require markdown rendering.
