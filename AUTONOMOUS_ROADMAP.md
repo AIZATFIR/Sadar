@@ -4555,3 +4555,75 @@ export const bindLogAutoSave = (form, saveUrl) => {
 ```
 skipped: Manual save buttons, state managers, and visual spinner overlays.  
 add when: Offline conflict resolution or retry queues are required.
+
+
+### Cycle #61 Directive (2026-11-03 02:52)
+### 1. Optical Baseline Alignment & Auto-Expanding Journal Input
+
+```css
+/* sadar.css: lock input to typographic vertical rhythm */
+.journal-input {
+  field-sizing: content;
+  min-height: 3lh;
+  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  padding: 0.2lh 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: none;
+  /* ponytail: field-sizing requires modern evergreen; fallback to 1-line JS resize if legacy iOS support needed */
+}
+```
+`skipped: JS textarea autosizers, add when targeting browsers older than Safari 17.4.`
+
+---
+
+### 2. Tabular Grid for Conscious Living Stream
+
+```css
+/* Strict 2-column baseline alignment between timestamp and reflection */
+.log-stream {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  column-gap: 1.25rem;
+  row-gap: 0.75lh;
+  border-left: 1px solid var(--border-subtle, #e8e6e1);
+  padding-left: 1rem;
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  line-height: 1.6; /* matches .log-content exactly for baseline sync */
+  color: var(--text-muted, #7c776e);
+  user-select: none;
+}
+
+.log-content {
+  line-height: 1.6;
+  color: var(--text-base, #1e1d1a);
+}
+```
+`skipped: Absolute positioned timeline badges, add when entries require branching or multi-state icons.`
+
+---
+
+### 3. Frictionless Capture via Keyboard Dispatch
+
+```javascript
+// Inline journal commit without form wrappers or buttons
+const input = document.querySelector('#journal-input');
+const stream = document.querySelector('#log-stream');
+
+input?.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && input.value.trim()) {
+    const time = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit' }).format(new Date());
+    stream.insertAdjacentHTML('afterbegin', 
+      `<time class="log-time">${time}</time><p class="log-content">${input.value.trim()}</p>`
+    );
+    input.value = '';
+  }
+});
+```
+`skipped: Form validation popups and DB sync layer, add when persistence endpoint is wired.`
