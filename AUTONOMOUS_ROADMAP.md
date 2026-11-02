@@ -4788,3 +4788,117 @@ console.assert(typeof HTMLFormElement.prototype.requestSubmit === 'function', 'N
 ```
 → skipped: heavy command-bar abstractions, hotkey libraries, and custom dispatch events.  
 → add when: an expanded modal command palette is built.
+
+
+### Cycle #64 Directive (2026-11-03 03:09)
+### 1. Vertical Rhythm & Auto-Expanding Log Input
+Eliminate JS-based textarea auto-resizers and baseline drift.
+
+```css
+/* journal.css */
+.log-entry-form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--zen-muted, #8a8175);
+  line-height: 1.5rem;
+}
+
+.log-input {
+  field-sizing: content; /* ponytail: native auto-expand; fallback to fixed height if unsupported */
+  min-height: 1.5rem;
+  line-height: 1.5rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  resize: none;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  color: var(--zen-ink, #24211e);
+  outline: none;
+}
+```
+skipped: ResizeObserver/JS height sync; add when target browsers lack baseline `field-sizing` support.
+
+---
+
+### 2. Micro-Timeline Vertical Alignment
+Lock metacognitive markers and conscious logs to an optical baseline grid.
+
+```css
+/* log-list.css */
+.conscious-log-list {
+  display: grid;
+  grid-template-columns: [time] 3.5rem [marker] 1rem [content] 1fr;
+  align-items: baseline;
+  row-gap: 0.5rem;
+  column-gap: 0.75rem;
+  padding: 0;
+  list-style: none;
+}
+
+.conscious-log-item {
+  display: contents; /* preserves grid alignment without wrapper div soup */
+}
+
+.conscious-log-item time {
+  grid-column: time;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  color: var(--zen-muted, #8a8175);
+}
+
+.conscious-log-item .anchor {
+  grid-column: marker;
+  justify-self: center;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--zen-accent, #c28859);
+}
+
+.conscious-log-item p {
+  grid-column: content;
+  margin: 0;
+  line-height: 1.5;
+  font-size: 0.875rem;
+}
+```
+skipped: Flexbox calculations and pseudo-element connector lines; add when multi-tier nested threads are requested.
+
+---
+
+### 3. Streamlined Append & Persistence (Zero-Bloat)
+Direct-to-DOM commit with native local persistence.
+
+```javascript
+// log.js
+export function recordConsciousLog(text) {
+  if (!text.trim()) return;
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+  const log = { id: crypto.randomUUID(), time, text: text.trim() };
+
+  const list = document.querySelector('.conscious-log-list');
+  list.insertAdjacentHTML('afterbegin', `
+    <li class="conscious-log-item" id="${log.id}">
+      <time>${log.time}</time>
+      <span class="anchor" aria-hidden="true"></span>
+      <p>${log.text}</p>
+    </li>
+  `);
+
+  const logs = JSON.parse(localStorage.getItem('sadar_logs') || '[]');
+  logs.unshift(log);
+  localStorage.setItem('sadar_logs', JSON.stringify(logs));
+}
+
+// Runnable self-check
+console.assert(typeof recordConsciousLog === 'function', 'recordConsciousLog should be defined');
+```
+skipped: Virtual DOM / IndexedDB abstraction; add when log size exceeds ~2,000 entries or requires full-text search.
