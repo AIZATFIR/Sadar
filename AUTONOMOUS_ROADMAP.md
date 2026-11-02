@@ -1776,3 +1776,88 @@ textarea.journal-input {
 ```
 → skipped: Custom focus-trap packages, portal layers, and modal state libraries.  
 → add when: Route-driven deep linking to opened logs is required.
+
+
+### Cycle #25 Directive (2026-11-02 23:29)
+### 1. Vertical Auto-Expanding Thought Input
+
+```css
+/* Core editor rhythm without textarea-resizing JS */
+.mindful-input {
+  width: 100%;
+  field-sizing: content;
+  min-height: 3lh;
+  line-height: 1.6;
+  padding: 0;
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: inherit;
+  background: transparent;
+  color: var(--text, #1c1917);
+}
+/* ponytail: JS input listener fallback only needed if legacy iOS (<17.4) support is required */
+```
+→ skipped: [Textarea resize event listeners and height recalculation logic], add when [supporting Safari < 17.4].
+
+---
+
+### 2. Subgrid Timeline Alignment (Baseline Sync)
+
+```css
+/* Precise baseline lock across varying log lengths without wrappers */
+.log-stream {
+  display: grid;
+  grid-template-columns: 5ch 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1.2lh;
+  list-style: none;
+  padding: 0;
+}
+.log-item {
+  display: subgrid;
+  grid-column: 1 / -1;
+  align-items: baseline;
+}
+.log-item time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--muted, #78716c);
+}
+```
+→ skipped: [Flexbox wrapper divs and manual baseline offset hacks], add when [CSS Subgrid isn't universally available on target devices].
+
+---
+
+### 3. Native Zero-JS Mental State Selector
+
+```html
+<fieldset class="state-pills">
+  <label><input type="radio" name="state" value="reactive" checked> Reactive</label>
+  <label><input type="radio" name="state" value="observing"> Observing</label>
+  <label><input type="radio" name="state" value="present"> Present</label>
+</fieldset>
+```
+```css
+.state-pills {
+  display: inline-flex;
+  gap: 0.35rem;
+  border: 0;
+  padding: 0;
+}
+.state-pills input { position: absolute; opacity: 0; pointer-events: none; }
+.state-pills label {
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  background: var(--pill-bg, #f5f5f4);
+  color: var(--muted, #78716c);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.state-pills label:has(input:checked) {
+  background: var(--pill-active, #e7e5e4);
+  color: var(--text, #1c1917);
+}
+```
+→ skipped: [React/Svelte state store and custom button component], add when [multi-tag selection or external state synchronization is introduced].
