@@ -6350,3 +6350,83 @@ add when: nodes require interactive milestone states or distinct semantic icons.
 }
 ```
 → skipped: Custom dropdown popover, icon sets, complex state management. Add persistence/custom state attributes when logging requires multi-tag metadata.
+
+
+### Cycle #85 Directive (2026-11-03 05:05)
+### 1. Zero-JS Auto-Expanding Capture Field
+
+```css
+/* sadar-input.css */
+.conscious-input {
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 20lh;
+  line-height: 1.65;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  resize: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* ponytail: field-sizing lacks full legacy Safari support; add height recalculation JS if Safari <17.4 is mandatory */
+}
+
+.conscious-input:focus {
+  outline: none;
+  border-color: rgba(0, 0, 0, 0.25);
+}
+```
+→ skipped: JS auto-resize listeners and height recalculation observers.  
+→ add when: Safari <17.4 support becomes a hard metric requirement.
+
+---
+
+### 2. Baseline-Locked Chrono-Stream Grid
+
+```css
+/* conscious-stream.css */
+.log-stream {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  column-gap: 1.5rem;
+  row-gap: 1.25lh;
+}
+
+.log-meta {
+  font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8125rem;
+  color: #8c827a; /* zen warm muted tone */
+  user-select: none;
+}
+
+.log-content {
+  line-height: 1.6;
+  margin: 0;
+  color: #1a1918;
+}
+```
+→ skipped: Nested flex containers, custom spacer divs, and JS alignment hacks.  
+→ add when: Multi-column content needs dynamic column re-ordering or subgrid collapse.
+
+---
+
+### 3. Native Intent-Capture Form Submission
+
+```javascript
+// conscious-capture.js
+document.querySelector('#log-form')?.addEventListener('keydown', (e) => {
+  // ponytail: inline listener; add AbortController if dynamic DOM mounting is introduced
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    e.preventDefault();
+    e.currentTarget.requestSubmit();
+  }
+});
+```
+```javascript
+// self-check
+console.assert(typeof HTMLFormElement.prototype.requestSubmit === 'function', 'Native requestSubmit supported');
+```
+→ skipped: Draft state persistence (localStorage) and heavy rich-text listeners.  
+→ add when: Unsaved draft dropoff is confirmed in user telemetry.
