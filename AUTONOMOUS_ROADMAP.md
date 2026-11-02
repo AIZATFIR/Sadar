@@ -6430,3 +6430,79 @@ console.assert(typeof HTMLFormElement.prototype.requestSubmit === 'function', 'N
 ```
 → skipped: Draft state persistence (localStorage) and heavy rich-text listeners.  
 → add when: Unsaved draft dropoff is confirmed in user telemetry.
+
+
+### Cycle #86 Directive (2026-11-03 05:11)
+### 1. Baseline Optical Alignment for Journal Stream
+Replaces loose flex/margin stacks with a baseline-anchored grid to keep timestamps and reflections optically locked across varying font sizes.
+
+```css
+.journal-stream {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1rem;
+  align-items: baseline;
+  max-width: 62ch;
+  margin-inline: auto;
+}
+
+.journal-stream time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--color-zen-muted, #8e8e93);
+  user-select: none;
+}
+
+.journal-stream .entry-body {
+  margin: 0;
+  line-height: 1.55;
+  color: var(--color-zen-text, #1c1c1e);
+}
+```
+→ skipped: virtual scrolling and dynamic row-gap calculation.  
+→ add when: log history exceeds 500 DOM elements in a single active view.
+
+---
+
+### 2. Auto-Expanding Zen Input (Zero JS)
+Replaces JS-calculated textarea heights with native browser field sizing, preventing layout jank during stream-of-consciousness capture.
+
+```css
+.conscious-entry-input {
+  /* ponytail: field-sizing lacks full Safari support; gracefully degrades to static 3-line box */
+  field-sizing: content;
+  width: 100%;
+  min-height: 3lh;
+  max-height: 12lh;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: inherit;
+}
+```
+→ skipped: heavy auto-grow textarea polyfills or mirror-div hacks.  
+→ add when: explicit user telemetry demands non-scrolling multi-paragraph entry in legacy Safari.
+
+---
+
+### 3. Native Keyboard Quick-Capture
+Captures metacognitive insights with standard `Cmd/Ctrl + Enter` dispatch without bespoke event abstractions.
+
+```javascript
+document.querySelector('#conscious-log-form')?.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    e.preventDefault();
+    e.currentTarget.requestSubmit();
+  }
+});
+
+// Self-check
+console.assert(typeof HTMLFormElement.prototype.requestSubmit === 'function', 'Native requestSubmit supported');
+```
+→ skipped: custom shortcut managers, undo-history buffers, and hotkey config panels.  
+→ add when: full-modal command palettes or custom keymap re-binding are required.
