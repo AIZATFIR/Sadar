@@ -1861,3 +1861,60 @@ textarea.journal-input {
 }
 ```
 → skipped: [React/Svelte state store and custom button component], add when [multi-tag selection or external state synchronization is introduced].
+
+
+### Cycle #26 Directive (2026-11-02 23:34)
+### 1. Optical Baseline Grid & Native Auto-Expanding Textarea
+
+```css
+.log-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 18lh;
+  line-height: 1.6;
+  padding: 0;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  color: #1c1c1e;
+}
+```
+→ skipped: JS auto-resize observers and scrollbar hacks.  
+→ add when: Firefox/Safari lack of `field-sizing` support breaks entry flow (fallback: default height handles standard 2-line capture).
+
+---
+
+### 2. Tabular Metric Alignment for Conscious Logs
+
+```css
+.log-stream {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1.2lh;
+  align-items: baseline;
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: #8e8e93;
+}
+```
+→ skipped: Flexbox spacing utilities and wrapper `<div>` wrappers for rows.  
+→ add when: Multi-column metadata (tags, mood metrics) exceeds a 2-column key-value baseline.
+
+---
+
+### 3. Frictionless Native Cmd+Enter Micro-Capture
+
+```html
+<form id="entry-form" onkeydown="if((event.metaKey||event.ctrlKey)&&event.key==='Enter'){event.preventDefault();this.requestSubmit();}">
+  <textarea name="thought" class="log-input" placeholder="Notice what is..." autofocus required></textarea>
+</form>
+```
+→ skipped: React/controlled-state onChange bindings and submit button chrome.  
+→ add when: Offline syncing queue or multi-step draft validation is introduced.
