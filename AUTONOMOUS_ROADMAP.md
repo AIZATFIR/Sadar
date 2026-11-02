@@ -4417,3 +4417,78 @@ Eliminate always-visible edit/delete visual noise to preserve metacognitive focu
 ```
 → skipped: active-index JS state, React/Svelte blur-filter bindings  
 → add when: individual entry action menus need persistent contrast on hover
+
+
+### Cycle #59 Directive (2026-11-03 02:41)
+### 1. Strict Baseline Alignment for Log Entries
+
+Align timestamps and reflections to the font baseline using native 2-column grid instead of messy flex wrappers.
+
+```css
+.log-item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  column-gap: 1.5rem;
+  align-items: baseline;
+  padding-block: 0.875rem;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 7%, transparent);
+}
+
+.log-item time {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted, #78716c); /* Warm zen muted stone */
+  line-height: 1.5;
+}
+
+.log-item p {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--text-main, #1c1917);
+}
+```
+`skipped: JS height sync and manual line-height offsets, add when: supporting multi-column custom metadata grids.`
+
+---
+
+### 2. Frictionless Conscious Entry Box
+
+Replaces dynamic JS autosize scripts with browser-native text expansion.
+
+```html
+<form class="log-form" method="POST" action="/log">
+  <textarea 
+    name="entry" 
+    rows="1" 
+    placeholder="Notice without judgment..." 
+    required
+    style="field-sizing: content; width: 100%; min-height: 2.25rem; resize: none; border: none; background: transparent; outline: none; line-height: 1.5; font-family: inherit;"
+  ></textarea>
+</form>
+```
+`/* ponytail: field-sizing requires Chrome 123+ / Safari 18.2+. */`
+`skipped: heavy auto-growing textarea JS plugins, add when: hard legacy browser constraints require a 4-line scrollHeight fallback.`
+
+---
+
+### 3. Pure CSS Continuous Vertical Thread
+
+Provides visual continuity for conscious stream logs without decorative DOM wrapper nodes.
+
+```css
+.log-stream {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.log-stream::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  bottom: 1rem;
+  width: 1px;
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+```
+`skipped: SVG paths and individual timeline node markers, add when: branching logs or visual tag icons are explicitly requested.`
