@@ -4271,3 +4271,88 @@ Standardizes vertical rhythm throughout the journal stream without magic number 
 }
 ```
 `gap: 1lh` → skipped: pixel/rem vertical rhythm calc maps, add when: multi-font dynamic scales break relative cadence.
+
+
+### Cycle #57 Directive (2026-11-03 02:30)
+### 1. Zero-JS Auto-Expanding Conscious Log Input
+
+Replace manual textarea resizing scripts with native CSS auto-sizing anchored to font line-height.
+
+```css
+.conscious-log-input {
+  width: 100%;
+  field-sizing: content; /* ponytail: fallback to JS autosize only if Safari <17.4 support is required */
+  min-height: 2lh;
+  max-height: 40vh;
+  line-height: 1.6;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #231f1d;
+  caret-color: #8c5338;
+}
+.conscious-log-input::placeholder {
+  color: #9c948e;
+}
+```
+→ skipped: JS event listeners for textarea growth. Add when: legacy browser matrix explicitly mandates pre-2024 web engines.
+
+---
+
+### 2. Strict Baseline-Aligned Stream Layout via Native Subgrid
+
+Enforce strict horizontal-to-vertical alignment across variable metadata (timestamp/tags) and journal reflections without tabular bloat.
+
+```css
+.log-stream {
+  display: grid;
+  grid-template-columns: 5ch 1fr;
+  row-gap: 1.5rem;
+  column-gap: 1.25rem;
+  align-items: baseline;
+}
+
+.log-entry {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+}
+
+.log-entry > time {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: #8f857d;
+  text-align: right;
+}
+
+.log-entry > p {
+  margin: 0;
+  line-height: 1.6;
+  color: #2d2623;
+}
+```
+→ skipped: complex flexbox baseline-shims and margin hacks. Add when: subgrid column count exceeds arbitrary 2-track metadata.
+
+---
+
+### 3. Anti-Slop UI Quietness (Micro-Actions on Context)
+
+Eliminate always-visible edit/delete visual noise to preserve metacognitive focus.
+
+```css
+.log-entry .log-controls {
+  opacity: 0;
+  transition: opacity 100ms ease;
+}
+
+.log-entry:is(:hover, :focus-within) .log-controls {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .log-entry .log-controls { opacity: 0.6; }
+}
+```
+→ skipped: drawer menus, action sheets, and modal wrappers. Add when: entry actions exceed 2 primitives (e.g., delete & edit).
