@@ -1264,3 +1264,96 @@ add when: Unsaved draft restoration via IndexedDB or multi-step prompt flows are
 * Skipped: JavaScript-based input autosizing and scroll trackers; add only if iOS 17 baseline compatibility is formally reported broken.
 * Skipped: Complex CSS grid framework and spacing classes; add utility tokens only when log views exceed 3 distinct entry variants.
 * Skipped: Empty-state illustration components; add inline text cue only if new-session telemetry shows entry abandonment.
+
+
+### Cycle #18 Directive (2026-11-02 22:48)
+### 1. Zero-JS Auto-Growing Entry Input
+
+```css
+/* ponytail: Native field-sizing handles auto-grow. Ceiling: Safari 17.4+ */
+.log-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 40vh;
+  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  width: 100%;
+}
+```
+→ skipped: JS `scrollHeight` event listeners and hidden clone divs.  
+→ add when: Legacy WebKit (< Safari 17.4) support is strictly required.
+
+---
+
+### 2. Streamlined Log Stream with Baseline Alignment
+
+```html
+<ol class="log-stream">
+  <li>
+    <time datetime="2025-05-14T08:00">08:00</time>
+    <p>Observed cognitive drift during review; reset via breath.</p>
+  </li>
+</ol>
+```
+
+```css
+.log-stream {
+  list-style: none;
+  padding-left: 1rem;
+  border-left: 1px solid var(--border-subtle, #ece9e2);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.log-stream li {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  align-items: first baseline;
+  gap: 0.75rem;
+}
+
+.log-stream time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--text-muted, #88847c);
+}
+```
+→ skipped: Timeline dot markers and SVG connectors.  
+→ add when: Multiple log categories or interactive status nodes are required.
+
+---
+
+### 3. Zen Warmth Tokens (Zero-Config Light/Dark)
+
+```css
+:root {
+  --bg-zen: #fcfbf9;
+  --text-main: #232220;
+  --text-muted: #85827b;
+  --border-subtle: #eeece6;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-zen: #141312;
+    --text-main: #ebe9e4;
+    --text-muted: #7e7a73;
+    --border-subtle: #262422;
+  }
+}
+
+body {
+  background: var(--bg-zen);
+  color: var(--text-main);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+```
+→ skipped: Theme-switching state stores and LocalStorage keys.  
+→ add when: Manual in-app toggle overrides system preference.
