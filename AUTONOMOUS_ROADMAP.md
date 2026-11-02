@@ -1159,3 +1159,61 @@ input?.addEventListener('keydown', (e) => {
 
 → skipped: JS auto-resize libraries, timeline SVG nodes, multi-div flex layouts.  
 → add when: explicit multi-day visual tagging or legacy browser support is demanded.
+
+
+### Cycle #16 Directive (2026-11-02 22:37)
+```css
+/* 1. Micro-aligned log stream with zero layout drift */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 65ch;
+  margin: 0 auto;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  align-items: first baseline;
+  gap: 1rem;
+}
+
+.log-entry time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+  color: var(--zen-muted, #8e8e93);
+}
+```
+skipped: Timeline connector line graphics and custom icon SVGs.
+add when: Non-linear journal branches or multi-day grouped hierarchies are required.
+
+```css
+/* 2. Zero-JS expanding conscious log textarea */
+.log-input {
+  /* ponytail: field-sizing requires Chrome 123+; falls back to static min-height */
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 12lh;
+  width: 100%;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.6;
+  border: 0;
+  outline: none;
+  background: transparent;
+  resize: none;
+}
+```
+skipped: Dynamic JS height-calculation scripts and duplicate mirror elements.
+add when: Strict legacy browser support requires synchronous manual resize syncing.
+
+```html
+<!-- 3. Minimal instant-capture hotkey pipeline -->
+<form method="POST" action="/api/logs" onkeydown="if((event.metaKey||event.ctrlKey)&&event.key==='Enter'){this.requestSubmit();}">
+  <textarea name="entry" class="log-input" placeholder="Observe without judging..." required autofocus></textarea>
+</form>
+```
+skipped: External form state libraries and synthetic hotkey provider trees.
+add when: Unsaved draft restoration via IndexedDB or multi-step prompt flows are implemented.
