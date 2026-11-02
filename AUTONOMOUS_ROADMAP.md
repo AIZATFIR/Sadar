@@ -1982,3 +1982,91 @@ Eliminate toolbar bloat; capture fleeting thoughts with minimal native form subm
 </form>
 ```
 `requestSubmit()` → skipped: floating action buttons and modal wrapper frameworks, add when rich-text formatting (bold, links, tags) is explicitly requested.
+
+
+### Cycle #28 Directive (2026-11-02 23:46)
+### 1. Auto-Expanding Reflection Input (Zero JS)
+
+```css
+/* sadar-input.css */
+.metacog-input {
+  /* ponytail: field-sizing requires Chromium 123+; falls back to static min-height */
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 35vh;
+  width: 100%;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  line-height: 1.65;
+  font-family: inherit;
+  color: var(--text-primary, #1c1c1e);
+}
+```
+skipped: JS resize listeners and hidden mirror-`div` calculations.  
+add when: Cross-browser parity on legacy Gecko/WebKit is explicitly required.
+
+---
+
+### 2. Tabular Baseline Vertical Alignment for Logs
+
+```css
+/* sadar-timeline.css */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  border-inline-start: 1px solid var(--border-zen, #e5e5ea);
+  margin-inline-start: 1rem;
+}
+
+.log-item {
+  display: grid;
+  grid-template-columns: 5ch 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+  padding: 0.625rem 0 0.625rem 1rem;
+}
+
+.log-item time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--text-muted, #8e8e93);
+}
+```
+skipped: Timeline icon nodes, absolute-positioned bullets, and JavaScript alignment guards.  
+add when: Non-linear or multi-day grouped branch visualizations are introduced.
+
+---
+
+### 3. Native Low-Friction Daily Disclosure
+
+```html
+<!-- sadar-day-group.html -->
+<details class="day-group" open>
+  <summary class="day-header">
+    <span class="day-label">Today</span>
+    <span class="day-count">3 observations</span>
+  </summary>
+  <div class="log-stream">
+    <!-- log-item entries -->
+  </div>
+</details>
+
+<style>
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary, #636366);
+  padding: 0.5rem 0;
+}
+.day-header::-webkit-details-marker { display: none; }
+</style>
+```
+skipped: State store, toggle handlers, and custom accordion animation libraries.  
+add when: Nested contextual filtering (e.g., tags, emotion vectors) requires deep search queries.
