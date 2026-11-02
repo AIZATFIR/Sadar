@@ -2315,3 +2315,48 @@ add when: log items require inline multi-action toolbars.
 ```
 skipped: custom popovers, headless comboboxes, floating indicator badges.  
 add when: multiple concurrent tags or color-coded telemetry are requested.
+
+
+### Cycle #32 Directive (2026-11-03 00:08)
+```css
+/* 1. Conscious Log Input: Native auto-expanding capture */
+.log-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 14lh;
+  line-height: 1.6;
+  resize: none;
+  /* ponytail: field-sizing fallback to 3-line static height; upgrade when legacy browser support is explicitly demanded */
+}
+```
+→ skipped: JS `input` auto-resize calculation scripts.  
+→ add when: Legacy non-Chromium browsers must support dynamic expansion.
+
+```css
+/* 2. Timeline Baseline Alignment: Optical text lockup */
+.log-row {
+  display: grid;
+  grid-template-columns: fit-content(5ch) 1fr;
+  align-items: first baseline;
+  column-gap: 1.25rem;
+}
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+  opacity: 0.55;
+}
+```
+→ skipped: Manual `padding-top: 2px` flex-nudge hacks.  
+→ add when: Meta column contains multi-row pill tags requiring independent vertical centering.
+
+```css
+/* 3. Zen Stream Separation: Native margin-collapsing rhythm */
+.log-stream > * + * {
+  margin-block-start: 1.5rem;
+  border-block-start: 1px solid color-mix(in srgb, currentColor 6%, transparent);
+  padding-block-start: 1.5rem;
+}
+```
+→ skipped: Dedicated `<hr>` DOM nodes and timeline line wrapper divs.  
+→ add when: Log groups require sticky day-separators.
