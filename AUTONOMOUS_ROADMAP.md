@@ -2360,3 +2360,124 @@ add when: multiple concurrent tags or color-coded telemetry are requested.
 ```
 → skipped: Dedicated `<hr>` DOM nodes and timeline line wrapper divs.  
 → add when: Log groups require sticky day-separators.
+
+
+### Cycle #33 Directive (2026-11-03 00:14)
+### 1. Optical Baseline Grid & Native Auto-Expanding Capture
+
+Eliminates JS text-measuring libraries and aligns timestamps optically to typography baselines.
+
+```css
+/* Layout & optical baseline sync */
+.log-row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  column-gap: 1.25rem;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.log-row time {
+  font-family: -apple-system-ui-monospace, ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+/* Zero-JS self-sizing journal input */
+.log-row textarea {
+  field-sizing: content; /* ponytail: native in Chromium 123+; fallback to min-height */
+  min-height: 1.5lh;
+  resize: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  line-height: 1.5;
+  outline: none;
+  color: var(--text-main);
+}
+```
+→ skipped: JS auto-resize listeners & rich-text editors.  
+→ add when: multi-block rich media or markdown preview is explicitly required.
+
+---
+
+### 2. Zero-JS Conscious State Picker (Segmented Control)
+
+Captures metacognitive posture (Observer vs. Reactor) directly inside the form payload with zero script overhead.
+
+```html
+<fieldset class="metacog-state">
+  <label><input type="radio" name="state" value="witness" checked><span>Witness</span></label>
+  <label><input type="radio" name="state" value="reactive"><span>Reactive</span></label>
+  <label><input type="radio" name="state" value="deliberate"><span>Deliberate</span></label>
+</fieldset>
+```
+
+```css
+.metacog-state {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  background: var(--bg-surface);
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  margin: 0;
+}
+.metacog-state input { position: absolute; opacity: 0; pointer-events: none; }
+.metacog-state span {
+  display: block;
+  padding: 2px 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--text-muted);
+  user-select: none;
+}
+.metacog-state input:checked + span {
+  background: var(--bg-canvas);
+  color: var(--text-main);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+```
+→ skipped: State management wrapper, tabindex cycling scripts.  
+→ add when: custom keyboard shortcut navigation (e.g., `1`, `2`, `3` mode triggers) is requested.
+
+---
+
+### 3. Tactile Zen Warmth Token Layer
+
+Replaces sterile monochrome with tactile Japanese paper tones (`#FAF8F5` / `#161514`).
+
+```css
+:root {
+  --bg-canvas: #faf8f5;
+  --bg-surface: #f2eee8;
+  --text-main: #1d1c19;
+  --text-muted: #8a877f;
+  --border-subtle: rgba(29, 28, 25, 0.07);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-canvas: #161514;
+    --bg-surface: #1f1d1b;
+    --text-main: #eae7e1;
+    --text-muted: #82807a;
+    --border-subtle: rgba(234, 231, 225, 0.08);
+  }
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+```
+→ skipped: Theme switcher UI and local storage theme syncing.  
+→ add when: manual light/dark toggle override is demanded by users.
