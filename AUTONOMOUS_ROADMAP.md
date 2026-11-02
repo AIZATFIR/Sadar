@@ -1918,3 +1918,67 @@ textarea.journal-input {
 ```
 → skipped: React/controlled-state onChange bindings and submit button chrome.  
 → add when: Offline syncing queue or multi-step draft validation is introduced.
+
+
+### Cycle #27 Directive (2026-11-02 23:40)
+### 1. Auto-Expanding Streamlined Reflection Input
+Replace JS-based auto-resize listeners with native CSS dynamic text sizing.
+
+```css
+/* sadar-journal.css */
+.log-input {
+  width: 100%;
+  field-sizing: content;
+  min-height: 1.6lh;
+  max-height: 15lh;
+  resize: none;
+  line-height: 1.6;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  /* ponytail: add JS scrollHeight fallback if supporting Safari < 17.4 */
+}
+```
+`field-sizing: content` → skipped: JS event listeners/virtual textareas, add when legacy Safari/Firefox engine support is strictly mandated.
+
+---
+
+### 2. Timeline Vertical Baseline Lock
+Standardize temporal metadata and reflection copy to share a true typography baseline.
+
+```css
+/* sadar-timeline.css */
+.entry-row {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  align-items: first baseline;
+  column-gap: 1.5rem;
+  padding: 0.5rem 0;
+}
+
+.entry-row time {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-stone-400);
+}
+
+.entry-row p {
+  margin: 0;
+  line-height: 1.5;
+}
+```
+`align-items: first baseline` → skipped: nested flex wrappers and manual line-height offsets, add when entry headers introduce multi-line meta tags.
+
+---
+
+### 3. Lightweight Keyboard-First Commit
+Eliminate toolbar bloat; capture fleeting thoughts with minimal native form submission.
+
+```html
+<!-- sadar-quicklog.html -->
+<form method="dialog" id="quicklog" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.requestSubmit();}">
+  <textarea class="log-input" name="entry" placeholder="Log conscious state..." required></textarea>
+</form>
+```
+`requestSubmit()` → skipped: floating action buttons and modal wrapper frameworks, add when rich-text formatting (bold, links, tags) is explicitly requested.
