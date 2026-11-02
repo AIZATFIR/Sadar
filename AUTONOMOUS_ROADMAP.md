@@ -3160,3 +3160,69 @@ Use `display: contents` to align micro-timestamps, emotional state cues, and jou
 }
 ```
 → skipped: flexbox wrappers and card containers per entry, add when cards require individual borders or gesture-driven swiping.
+
+
+### Cycle #43 Directive (2026-11-03 01:11)
+### 1. Baseline Vertical Rhythm for Log Feed
+
+```css
+/* Align timestamp and entry text directly to typography baselines */
+.log-stream {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1.5rem;
+  align-items: baseline;
+}
+
+.log-stream time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+  color: var(--muted, #8a817c);
+  text-align: right;
+}
+
+.log-stream article {
+  line-height: 1.5;
+  margin: 0;
+}
+```
+skipped: JS-driven virtualized list; add when entry count exceeds 1,000 DOM nodes.
+
+---
+
+### 2. Zero-JS Auto-Expanding Log Input
+
+```css
+/* Eliminates input height sync scripts and layout shift */
+.conscious-input {
+  width: 100%;
+  field-sizing: content; /* ponytail: native expansion; upgrade to scrollHeight fallback if supporting Safari <18 */
+  min-height: 3rem;
+  max-height: 30vh;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  line-height: 1.5;
+  padding: 0;
+}
+```
+skipped: Custom textarea auto-grow JS utility; add when Safari < 18 support is strictly required.
+
+---
+
+### 3. Native Cmd+Enter Submission & Empty Boundary
+
+```javascript
+// Single delegation for silent metacognition capture
+document.querySelector('#log-form')?.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    e.preventDefault();
+    if (e.target.value?.trim()) e.currentTarget.requestSubmit();
+  }
+});
+```
+skipped: Draft auto-saving to IndexedDB/LocalStorage; add when multi-paragraph entry support is needed.
