@@ -2544,3 +2544,95 @@ body {
 skipped: JS textarea auto-resize polyfills; add when Safari < 17.4 support is mandated.
 skipped: Mood/tag taxonomies; add when journal query latency degrades without indexed tags.
 skipped: Custom modal sheets; add when log metadata exceeds timestamp + raw text.
+
+
+### Cycle #35 Directive (2026-11-03 00:26)
+### 1. Optical Vertical Alignment & Zero-JS Auto-Growing Entry
+Replaces auto-resize JS helpers with native vertical rhythm units.
+
+```css
+/* sadar/styles/entry.css */
+.journal-input {
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 50vh;
+  line-height: 1.65;
+  padding-block: 0.5lh;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  resize: none;
+  /* ponytail: field-sizing unsupported in Safari < 17.4; upgrade to 3-line scrollHeight sync if strict legacy required */
+}
+```
+→ skipped: JS `input` event listener and height recalculation logic.  
+→ add when: Safari < 17.4 browser share exceeds project threshold.
+
+---
+
+### 2. Streamlined Log Stream Alignment (No Wrapper Slop)
+Aligns timestamp and reflection text along identical baselines without extra container `div`s.
+
+```html
+<!-- sadar/components/log-stream.html -->
+<ol class="log-stream">
+  <li>
+    <time datetime="2025-05-18T07:30">07:30</time>
+    <p>Observed reactionary tension before standup; reframed to passive curiosity.</p>
+  </li>
+</ol>
+```
+
+```css
+/* sadar/styles/log-stream.css */
+.log-stream {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.log-stream > li {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  align-items: baseline;
+  column-gap: 1.25rem;
+  margin-bottom: 1.25lh;
+}
+.log-stream time {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, currentColor 45%, transparent);
+}
+.log-stream p {
+  margin: 0;
+  line-height: 1.65;
+}
+```
+→ skipped: Nested layout divs, absolute-positioned timeline lines, date-formatting utility library.  
+→ add when: Timeline requires multi-day grouping headers or visual connecting tracks.
+
+---
+
+### 3. Apple-Warmth Surface & Subtle State Tokens
+Removes hard contrast borders in favor of warm ambient contrast.
+
+```css
+/* sadar/styles/theme.css */
+:root {
+  --bg-zen: #fcfbf9;
+  --ink-zen: #1e1d1b;
+  --hairline-zen: color-mix(in srgb, var(--ink-zen) 8%, transparent);
+}
+body {
+  background: var(--bg-zen);
+  color: var(--ink-zen);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+.journal-entry-card {
+  border-bottom: 1px solid var(--hairline-zen);
+}
+```
+→ skipped: CSS-in-JS theme provider and dark mode toggle.  
+→ add when: System `prefers-color-scheme: dark` is explicitly targeted.
