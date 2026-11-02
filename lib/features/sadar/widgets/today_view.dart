@@ -103,6 +103,10 @@ class _TodayViewState extends ConsumerState<TodayView> {
       dateString: _todayStr,
       delta: delta,
     );
+
+    ref.invalidate(dailyFulfillmentProvider);
+    ref.invalidate(whatIRepeatProvider);
+    ref.invalidate(awarenessStatsProvider);
   }
 
   Future<void> _toggleComplete(Habit habit, HabitStatus currentStatus) async {
@@ -120,6 +124,9 @@ class _TodayViewState extends ConsumerState<TodayView> {
           valueCompleted: target,
         );
         await repo.advanceProgression(habit.id);
+        ref.invalidate(dailyFulfillmentProvider);
+        ref.invalidate(whatIRepeatProvider);
+        ref.invalidate(awarenessStatsProvider);
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -151,6 +158,10 @@ class _TodayViewState extends ConsumerState<TodayView> {
       status: newStatus,
       valueCompleted: newStatus == HabitStatus.yes ? habit.target : 0,
     );
+
+    ref.invalidate(dailyFulfillmentProvider);
+    ref.invalidate(whatIRepeatProvider);
+    ref.invalidate(awarenessStatsProvider);
   }
 
   @override

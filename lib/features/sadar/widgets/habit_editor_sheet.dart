@@ -100,6 +100,9 @@ class _HabitEditorSheetState extends ConsumerState<HabitEditorSheet> {
 
     HapticFeedback.mediumImpact();
     await ref.read(sadarRepoProvider).upsertHabit(habit);
+    ref.invalidate(dailyFulfillmentProvider);
+    ref.invalidate(whatIRepeatProvider);
+    ref.invalidate(awarenessStatsProvider);
     widget.onSaved();
   }
 
@@ -107,6 +110,9 @@ class _HabitEditorSheetState extends ConsumerState<HabitEditorSheet> {
     if (widget.habit == null) return;
     HapticFeedback.heavyImpact();
     await ref.read(sadarRepoProvider).deleteHabit(widget.habit!.id);
+    ref.invalidate(dailyFulfillmentProvider);
+    ref.invalidate(whatIRepeatProvider);
+    ref.invalidate(awarenessStatsProvider);
     widget.onSaved();
   }
 
