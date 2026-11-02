@@ -1567,3 +1567,63 @@ console.assert(parseConsciousLog("Just sitting").state === "aware");
 ```
 * Skipped: Natural language parsing engines, client-side NLP libraries, and custom tag picker widgets.
 * Add when: Users require arbitrary key-value metadata schemas beyond baseline conscious states.
+
+
+### Cycle #22 Directive (2026-11-02 23:12)
+```css
+/* 1. Conscious Log: Native zero-JS auto-expanding input */
+.journal-input {
+  field-sizing: content;
+  min-height: 3.5rem;
+  max-height: 40vh;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  line-height: 1.65;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", serif;
+  color: #23201c;
+}
+
+/* 2. Vertical Alignment: Optical baseline snap for timeline stream */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  column-gap: 1.5rem;
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: #8a8278;
+}
+
+.log-text {
+  line-height: 1.65;
+  color: #23201c;
+}
+
+/* 3. Zen Focus Indicator: Subtle warm spine instead of heavy box-shadows */
+.journal-container {
+  background-color: #fcfbf8;
+  border-left: 1.5px solid #e7e2d9;
+  padding-left: 1.25rem;
+  /* ponytail: manual transition; upgrade to view transitions if multi-pane */
+  transition: border-color 180ms ease-out;
+}
+
+.journal-container:focus-within {
+  border-left-color: #796e62;
+}
+```
+
+skipped: JS `autosize` listeners; add when Firefox without `field-sizing` support drops below target threshold.
+skipped: Complex multi-column grid layout; add when side-by-side reflection tagging is explicitly introduced.
+skipped: Custom modal/sheet wrapper; keep log inline on the single zen surface until viewing density demands drawer splits.
