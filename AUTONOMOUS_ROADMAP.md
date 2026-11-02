@@ -2782,3 +2782,98 @@ Eliminate custom JavaScript dropdowns/popovers for daily state logging:
 ```
 skipped: React state tracking, custom modal overlays, or form click handlers.  
 add when: Multi-tag selections or user-defined custom categories are needed.
+
+
+### Cycle #38 Directive (2026-11-03 00:43)
+### 1. Zero-JS Auto-Growing Reflection Area
+
+```css
+/* sadar-input.css */
+.thought-textarea {
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 30lh;
+  line-height: 1.6;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-family: inherit;
+  /* ponytail: unsupported in legacy WebKit; add small JS scrollHeight listener if legacy support needed */
+}
+```
+skipped: JS resize listeners and extra wrapper divs.  
+add when: supporting legacy Safari/Firefox without `field-sizing` support.
+
+---
+
+### 2. Optical Baseline Alignment for Conscious Living Stream
+
+```css
+/* sadar-stream.css */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.25rem 1fr;
+  column-gap: 1.5rem;
+  align-items: baseline;
+  padding-block: 0.6lh;
+  border-bottom: 1px solid oklch(0.94 0.01 65);
+}
+
+.log-meta {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: oklch(0.55 0.02 50);
+  letter-spacing: -0.01em;
+  user-select: none;
+}
+
+.log-body {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: oklch(0.2 0.01 50);
+}
+```
+skipped: custom flexbox hack offsets and manual vertical-align margins.  
+add when: entry requires dynamic multi-column tags or rich media attachments.
+
+---
+
+### 3. Native Streamlined Day-Grouping (Zero-JS Accordion)
+
+```html
+<!-- sadar-day-group.html -->
+<details name="journal-days" class="day-group" open>
+  <summary class="day-header">
+    <time datetime="2025-05-14">Today</time>
+    <span class="day-count">4 notes</span>
+  </summary>
+  <div class="log-stream">
+    <!-- .log-entry items -->
+  </div>
+</details>
+
+<style>
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-block: 0.5lh;
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: oklch(0.45 0.02 60);
+}
+.day-header::-webkit-details-marker { display: none; }
+</style>
+```
+skipped: React/Alpine open/close state machines and external UI packages.  
+add when: animated height transitions or persisted open/close state across sessions are required.
