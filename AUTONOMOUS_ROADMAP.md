@@ -6966,3 +6966,74 @@ Replaces complex timeline components with an ultra-light floating time marker.
 ```
 skipped: Scroll-spies, JS timeline observers, and relative-time ticker libraries.  
 add when: Live time-ago updates ("2m ago") are explicitly requested.
+
+
+### Cycle #92 Directive (2026-11-03 05:45)
+### 1. Baseline Typographic Stream (Replaces Flexbox Timeline Slop)
+
+```css
+.log-stream {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 1.5rem;
+  row-gap: 1.2lh;
+  align-items: baseline;
+}
+
+.log-stream time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  opacity: 0.45;
+}
+```
+skipped: timeline node pseudo-elements, nested alignment wrappers, and JS layout measurements.  
+add when: connected graphical timeline stems/nodes are explicitly required.
+
+---
+
+### 2. Auto-Expanding Zen Input (Replaces JS Autosize)
+
+```css
+.journal-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 45vh;
+  line-height: 1.6;
+  padding: 0.2lh 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  width: 100%;
+}
+/* ponytail: fallback to input event scrollHeight clamping if Safari <18 support required */
+```
+skipped: hidden mirror `div` calculation hacks and `autosize.js` dependency.  
+add when: targeted browser demographic lacks CSS `field-sizing` support.
+
+---
+
+### 3. Native Metacognitive State Capture
+
+```html
+<fieldset class="state-toggle">
+  <label><input type="radio" name="presence" value="reactive" checked><span>Reactive</span></label>
+  <label><input type="radio" name="presence" value="observing"><span>Observing</span></label>
+  <label><input type="radio" name="presence" value="still"><span>Still</span></label>
+</fieldset>
+```
+```css
+.state-toggle { border: 0; padding: 0; margin: 0; display: inline-flex; gap: 0.375rem; }
+.state-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+.state-toggle span {
+  padding: 0.2lh 0.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  background: color-mix(in srgb, currentColor 5%, transparent);
+}
+.state-toggle input:checked + span {
+  background: color-mix(in srgb, currentColor 15%, transparent);
+  font-weight: 500;
+}
+```
+skipped: custom dropdown component, click-outside hooks, and ARIA re-inventions.  
+add when: taxonomy requires custom user-defined tags or multi-select filtering.
