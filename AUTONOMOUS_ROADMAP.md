@@ -6253,3 +6253,100 @@ add when: nodes require interactive milestone states or distinct semantic icons.
 ```
 → skipped: React/JS state toggles, backdrop overlays, and focus traps.  
 → add when: Prompts require multi-step branching validation.
+
+
+### Cycle #84 Directive (2026-11-03 05:00)
+### 1. Optical Baseline Vertical Alignment for Logs
+
+```css
+/* journal-stream.css */
+.log-entry {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+  padding-block: 0.65lh;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.log-meta {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  opacity: 0.5;
+}
+
+.log-body {
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+```
+→ skipped: JS-based alignment observers or bespoke flex spacers. Add subgrid when entry metadata expands to multi-column layouts.
+
+---
+
+### 2. Auto-Expanding Streamlined Input (Zero JS)
+
+```css
+/* quick-input.css */
+.journal-input {
+  field-sizing: content; /* ponytail: native auto-grow; relies on modern baseline (Chrome 123+, Safari TP) */
+  min-height: 1.6lh;
+  max-height: 35vh;
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  line-height: 1.6;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.journal-input::placeholder {
+  color: color-mix(in srgb, currentColor 35%, transparent);
+}
+```
+→ skipped: Textarea resizing libraries / input scroll sync scripts. Add simple `scrollHeight` event handler only if legacy Safari support is mandated.
+
+---
+
+### 3. Native Low-Friction Awareness State Selector
+
+```html
+<!-- log-state.html -->
+<fieldset class="state-picker" aria-label="Awareness State">
+  <label><input type="radio" name="state" value="grounded" checked> <span>Grounded</span></label>
+  <label><input type="radio" name="state" value="drifting"> <span>Drifting</span></label>
+  <label><input type="radio" name="state" value="reactive"> <span>Reactive</span></label>
+</fieldset>
+```
+
+```css
+/* log-state.css */
+.state-picker {
+  display: inline-flex;
+  gap: 0.5rem;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.8125rem;
+}
+
+.state-picker input {
+  appearance: none;
+  margin: 0;
+}
+
+.state-picker span {
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 120ms ease;
+}
+
+.state-picker label:has(:checked) span {
+  opacity: 1;
+  font-weight: 500;
+}
+```
+→ skipped: Custom dropdown popover, icon sets, complex state management. Add persistence/custom state attributes when logging requires multi-tag metadata.
