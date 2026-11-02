@@ -909,3 +909,64 @@ export const logStore = {
 console.assert(logStore.add({ impulse: "rushing", witness: "felt tight chest" }).t > 0);
 ```
 → skipped: State machines, validation libraries, and ORM abstractions, add when: background cloud synchronization is actively provisioned.
+
+
+### Cycle #12 Directive (2026-11-02 22:14)
+### 1. Native Auto-Growing Journal Input (Drop JS resize handlers)
+
+```css
+/* sadar-input.css */
+.journal-entry-input {
+  field-sizing: content; /* ponytail: evergreen browsers only; fallback to min-height */
+  min-height: 3lh;
+  line-height: 1.6;
+  width: 100%;
+  resize: none;
+  background: transparent;
+  border: 0;
+  outline: none;
+  font-family: inherit;
+}
+```
+skipped: ResizeObserver/JS height calculation scripts.  
+add when: Firefox-without-flag support becomes a strict requirement.
+
+---
+
+### 2. Tabular Baseline Grid for Conscious Living Logs
+
+```css
+/* sadar-timeline.css */
+.log-stream {
+  display: grid;
+  grid-template-columns: [time] 4.5rem [entry] 1fr;
+  row-gap: 0.75lh;
+  column-gap: 1.5rem;
+  align-items: baseline;
+}
+
+.log-stream time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--color-stone-muted, #8a8886);
+}
+```
+skipped: Flexbox margins, negative offsets, and manual alignment hacks.  
+add when: Multi-column metadata (tags, states) exceeds two track definitions.
+
+---
+
+### 3. Zero-JS Instant Local Draft Recovery
+
+```html
+<!-- index.html -->
+<form id="journal-form" oninput="localStorage.setItem('sadar_draft', this.entry.value)">
+  <textarea name="entry" class="journal-entry-input" placeholder="Observe without judging..."></textarea>
+</form>
+<script>
+  journalForm = document.getElementById('journal-form');
+  journalForm.entry.value = localStorage.getItem('sadar_draft') || '';
+</script>
+```
+skipped: Debounce utilities, storage wrappers, and mutation frameworks.  
+add when: Draft payload size causes main-thread frame drops (unlikely for plain text).
