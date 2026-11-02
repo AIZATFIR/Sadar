@@ -3661,3 +3661,68 @@ console.assert(formatLogTime(new Date(Date.now() - 5 * 60000)) === '5 min. ago')
 ```
 * Skipped: `date-fns`, `dayjs`, custom formatting matrices.
 * Add when: Locale switching or calendar-pinned dates are needed.
+
+
+### Cycle #50 Directive (2026-11-03 01:51)
+### 1. Zero-JS Auto-Expanding Log Input
+
+```css
+/* conscious-living auto-expanding log field */
+textarea.log-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 18lh;
+  resize: none;
+  line-height: 1.6;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  /* ponytail: fallback to js resize listener if legacy iOS < 17.4 is required */
+}
+```
+→ skipped: [ResizeObserver / JS height listeners], add when [supporting browsers older than 2024].
+
+---
+
+### 2. Typographic Baseline Vertical Cadence
+
+```css
+/* strict timeline vertical alignment */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5lh;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  align-items: baseline;
+  column-gap: 1.25rem;
+}
+
+.log-entry time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  opacity: 0.45;
+}
+```
+→ skipped: [Arbitrary pixel padding and flex-centering hacks], add when [metadata supports multi-line badge attachments].
+
+---
+
+### 3. Zen Warmth Surface (Apple-grade Minimal Border)
+
+```css
+/* warm neutral surface without utility bloat */
+.journal-card {
+  --tint: #f6eedb;
+  background: color-mix(in srgb, var(--bg, #fff) 93%, var(--tint));
+  border: 1px solid color-mix(in srgb, currentColor 7%, transparent);
+  border-radius: 10px;
+  padding: 1lh 1.25rem;
+}
+```
+→ skipped: [Multi-layered shadow utilities and heavy CSS palettes], add when [multi-theme elevation tokens become mandatory].
