@@ -3432,3 +3432,84 @@ add when: log size crosses 5MB or background sync is introduced.
 
 skipped: Autosize JS plugins, card wrappers, and absolute-positioned timeline SVG icons.  
 add when: Browser targeting requires Safari 17 full auto-expand parity (use 3-line `scrollHeight` sync).
+
+
+### Cycle #47 Directive (2026-11-03 01:34)
+### 1. Zero-JS Auto-Expanding Input for Thought Capture
+
+```css
+.conscious-log-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 12lh;
+  line-height: 1.6;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+}
+```
+→ skipped: JS `input` event auto-height calculation handlers and wrapper shadow divs.  
+→ add when: explicit fallback required for pre-2024 browsers lacking `field-sizing`.
+
+---
+
+### 2. Optical Baseline Alignment & Zen Spine for Metacognition Stream
+
+```css
+.log-stream {
+  list-style: none;
+  padding: 0;
+  margin-left: 3rem;
+  border-left: 1px solid color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 5ch 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+  padding-block: 0.35lh;
+  padding-left: 1rem;
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+  color: color-mix(in srgb, currentColor 45%, transparent);
+}
+```
+→ skipped: heavy card shells, flexbox alignment hacks, and layout wrapper nodes.  
+→ add when: entries need multi-column asset previews or nested reply trees.
+
+---
+
+### 3. Native Backdrop & Dismiss for Quick-Capture Sheet
+
+```html
+<dialog id="quick-capture" onclick="event.target === this && this.close()" class="capture-dialog">
+  <form method="dialog">
+    <textarea class="conscious-log-input" placeholder="Current state of awareness..." autofocus required></textarea>
+  </form>
+</dialog>
+
+<style>
+.capture-dialog {
+  border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  border-radius: 8px;
+  background: #fdfdfc;
+  padding: 1.5rem;
+  max-width: 480px;
+  width: 90vw;
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.05);
+}
+.capture-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(2px);
+}
+</style>
+```
+→ skipped: React portals, overlay context managers, and custom ESC/click-outside listeners.  
+→ add when: multi-step state persistence or drag-to-dismiss sheet gestures are explicitly needed.
