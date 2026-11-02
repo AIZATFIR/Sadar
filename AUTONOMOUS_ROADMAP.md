@@ -970,3 +970,71 @@ add when: Multi-column metadata (tags, states) exceeds two track definitions.
 ```
 skipped: Debounce utilities, storage wrappers, and mutation frameworks.  
 add when: Draft payload size causes main-thread frame drops (unlikely for plain text).
+
+
+### Cycle #13 Directive (2026-11-02 22:20)
+### 1. Zero-JS Auto-Expanding Log Field
+
+```css
+/* Replaces JS textarea auto-grow listeners */
+.log-input {
+  field-sizing: content;
+  min-height: 1.5lh;
+  max-height: 20lh;
+  line-height: 1.5;
+  font-family: inherit;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+}
+```
+skipped: JS scrollHeight recalculation and ResizeObserver boilerplate.  
+add when: Supporting browsers without CSS `field-sizing` (Chromium <123, Safari <18.2).
+
+---
+
+### 2. Baseline-Locked Timeline Grid
+
+```css
+/* Optical baseline vertical alignment for conscious logs */
+.log-stream {
+  display: grid;
+  grid-template-columns: 5ch 1fr;
+  column-gap: 1.5ch;
+  row-gap: 0.75lh;
+  align-items: baseline;
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--muted, #737373);
+  user-select: none;
+}
+
+.log-content {
+  line-height: 1.5;
+  margin: 0;
+}
+```
+skipped: Margin-hack timeline spacing and decorative absolute-positioned timeline lines.  
+add when: Multi-dimensional log metadata (mood, tags, coordinates) demands `subgrid`.
+
+---
+
+### 3. Native Frictionless Entry Submission
+
+```js
+// ponytail: desktop-only shortcut; upgrade path adds mobile swipe-to-commit gesture
+document.querySelector('#log-form textarea')?.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    e.preventDefault();
+    e.currentTarget.form?.requestSubmit();
+  }
+});
+```
+skipped: Hotkey managers, rich-text markdown libraries, bespoke validation managers.  
+add when: Sadar gains a global Command-K palette.
