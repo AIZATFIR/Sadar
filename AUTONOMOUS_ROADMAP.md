@@ -2877,3 +2877,72 @@ add when: entry requires dynamic multi-column tags or rich media attachments.
 ```
 skipped: React/Alpine open/close state machines and external UI packages.  
 add when: animated height transitions or persisted open/close state across sessions are required.
+
+
+### Cycle #39 Directive (2026-11-03 00:48)
+### 1. Auto-Expanding Journal Input (Native CSS)
+```css
+/* Replace JS auto-resize libraries and wrapper containers */
+textarea.log-input {
+  field-sizing: content;
+  min-height: 3lh;
+  line-height: 1.6;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-family: inherit;
+  width: 100%;
+}
+```
+→ skipped: `ResizeObserver` / JS height calculation scripts.  
+→ add when: target engine requires Firefox < 131 support.
+
+---
+
+### 2. Strict Baseline Rhythm for Living Logs
+```css
+/* Snap timestamps, mood tokens, and logs to a single typographic baseline */
+.log-row {
+  display: grid;
+  grid-template-columns: 4.5ch 1fr;
+  column-gap: 1.25rem;
+  align-items: first baseline;
+  padding-block: 0.625rem;
+  border-block-end: 1px solid color-mix(in srgb, currentColor 7%, transparent);
+}
+
+.log-row time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  opacity: 0.45;
+}
+```
+→ skipped: nested layout wrappers and flex vertical-centering hacks.  
+→ add when: multi-line timestamp metadata (e.g., date ranges) is explicitly introduced.
+
+---
+
+### 3. Streamlined Conscious Living Log Markup
+```html
+<!-- Kill card/box-shadow container slop: flat semantic row with inline cue -->
+<article class="log-row">
+  <time datetime="06:45">06:45</time>
+  <p>
+    <data value="present" class="log-cue">present</data>
+    Morning stillness. Unhurried breath before opening screen.
+  </p>
+</article>
+```
+```css
+.log-cue {
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-inline-end: 0.5ch;
+  opacity: 0.6;
+  /* ponytail: inline text cues ceiling; upgrade to interactive filter chips only if log volume exceeds single-page review */
+}
+```
+→ skipped: dedicated badge components and pill container styling.  
+→ add when: interactive tag filtering or taxonomy querying is implemented.
