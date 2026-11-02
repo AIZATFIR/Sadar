@@ -5047,3 +5047,102 @@ Ground continuous conscious logs with silent, hardware-accelerated markers.
 ```
 skipped: scroll-spy state machines and JS sticky polyfills.  
 add when: entries must collapse or fold per date via manual interaction.
+
+
+### Cycle #67 Directive (2026-11-03 03:25)
+### 1. Baseline-Locked Log Stream (Native 2-Column Grid)
+
+Aligns entry timestamps and multi-line thoughts to identical typographic baselines across all viewports without wrapping containers.
+
+```css
+.log-stream {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  column-gap: 1.5rem;
+  row-gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.log-entry {
+  display: contents; /* ponytail: assumes 2 direct children (<time>, <p>); upgrade to explicit subgrid if nesting deepens */
+}
+
+.log-entry time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--zen-muted, #8a8279);
+  padding-top: 1px; /* Optical optical-axis micro-offset for native caps */
+}
+
+.log-entry p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--zen-ink, #2a2622);
+}
+```
+→ skipped: JS-based alignment observers and column wrappers.  
+→ add when: entries require nested flex layouts with dynamic action panels.
+
+---
+
+### 2. Zero-JS Growing Micro-Prompt (Native UI)
+
+A seamless conscious capture area that expands with the user's reflection; eliminates DOM-measuring scripts.
+
+```html
+<form class="quick-log" action="/log" method="POST">
+  <textarea 
+    name="entry" 
+    placeholder="What is present right now?" 
+    rows="1" 
+    required
+    style="
+      width: 100%;
+      field-sizing: content;
+      min-height: 1.6lh;
+      line-height: 1.6;
+      border: none;
+      outline: none;
+      background: transparent;
+      resize: none;
+      padding: 0;
+      font-family: inherit;
+    "
+  ></textarea>
+</form>
+```
+→ skipped: Auto-resize JavaScript text-listeners and shadow clone divs.  
+→ add when: Older Safari/Firefox support without `field-sizing` is strictly required (fallback: small 3-line scroll script).
+
+---
+
+### 3. Zen Anti-Shift Surface Container
+
+Stops layout drift during stream updates and anchors vertical rhythm.
+
+```css
+:root {
+  --zen-bg: #fcfbf9;
+  --zen-ink: #2a2622;
+  --zen-muted: #8a8279;
+}
+
+body {
+  background-color: var(--zen-bg);
+  color: var(--zen-ink);
+  scrollbar-gutter: stable; /* Stops horizontal jump on stream mutation */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.journal-container {
+  max-width: 42ch; /* Optimal reading measure for contemplative pacing */
+  margin-inline: auto;
+  padding-block: 15vh 8vh; /* Zen breathing room: asymmetric top weight */
+}
+```
+→ skipped: Complex theme engine / dynamic CSS-in-JS abstractions.  
+→ add when: User-toggled dark mode or custom palettes are introduced.
