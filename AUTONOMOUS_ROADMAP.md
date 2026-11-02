@@ -2481,3 +2481,66 @@ body {
 ```
 → skipped: Theme switcher UI and local storage theme syncing.  
 → add when: manual light/dark toggle override is demanded by users.
+
+
+### Cycle #34 Directive (2026-11-03 00:20)
+```css
+/* 1. Optical baseline rhythm & tabular timestamps for logs */
+.log-stream {
+  display: grid;
+  row-gap: 0.5rem;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  column-gap: 0.875rem;
+  /* ponytail: 2-column ceiling; upgrade to subgrid when adding category/mood tags */
+}
+
+.log-entry time {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted, #78716c);
+}
+
+.log-entry p {
+  margin: 0;
+  line-height: 1.45;
+  color: var(--text-main, #292524);
+}
+
+/* 2. Zero-JS expanding quick-entry for conscious living logs */
+.log-input {
+  field-sizing: content;
+  min-height: 1.45lh;
+  max-height: 10lh;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle, #e7e5e4);
+  background: transparent;
+  padding: 0 0 0.25rem 0;
+  outline: none;
+  resize: none;
+  line-height: 1.45;
+  color: inherit;
+}
+
+.log-input:focus {
+  border-color: var(--text-muted, #78716c);
+}
+```
+
+```html
+<!-- 3. Streamlined single-action log form -->
+<form class="log-entry" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.requestSubmit();}">
+  <time datetime="" id="live-time">Now</time>
+  <textarea name="entry" class="log-input" placeholder="Note conscious state..." required></textarea>
+</form>
+```
+
+skipped: JS textarea auto-resize polyfills; add when Safari < 17.4 support is mandated.
+skipped: Mood/tag taxonomies; add when journal query latency degrades without indexed tags.
+skipped: Custom modal sheets; add when log metadata exceeds timestamp + raw text.
