@@ -1116,3 +1116,46 @@ input?.addEventListener('keydown', (e) => {
 });
 ```
 → skipped: State store abstractions and form wrapper boilerplate, add when: offline persistence or multi-field metadata tags are introduced.
+
+
+### Cycle #15 Directive (2026-11-02 22:31)
+```css
+/* 1. Auto-expanding log entry: Native CSS replaces JS resize listeners */
+.log-input {
+  field-sizing: content; /* ponytail: fallback to rows="1" on older browsers */
+  min-height: 1.5lh;
+  max-height: 12lh;
+  line-height: 1.5;
+  border: none;
+  border-bottom: 1px solid var(--border, #e5e5ea);
+  background: transparent;
+  resize: none;
+  font: inherit;
+}
+
+/* 2. Streamlined timeline spine: 2-column baseline alignment without DOM wrappers */
+.log-stream {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1rem;
+  row-gap: 1.25lh;
+  align-items: baseline;
+  padding-inline-start: 0.75rem;
+  border-inline-start: 1px solid var(--spine, #e5e5ea);
+}
+.log-stream time {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted, #8e8e93);
+}
+```
+
+```html
+<!-- 3. Minimal capture form: inline submit on Enter -->
+<form class="log-form" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.requestSubmit();}">
+  <textarea name="entry" class="log-input" placeholder="Record awareness..." required></textarea>
+</form>
+```
+
+→ skipped: JS auto-resize libraries, timeline SVG nodes, multi-div flex layouts.  
+→ add when: explicit multi-day visual tagging or legacy browser support is demanded.
