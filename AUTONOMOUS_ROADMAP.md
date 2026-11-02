@@ -5993,3 +5993,65 @@ export function recordConsciousLog(formEl, onPersist) {
 ```
 → skipped: WYSIWYG/Markdown heavy editor state stores.  
 → add when: logs require nested blocks or inline attachments.
+
+
+### Cycle #80 Directive (2026-11-03 04:38)
+### 1. Zero-JS Auto-Expanding Micro-Log Input
+
+```css
+/* Replaces auto-resize JS libraries with native baseline */
+.log-input {
+  field-sizing: content;
+  min-height: 1.5lh;
+  max-height: 10lh;
+  line-height: 1.5;
+  padding: 0;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-family: inherit;
+  /* ponytail: manual scroll on overflow; add JS auto-grow only if legacy Safari <17.4 support is required */
+}
+```
+skipped: ResizeObserver JS listeners, height recalculation loops.  
+add when: Supporting legacy WebKit runtimes without `field-sizing`.
+
+---
+
+### 2. Optical Baseline Alignment for Conscious Timeline Logs
+
+```css
+/* Snaps timestamp to first text baseline, eliminating wrapper div bloat */
+.log-stream {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  row-gap: 1.25rem;
+  column-gap: 1.5rem;
+  align-items: first baseline;
+}
+
+.log-stream > time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--color-subtle, #767676);
+}
+```
+skipped: Flex centering hacks, negative margins, wrapper `div`s.  
+add when: Entries require multi-column structured meta tags (use subgrid).
+
+---
+
+### 3. Inline Zero-Modal Quick Capture
+
+```html
+<!-- Native single-keystroke submit without modal overhead -->
+<form action="/api/logs" method="POST" class="log-stream"
+      onkeydown="if(event.key==='Enter'&&(event.metaKey||event.ctrlKey)){event.preventDefault();this.requestSubmit();}">
+  <time datetime="now">just now</time>
+  <textarea name="content" class="log-input" placeholder="Acknowledge current state..." required autofocus></textarea>
+</form>
+```
+skipped: Dialog/modal overlay scaffolding, draft local-storage sync.  
+add when: Unsaved state needs persistence across accidental page reloads.
