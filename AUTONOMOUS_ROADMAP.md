@@ -1217,3 +1217,50 @@ add when: Strict legacy browser support requires synchronous manual resize synci
 ```
 skipped: External form state libraries and synthetic hotkey provider trees.
 add when: Unsaved draft restoration via IndexedDB or multi-step prompt flows are implemented.
+
+
+### Cycle #17 Directive (2026-11-02 22:43)
+```css
+/* 1. Streamlined log input: native auto-grow, zero JS textarea autosize listeners */
+.log-input {
+  field-sizing: content;
+  min-height: 2.5lh;
+  max-height: 40vh;
+  resize: none;
+  line-height: 1.6;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-family: inherit;
+  /* ponytail: fallback to ResizeObserver auto-height if iOS < 18 support is strictly required */
+}
+
+/* 2. Vertical micro-alignment: lock timestamps to first-line copy baseline */
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: first baseline;
+  column-gap: 1.25rem;
+  padding-block: 0.75rem;
+}
+.log-entry time {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-subtle, oklch(0.55 0.01 60));
+}
+
+/* 3. Zen vertical cadence: optical page-centering with margin collapse prevention */
+.journal-canvas {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  max-width: 60ch;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  margin-trim: block;
+}
+```
+
+* Skipped: JavaScript-based input autosizing and scroll trackers; add only if iOS 17 baseline compatibility is formally reported broken.
+* Skipped: Complex CSS grid framework and spacing classes; add utility tokens only when log views exceed 3 distinct entry variants.
+* Skipped: Empty-state illustration components; add inline text cue only if new-session telemetry shows entry abandonment.
