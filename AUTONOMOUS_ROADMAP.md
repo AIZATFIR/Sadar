@@ -3022,3 +3022,66 @@ Eliminate extra wrappers and spacing recalculations for the conscious living tim
 }
 ```
 `gap: 1.5lh` + `margin-trim` → skipped: wrapper padding resets; add manual `:first-child`/`:last-child` overrides if target browser engine lacks CSS Box Alignment Level 3.
+
+
+### Cycle #41 Directive (2026-11-03 01:00)
+### 1. Optical Vertical Rhythm & Native Dynamic Input
+
+```css
+/* Replace JS textarea autosizers and arbitrary paddings */
+.journal-input {
+  field-sizing: content;
+  min-height: 3lh;
+  line-height: 1.6;
+  font-family: ui-serif, -apple-system-ui-serif, Georgia, serif;
+  padding: 0.5lh 0;
+  border: 0;
+  outline: none;
+  resize: none;
+  background: transparent;
+  /* ponytail: field-sizing unsupported in legacy Firefox/Safari; fallback to min-height */
+}
+```
+`[code]` → skipped: JS-based height calculation listeners; add when supporting Safari < 17.4 or legacy Firefox without fallback tolerance.
+
+---
+
+### 2. Tabular Log Alignment with Baseline Locking
+
+```css
+/* Crisp 2-column metacognition entry with tabular numbers */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+}
+.log-row {
+  display: grid;
+  grid-template-columns: 5ch 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+  padding: 0.4lh 0;
+  border-bottom: 1px solid oklch(0.5 0.01 40 / 0.08);
+}
+.log-row time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: oklch(0.5 0.02 50);
+}
+```
+`[code]` → skipped: Complex virtualized timeline layout; add when local logs exceed 2,000 un-paginated DOM elements.
+
+---
+
+### 3. Native Zero-State Hotkey Capture for Fast Logging
+
+```html
+<form 
+  class="log-form" 
+  action="/api/logs" 
+  method="POST" 
+  onkeydown="if((event.metaKey || event.ctrlKey) && event.key === 'Enter') this.requestSubmit()"
+>
+  <textarea name="entry" class="journal-input" placeholder="Record metacognition..." required></textarea>
+</form>
+```
+`[code]` → skipped: Keybinding state manager/listener libraries; add when non-submit multi-key chord shortcuts are required.
