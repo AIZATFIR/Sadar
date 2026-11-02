@@ -5278,3 +5278,96 @@ Replaces jarring default blue focus rings with an offset, optical-glow warm ring
 }
 ```
 → skipped: complex CSS animations; add when implementing spatial interaction audio or haptics.
+
+
+### Cycle #70 Directive (2026-11-03 03:42)
+### 1. Frictionless Text Input via Native Auto-Expand
+
+Replace JS auto-resizers with native `field-sizing` locked to standard typographic line-heights.
+
+```css
+.conscious-log-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 40vh;
+  line-height: 1.6;
+  padding: 0.25lh 0;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: none;
+  font-family: inherit;
+  color: var(--text-primary, #1c1b1a);
+}
+```
+skipped: JS scrollHeight observers and measuring clones; add when support for Chromium < 123 / Safari < 18 is required.
+
+---
+
+### 2. Streamlined Baseline Stream Alignment
+
+Lock entry timestamps to the exact typographic baseline of the journal text without flex offset hacks.
+
+```css
+.log-stream {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1.5lh;
+  align-items: baseline; /* Optical lock */
+}
+
+.log-timestamp {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted, #8a8880);
+  user-select: none;
+}
+```
+skipped: Flexbox wrapper divs and negative margin shifts; add when timestamps require multi-line nested metadata.
+
+---
+
+### 3. Native State-Pill Picker (Zero-JS Metacognition Toggles)
+
+Track awareness states (Reactive, Observing, Present) with pure semantic inputs and zen styling.
+
+```html
+<fieldset class="awareness-picker">
+  <label><input type="radio" name="state" value="reactive" checked><span>Reactive</span></label>
+  <label><input type="radio" name="state" value="observing"><span>Observing</span></label>
+  <label><input type="radio" name="state" value="present"><span>Present</span></label>
+</fieldset>
+```
+
+```css
+.awareness-picker {
+  display: inline-flex;
+  gap: 0.375rem;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+.awareness-picker input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.awareness-picker span {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+  border-radius: 999px;
+  background: var(--pill-bg, #f2f0eb);
+  color: var(--pill-fg, #706e68);
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+.awareness-picker input:checked + span {
+  background: var(--pill-active-bg, #2d2b28);
+  color: #faf9f6;
+}
+```
+skipped: Custom dropdowns, ARIA combobox state logic, and external icon assets; add when tag lists exceed 5 entries or become user-configurable.
