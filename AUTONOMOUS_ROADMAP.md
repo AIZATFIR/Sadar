@@ -551,3 +551,64 @@ document.querySelector("#conscious-form")?.addEventListener("keydown", (e) => {
 }
 ```
 `[code] → skipped: [sidebar/dashboard grid shells], add when [dense analytics/history search is explicitly required].`
+
+
+### Cycle #7 Directive (2026-11-02 21:46)
+### 1. Vertical Rhythm: Baseline-Aligned Stream
+
+```css
+.log-stream {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1.5lh;
+  align-items: baseline;
+}
+
+.log-stream time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--text-muted, #8a8178);
+  white-space: nowrap;
+}
+
+.log-stream .entry-content {
+  margin: 0;
+  line-height: 1.6;
+}
+```
+skipped: Flexbox margins & multi-column wrapping logic; add when logs support inline media attachments.
+
+---
+
+### 2. Streamlined Log Capture: Native Auto-Grow
+
+```css
+.entry-field {
+  field-sizing: content; /* ponytail: modern baseline; upgrade with JS scrollHeight calc only if Firefox ESR support is mandatory */
+  width: 100%;
+  min-height: 1.6lh;
+  max-height: 15lh;
+  resize: none;
+  line-height: 1.6;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+```
+skipped: `resize` event listeners and hidden dummy `div` synchronizers; add when older Gecko-engine telemetry demands it.
+
+---
+
+### 3. Conscious Log Separators: Native Semantic Anchors
+
+```html
+<ol class="log-stream">
+  <time datetime="2024-10-24T08:30">08:30</time>
+  <div class="entry-content">Noticing attachment to today's shipping velocity. Dropped the tension.</div>
+
+  <time datetime="2024-10-24T12:15">12:15</time>
+  <div class="entry-content">Energy dip post-prandial. 10m breath awareness before code review.</div>
+</ol>
+```
+skipped: Date grouping wrappers and card-container UI bloat; add when aggregate multi-day search and pagination become active requirements.
