@@ -5652,3 +5652,73 @@ function submitEntry(form) {
 skipped: dynamic scrollbar customizers and JS textarea autosize listeners; add only if targeting Safari < 17.4.  
 skipped: card containers/box-shadows; add only if logs become drag-and-drop units.  
 skipped: category tagging filters; add when log frequency exceeds 20 items per day.
+
+
+### Cycle #75 Directive (2026-11-03 04:10)
+### 1. Zero-JS Auto-Expanding Capture Field
+
+Replace textarea height calculation scripts with native CSS auto-sizing tied to line-height units.
+
+```css
+.awareness-input {
+  width: 100%;
+  field-sizing: content; /* ponytail: fallback to js height sync if legacy Safari support is mandated */
+  min-height: 2lh;
+  max-height: 18lh;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  font: 1rem/1.6 system-ui, -apple-system, sans-serif;
+  padding: 0;
+}
+```
+→ skipped: JS `scrollHeight` event listeners and hidden clone divs.  
+→ add when: Safari < 17.4 or Firefox compatibility without flag is strictly required.
+
+---
+
+### 2. Baseline-Locked Log Stream (Precision Alignment)
+
+Align timestamps, metacognitive tags, and thought fragments to the exact typographic baseline.
+
+```css
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5lh;
+  padding-block: 2lh;
+  margin-inline: auto;
+  max-width: 42rem;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: first baseline;
+  column-gap: 1.25rem;
+}
+
+.log-entry time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--color-warm-muted, #8f8a85);
+}
+```
+→ skipped: Absolute positioning hacks and flex margin offsets.  
+→ add when: Multi-line metadata badges demand dynamic wrapping layouts.
+
+---
+
+### 3. Streamlined Capture Action via Native Form Reset
+
+Eliminate state management overhead for new consciousness logs with native `<form>` semantics.
+
+```html
+<form class="log-entry" onsubmit="event.preventDefault(); this.dispatchEvent(new CustomEvent('entry-save', {detail: new FormData(this), bubbles: true})); this.reset();">
+  <time class="current-time">now</time>
+  <textarea name="thought" class="awareness-input" placeholder="Note awareness..." required autofocus></textarea>
+</form>
+```
+→ skipped: Controlled React/Svelte input bindings and bespoke draft state.  
+→ add when: Real-time collaborative syncing or offline indexedDB draft recovery is needed.
