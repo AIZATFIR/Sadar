@@ -3572,3 +3572,92 @@ add when: Browser targeting requires Safari 17 full auto-expand parity (use 3-li
 skipped: JS textarea resizing observers, custom scroll listeners, utility CSS classes.
 add when: Supporting legacy browsers without `field-sizing: content` (wrap in `@supports not (field-sizing: content)`).
 ```
+
+
+### Cycle #49 Directive (2026-11-03 01:45)
+### 1. Elastic Log Textarea (Zero-JS Vertical Rhythm)
+
+Eliminates auto-resize JS listeners. Uses native CSS sizing tied directly to line-height for vertical alignment.
+
+```css
+.metacog-input {
+  width: 100%;
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 12lh;
+  line-height: 1.6;
+  padding: 0.75rem 1rem;
+  font-family: inherit;
+  border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.08));
+  border-radius: 10px;
+  background: var(--surface-warm, #fbfbf9);
+  resize: none;
+  outline: none;
+}
+/* ponytail: field-sizing unsupported in Safari <18; add inline JS fallback if Safari 17 support is required. */
+```
+* Skipped: Auto-resize JS listeners, shadow DOM hidden clones.
+* Add when: Legacy browser matrix (<2024 engines) is explicitly mandated.
+
+---
+
+### 2. Baseline-Locked Log Stream (Precision Alignment)
+
+Aligns micro-log timestamps to the primary typography baseline without wrappers or margin hacks.
+
+```css
+.log-stream {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  column-gap: 1.25rem;
+  row-gap: 0.875rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.log-entry {
+  display: contents;
+}
+
+.log-time {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted, #86868b);
+  align-self: baseline;
+  white-space: nowrap;
+}
+
+.log-body {
+  margin: 0;
+  line-height: 1.6;
+  align-self: baseline;
+  color: var(--text-primary, #1d1d1f);
+}
+```
+* Skipped: Nested flex containers, custom timeline pseudo-element lines.
+* Add when: Visual thread connectors (connecting dots) are explicitly requested.
+
+---
+
+### 3. Native Relative Timestamp (Zero Dependencies)
+
+Formats conscious logs relative to current time using standard library `Intl`.
+
+```javascript
+const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto', style: 'short' });
+
+export function formatLogTime(date, now = Date.now()) {
+  const diffMinutes = Math.round((date.getTime() - now) / 60000);
+  if (Math.abs(diffMinutes) < 60) return rtf.format(diffMinutes, 'minute');
+  const diffHours = Math.round(diffMinutes / 60);
+  return Math.abs(diffHours) < 24 ? rtf.format(diffHours, 'hour') : rtf.format(Math.round(diffHours / 24), 'day');
+}
+// ponytail: capped at day-level resolution. Upgrade to full calendar dates if history view exceeds 30 days.
+
+// Self-check
+console.assert(formatLogTime(new Date(Date.now() - 5 * 60000)) === '5 min. ago');
+```
+* Skipped: `date-fns`, `dayjs`, custom formatting matrices.
+* Add when: Locale switching or calendar-pinned dates are needed.
