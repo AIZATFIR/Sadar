@@ -6055,3 +6055,66 @@ add when: Entries require multi-column structured meta tags (use subgrid).
 ```
 skipped: Dialog/modal overlay scaffolding, draft local-storage sync.  
 add when: Unsaved state needs persistence across accidental page reloads.
+
+
+### Cycle #81 Directive (2026-11-03 04:43)
+### 1. Zero-JS Auto-Expanding Input (Native Sizing)
+
+```css
+.conscious-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 16lh;
+  line-height: 1.6;
+  padding-block: 0.5lh;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  /* ponytail: relies on Chromium 123+; fallback to standard vertical resize if Safari lags */
+}
+```
+→ skipped: JS auto-resize listeners and hidden mirror-div calculations.  
+→ add when: explicit legacy cross-browser support below baseline 2024 is mandated.
+
+---
+
+### 2. Tabular Timeline & Baseline-Aligned Stream
+
+```css
+.log-stream {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 1.25rem;
+  row-gap: 0.75lh;
+  line-height: 1.5;
+}
+
+.log-stream time {
+  font-variant-numeric: tabular-nums;
+  color: oklch(0.55 0.02 65);
+  user-select: none;
+}
+```
+→ skipped: CSS subgrid abstractions, custom flex wrappers, and icon decorations.  
+→ add when: log items require inline tagging or secondary status metadata.
+
+---
+
+### 3. Atomic Uncontrolled Capture Boundary
+
+```ts
+const form = document.querySelector<HTMLFormElement>("#metacog-capture")!;
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const content = new FormData(form).get("thought")?.toString().trim();
+  if (!content) return;
+
+  db.entries.add({ id: crypto.randomUUID(), content, createdAt: Date.now() });
+  form.reset();
+});
+```
+→ skipped: Controlled state layers, reactive keystroke tracking, and draft debouncing.  
+→ add when: live word-counts, autocomplete, or markdown previews are requested.
