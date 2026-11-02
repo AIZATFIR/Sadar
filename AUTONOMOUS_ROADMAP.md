@@ -7037,3 +7037,69 @@ add when: targeted browser demographic lacks CSS `field-sizing` support.
 ```
 skipped: custom dropdown component, click-outside hooks, and ARIA re-inventions.  
 add when: taxonomy requires custom user-defined tags or multi-select filtering.
+
+
+### Cycle #93 Directive (2026-11-03 05:50)
+### 1. Baseline Optical Alignment for Entries
+
+Align metadata/timestamps strictly to the first line's text baseline using CSS Grid instead of fragile flex offsets.
+
+```css
+.log-entry {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+  line-height: 1.6;
+}
+
+.log-entry time {
+  font-family: var(--font-mono, monospace);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+```
+→ skipped: complex JS layout engines or optical baseline polyfills.  
+→ add when: supporting obsolete rendering engines that drop `align-items: baseline` in grid.
+
+---
+
+### 2. Zero-JS Auto-expanding Conscious Input
+
+Replace textarea resize observers with native CSS `field-sizing` for instant, shift-free vertical expansion.
+
+```css
+.zen-input {
+  field-sizing: content; /* ponytail: native in modern engines; auto-grows vertically */
+  width: 100%;
+  min-height: 1.6lh;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: none;
+  padding: 0;
+}
+```
+→ skipped: JS auto-resize micro-libraries and layout-shift hooks.  
+→ add when: legacy browser telemetry exceeds 5% of active users.
+
+---
+
+### 3. Chrono-Spine Layout (Streamlined Visual Flow)
+
+Eliminate card containers; use a single native CSS vertical trace to anchor continuous metacognition entries.
+
+```css
+.journal-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-left: 1rem;
+  border-left: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+}
+```
+→ skipped: card wrappers, box shadows, and nested structural wrappers.  
+→ add when: explicit drag-and-drop grouping or multi-column kanban is requested.
