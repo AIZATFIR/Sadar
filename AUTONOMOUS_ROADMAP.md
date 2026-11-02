@@ -2946,3 +2946,79 @@ textarea.log-input {
 ```
 → skipped: dedicated badge components and pill container styling.  
 → add when: interactive tag filtering or taxonomy querying is implemented.
+
+
+### Cycle #40 Directive (2026-11-03 00:54)
+### 1. Auto-Expanding Journal Input (Zero-JS)
+Replace textarea resizing scripts with native baseline-aligned expansion.
+
+```css
+/* journal-entry.css */
+.log-input {
+  field-sizing: content; /* ponytail: fallback to JS autosize if legacy Safari support required */
+  min-height: 2.5lh;
+  max-height: 15lh;
+  line-height: 1.6;
+  padding: 0.5lh 0;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-family: inherit;
+  color: var(--zen-ink, #2c2a29);
+}
+```
+`field-sizing: content;` → skipped: JS height recalculation listeners; add when iOS Safari < 17.4 support is non-negotiable.
+
+---
+
+### 2. Temporal Meta Alignment (Micro-Rhythm)
+Lock timestamp and awareness tags to the typographical baseline across viewport sizes.
+
+```css
+/* log-meta.css */
+.log-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  column-gap: 1ch;
+}
+
+.log-header time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8rem;
+  letter-spacing: -0.01em;
+  color: var(--zen-subtle, #8a8580);
+}
+
+.log-state-badge {
+  font-size: 0.75rem;
+  text-transform: lowercase;
+  opacity: 0.8;
+}
+```
+`align-items: baseline` + `tabular-nums` → skipped: flexbox centering workarounds; add when badges contain mixed icon assets requiring optical nudging.
+
+---
+
+### 3. Vertical Card Rhythm with Native Margin Trimming
+Eliminate extra wrappers and spacing recalculations for the conscious living timeline stack.
+
+```css
+/* log-stream.css */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5lh;
+  max-width: 65ch;
+  margin-inline: auto;
+}
+
+.log-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5lh;
+  margin-trim: block; /* ponytail: trim margins on modern engines, manual :last-child elsewhere */
+}
+```
+`gap: 1.5lh` + `margin-trim` → skipped: wrapper padding resets; add manual `:first-child`/`:last-child` overrides if target browser engine lacks CSS Box Alignment Level 3.
