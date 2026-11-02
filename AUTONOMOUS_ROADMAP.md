@@ -612,3 +612,73 @@ skipped: `resize` event listeners and hidden dummy `div` synchronizers; add when
 </ol>
 ```
 skipped: Date grouping wrappers and card-container UI bloat; add when aggregate multi-day search and pagination become active requirements.
+
+
+### Cycle #8 Directive (2026-11-02 21:52)
+### 1. Optical Timeline Rhythm (Zero-DOM hairline connector)
+
+```css
+/* Replaces wrapper divs and icon offset hacks */
+.log-stream {
+  display: grid;
+  grid-template-columns: 4rem 1px minmax(0, 1fr);
+  column-gap: 1.5rem;
+  row-gap: 2rem;
+  align-items: baseline;
+}
+
+.log-stream::before {
+  content: "";
+  grid-column: 2;
+  grid-row: 1 / -1;
+  background: var(--hairline, color-mix(in srgb, currentColor 8%, transparent));
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+```
+→ skipped: complex SVGs and nested container elements.  
+→ add when: multi-day branch histories require distinct vertical node forks.
+
+---
+
+### 2. Auto-Expanding Reflection Input (Zero-JS)
+
+```css
+/* Drops scrollbars and jumpy JS height-listeners */
+.metacognition-entry {
+  field-sizing: content;
+  min-height: 4lh;
+  line-height: 1.65;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  resize: none;
+  /* ponytail: relies on Chromium 123+ and Safari 18.2+. Add manual scroll listener if targeting legacy engines. */
+}
+```
+→ skipped: `textarea.style.height = scrollHeight + 'px'` JS sync loops.  
+→ add when: legacy browser targets fall below baseline compatibility.
+
+---
+
+### 3. Chronological Day Grouping (Stdlib ES2024)
+
+```js
+// Native grouping: eliminates date-fns/lodash
+const entriesByDate = Object.groupBy(entries, (entry) =>
+  new Date(entry.createdAt).toLocaleDateString("en-CA") // YYYY-MM-DD
+);
+
+// Self-check
+console.assert(
+  Object.keys(Object.groupBy([{ t: 0 }], () => "1970-01-01"))[0] === "1970-01-01",
+  "groupBy failed"
+);
+```
+→ skipped: external temporal/date grouping libraries.  
+→ add when: localized dynamic calendar systems (e.g., Hijri) are strictly required in the model layer.
