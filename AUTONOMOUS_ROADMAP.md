@@ -6506,3 +6506,97 @@ console.assert(typeof HTMLFormElement.prototype.requestSubmit === 'function', 'N
 ```
 → skipped: custom shortcut managers, undo-history buffers, and hotkey config panels.  
 → add when: full-modal command palettes or custom keymap re-binding are required.
+
+
+### Cycle #87 Directive (2026-11-03 05:16)
+### 1. Optical Baseline Alignment for Log Entries
+
+Align timestamps and metacognition entries to the typographic baseline; eliminate div-soup layout shift.
+
+```css
+.log-stream {
+  display: flex;
+  flex-direction: column;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 6%, transparent);
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  opacity: 0.45;
+  user-select: none;
+}
+
+.log-content {
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+```
+* Skipped: JavaScript-based virtualized list or flex hacks.
+* Add when: Log count exceeds 1,000 nodes in DOM and frame rate drops.
+
+---
+
+### 2. Zero-JS Auto-Expanding Input (Chrome-Free Logger)
+
+Native CSS dynamic height for frictionless thought capture.
+
+```css
+.thought-input {
+  /* ponytail: fallback to 3-line fixed textarea for Firefox <123 */
+  field-sizing: content;
+  min-height: 1.5lh;
+  max-height: 12lh;
+  width: 100%;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  line-height: 1.5;
+  padding: 0;
+  color: inherit;
+}
+
+.thought-input::placeholder {
+  opacity: 0.3;
+}
+```
+* Skipped: Hidden mirror divs and `scrollHeight` event listeners.
+* Add when: Non-supporting browser traffic (legacy Safari/Firefox) exceeds 5%.
+
+---
+
+### 3. Native Sticky Timeline Anchor (Zen Warmth)
+
+Provides vertical orientation without breaking focus or adding fixed overlay chrome.
+
+```css
+.day-bucket {
+  display: contents;
+}
+
+.day-header {
+  position: sticky;
+  top: 0;
+  background: color-mix(in srgb, var(--bg, #faf8f5) 85%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  padding: 0.75rem 0 0.25rem;
+  z-index: 2;
+}
+```
+* Skipped: IntersectionObserver scroll spies and pinned state classes.
+* Add when: Custom pin-and-dock header animations are explicitly needed.
