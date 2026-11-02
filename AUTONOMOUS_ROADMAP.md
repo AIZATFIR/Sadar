@@ -4627,3 +4627,67 @@ input?.addEventListener('keydown', (e) => {
 });
 ```
 `skipped: Form validation popups and DB sync layer, add when persistence endpoint is wired.`
+
+
+### Cycle #62 Directive (2026-11-03 02:58)
+### 1. Frictionless Log Entry (Zero-JS Auto-expanding Capture)
+
+```css
+/* conscious-input.css */
+.conscious-input {
+  field-sizing: content;
+  min-height: 2.5lh;
+  max-height: 18lh;
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  line-height: 1.6;
+  color: inherit;
+  /* ponytail: fallback to JS scrollHeight resize if Safari < 17.4 is required */
+}
+```
+→ skipped: JS input-event listeners and hidden shadow-clones. Add when: legacy browser targets dictate non-native auto-grow.
+
+---
+
+### 2. Typographic Baseline & Vertical Alignment
+
+```css
+/* log-cadence.css */
+.log-row {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  align-items: baseline;
+  column-gap: 1.5rem;
+  padding-block: 0.625rem;
+}
+
+.log-row time {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  opacity: 0.4;
+}
+```
+→ skipped: flex wrappers, absolute positioning offsets, and vertical-align hacks. Add when: metadata extends past timestamp + single status.
+
+---
+
+### 3. Zen Stream Decrapification (Subtle Structural Division)
+
+```css
+/* log-stream.css */
+.log-stream {
+  max-width: 48ch;
+  margin-inline: auto;
+  margin-trim: block;
+}
+
+.log-stream > :not(:first-child) {
+  border-top: 1px solid color-mix(in srgb, currentColor 6%, transparent);
+}
+```
+→ skipped: card containers, box-shadows, and spacer `div`s. Add when: entries become draggable/reorderable widgets.
