@@ -4972,3 +4972,78 @@ document.querySelector('#journal-form')?.addEventListener('keydown', (e) => {
 ```
 skipped: global keyboard manager library, custom event emitter.
 add when: multi-pane modal navigation requires hierarchical key delegation.
+
+
+### Cycle #66 Directive (2026-11-03 03:20)
+### 1. Zero-JS Auto-Expanding Log Input
+Replace textarea resize scripts with native engine expansion.
+
+```css
+/* ponytail: field-sizing requires Chrome 123+ / Safari 18.2+; fallback is standard 3lh box */
+.journal-entry-input {
+  width: 100%;
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 60vh;
+  line-height: 1.65;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 1.0625rem;
+}
+```
+skipped: JS scrollHeight listeners and autosize dependencies.  
+add when: supporting legacy WebKit (< Safari 18.2).
+
+---
+
+### 2. Typographic Baseline & Log Cadence
+Align time stamps and conscious logs on a unified typographic grid without wrapper bloat.
+
+```css
+.log-stream {
+  display: flex;
+  flex-direction: column;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  align-items: baseline;
+  column-gap: 1.25rem;
+  padding-block: 0.4lh;
+}
+
+.log-entry time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, currentColor 45%, transparent);
+}
+```
+skipped: custom flex layout hacks and JS timestamp alignment checks.  
+add when: log entry layout requires dynamic user-configured column widths.
+
+---
+
+### 3. Native Ambient Sticky Day Separator
+Ground continuous conscious logs with silent, hardware-accelerated markers.
+
+```css
+.log-group-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--bg-surface, #fff) 80%, transparent);
+  padding-block: 0.5lh;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: color-mix(in srgb, currentColor 60%, transparent);
+}
+```
+skipped: scroll-spy state machines and JS sticky polyfills.  
+add when: entries must collapse or fold per date via manual interaction.
