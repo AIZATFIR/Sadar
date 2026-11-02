@@ -5146,3 +5146,73 @@ body {
 ```
 → skipped: Complex theme engine / dynamic CSS-in-JS abstractions.  
 → add when: User-toggled dark mode or custom palettes are introduced.
+
+
+### Cycle #68 Directive (2026-11-03 03:31)
+### 1. Zero-JS Auto-Expanding Input for Fast Metacognition Capture
+
+```css
+.conscious-log-input {
+  width: 100%;
+  field-sizing: content;
+  min-height: 2lh;
+  line-height: 1.6;
+  padding: 0.5lh 0;
+  border: none;
+  background: transparent;
+  resize: none;
+  font-family: inherit;
+}
+.conscious-log-input:focus {
+  outline: none;
+}
+```
+→ skipped: JS auto-resize listeners, scrollHeight calculations, and shadow DOM mirrors.  
+→ add when: explicit legacy support is required for pre-2024 browsers.
+
+---
+
+### 2. Baseline-Snapped Timeline Alignment
+
+```css
+.log-entry {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+  padding: 0.5lh 0;
+}
+
+.log-meta {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--zen-muted, #8a8a8e);
+}
+```
+→ skipped: Absolute-positioned badges, vertical-align hacks, and flex layout compensators.  
+→ add when: logs feature multi-avatar replies or branching thread visual trees.
+
+---
+
+### 3. Native Smooth Day-Grouping
+
+```html
+<details class="log-group" open>
+  <summary class="log-group-header">Today</summary>
+  <div class="log-group-content"><!-- entries --></div>
+</details>
+```
+```css
+.log-group-header {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+.log-group-header::-webkit-details-marker { display: none; }
+
+::details-content {
+  transition: block-size 180ms cubic-bezier(0.2, 0, 0, 1), content-visibility 180ms allow-discrete;
+}
+```
+→ skipped: React/Vue collapse state handlers and frame-by-frame JS height tweening.  
+→ add when: dynamic height tracking during live streaming text insertion is mandated.
