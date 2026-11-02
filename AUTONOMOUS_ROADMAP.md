@@ -5216,3 +5216,65 @@ body {
 ```
 → skipped: React/Vue collapse state handlers and frame-by-frame JS height tweening.  
 → add when: dynamic height tracking during live streaming text insertion is mandated.
+
+
+### Cycle #69 Directive (2026-11-03 03:37)
+### 1. Zero-JS Auto-Expanding Input
+Replaces JS auto-grow event listeners with modern native CSS.
+
+```css
+.journal-entry-input {
+  field-sizing: content;
+  min-height: 4lh;
+  max-height: 25lh;
+  line-height: 1.6;
+  resize: none;
+  font-family: inherit;
+  background: transparent;
+  border: 1px solid var(--border-warm, #e8e4df);
+  padding: 0.75rem 1rem;
+}
+```
+→ skipped: JS height recalculations; add when supporting Safari < 17.4 or legacy Chromium.
+
+---
+
+### 2. Tabular Baseline Grid for Timeline Logs
+Eliminates vertical jitter between timestamps, state markers, and reflections.
+
+```css
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1lh;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 5ch 1fr;
+  align-items: baseline;
+  column-gap: 1.25rem;
+}
+
+.log-entry time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--text-muted, #8c827a);
+}
+```
+→ skipped: multi-column subgrid layout; add when logs support inline tag chips or mood vectors.
+
+---
+
+### 3. Apple-Grade Zen Warmth Focus State
+Replaces jarring default blue focus rings with an offset, optical-glow warm ring that avoids layout shift.
+
+```css
+.journal-entry-input:focus-visible,
+.log-action:focus-visible {
+  outline: 2px solid var(--accent-warm, #c28859);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--accent-glow, rgba(194, 136, 89, 0.12));
+}
+```
+→ skipped: complex CSS animations; add when implementing spatial interaction audio or haptics.
