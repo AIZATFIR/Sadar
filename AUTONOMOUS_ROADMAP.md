@@ -5847,3 +5847,86 @@ skipped: External icon sets for conscious states; add when semantic labels and t
 
 skipped: custom auto-resize JS, complex rich-text toolbars, and date-picker libraries.  
 add when: supporting browsers older than Safari 18/Chrome 123 (swap `field-sizing` for JS mirror div), or when entries require markdown rendering.
+
+
+### Cycle #78 Directive (2026-11-03 04:27)
+### 1. Auto-Expanding Streamlined Capture (CSS `field-sizing`)
+
+```css
+/* Zero-JS auto-growing thought stream */
+.metacog-input {
+  field-sizing: content;
+  min-height: 2.5lh;
+  max-height: 16lh;
+  line-height: 1.6;
+  max-inline-size: 65ch;
+  width: 100%;
+  resize: none;
+  border: none;
+  background: transparent;
+  padding-block: 0.5lh;
+  color: var(--zen-ink, #242220);
+  outline: none;
+}
+```
+`[code] → skipped: [JS textarea autosize listeners], add when [supporting browsers lacking field-sizing (pre-Chrome 123/Safari 18)].`
+
+---
+
+### 2. Typographic Baseline Lock for Log Items
+
+```css
+/* Lock timestamp and log text to identical baseline */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25lh;
+  max-inline-size: 65ch;
+  margin-inline: auto;
+}
+
+.log-row {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  align-items: baseline;
+  column-gap: 1.5rem;
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--zen-muted, #8e8780);
+}
+
+.log-body {
+  line-height: 1.6;
+  margin: 0;
+}
+```
+`[code] → skipped: [subgrid and card wrappers], add when [logs require nested multi-column metadata or action buttons].`
+
+---
+
+### 3. Native Minimalist Metacognition State Capture
+
+```javascript
+// ponytail: local-only capture pipeline; add sync engine when multi-device is needed
+export function recordConsciousLog(formEl, onPersist) {
+  const fd = new FormData(formEl);
+  const text = fd.get('thought')?.toString().trim();
+  if (!text) return null;
+
+  const entry = {
+    id: crypto.randomUUID(),
+    text,
+    created_at: new Date().toISOString()
+  };
+
+  const logs = JSON.parse(localStorage.getItem('sadar_logs') || '[]');
+  localStorage.setItem('sadar_logs', JSON.stringify([entry, ...logs]));
+  formEl.reset();
+  onPersist?.(entry);
+  return entry;
+}
+```
+`[code] → skipped: [IndexedDB and sync workers], add when [payload exceeds 5MB or background sync is wired].`
