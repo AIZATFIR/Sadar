@@ -682,3 +682,89 @@ console.assert(
 ```
 → skipped: external temporal/date grouping libraries.  
 → add when: localized dynamic calendar systems (e.g., Hijri) are strictly required in the model layer.
+
+
+### Cycle #9 Directive (2026-11-02 21:57)
+### 1. Frictionless Conscious Entry Input
+
+Eliminates auto-resize JS dependencies using native CSS.
+
+```css
+.log-input {
+  width: 100%;
+  field-sizing: content;
+  min-height: 1.5lh;
+  max-height: 10lh;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  line-height: 1.6;
+  font-family: inherit;
+  /* ponytail: relies on CSS field-sizing (Chromium 123+, Safari 18+); upgrade to 3-line scrollHeight sync if legacy support needed */
+}
+```
+→ skipped: [Auto-resize JS libraries/event listeners], add when [strict support for legacy browsers is explicitly required].
+
+---
+
+### 2. Optical Vertical Rhythm & Tabular Baseline
+
+Locks conscious logs to a natural vertical reading tempo (`lh`) with stable numeric alignment.
+
+```css
+.journal-stream {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.25lh;
+  max-inline-size: 62ch;
+  margin-inline: auto;
+  text-wrap: pretty;
+}
+
+.log-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5ch;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.log-meta time {
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, currentColor 55%, transparent);
+}
+```
+→ skipped: [Complex baseline grid math/fixed-height divs], add when [multi-column dense dashboard view is built].
+
+---
+
+### 3. Streamlined Expandable Reflection Row
+
+Native semantic disclosure without UI state management.
+
+```html
+<details class="reflection-node">
+  <summary class="log-meta">
+    <time datetime="2025-05-18T14:30">14:30</time>
+    <span>Overstimulated by task switching; returning to breath.</span>
+  </summary>
+  <div class="reflection-body">
+    <p>Trigger: 4 open projects. Shift: 5-minute single-focus reset.</p>
+  </div>
+</details>
+```
+
+```css
+.reflection-node summary {
+  list-style: none;
+  cursor: pointer;
+}
+.reflection-node summary::-webkit-details-marker { display: none; }
+.reflection-body {
+  padding-inline-start: calc(6ch + 1.5ch); /* align beneath summary text, past timestamp */
+  margin-block-start: 0.5lh;
+  opacity: 0.85;
+}
+```
+→ skipped: [Accordion toggle libraries and animated collapse state], add when [animated micro-interactions are scheduled for polish].
