@@ -2693,3 +2693,92 @@ body {
 - Skipped: JS auto-resize libraries; add only if Firefox < 128 legacy polyfill is required.
 - Skipped: Complex modal capture; add when log schema expands beyond timestamp + reflection.
 - Skipped: Timezone offset management; add when sync engine touches multi-device storage.
+
+
+### Cycle #37 Directive (2026-11-03 00:37)
+### 1. Optical Baseline Alignment for Log Stream
+
+Align timestamps to the first line's typography baseline instead of flex-centering:
+
+```css
+.log-item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding-block: 0.625rem;
+}
+
+.log-item time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  letter-spacing: -0.01em;
+  color: var(--color-stone-muted, #8d857e);
+}
+```
+skipped: Flexbox hacks and manual `transform: translateY()`.  
+add when: Dynamic multi-line metadata spans require subgrid.
+
+---
+
+### 2. Native Auto-Growing Reflection Area (Zero-JS)
+
+Replace dynamic textarea resize scripts with native engine auto-expansion:
+
+```css
+.journal-textarea {
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 50vh;
+  line-height: 1.65;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: none;
+  /* ponytail: modern evergreen browser baseline; add tiny JS fallback only if supporting older browsers */
+}
+```
+skipped: `textarea-autogrow` dependency and `input` event listeners measuring `scrollHeight`.  
+add when: Browser support under Safari 17.4 is mandatory.
+
+---
+
+### 3. Conscious State Quick-Stamps (Pure CSS State Selection)
+
+Eliminate custom JavaScript dropdowns/popovers for daily state logging:
+
+```html
+<fieldset class="state-selector">
+  <legend class="sr-only">Mental Clarity</legend>
+  <label><input type="radio" name="state" value="settled" checked><span>Settled</span></label>
+  <label><input type="radio" name="state" value="drifting"><span>Drifting</span></label>
+  <label><input type="radio" name="state" value="turbulent"><span>Turbulent</span></label>
+</fieldset>
+```
+
+```css
+.state-selector {
+  display: flex;
+  gap: 0.375rem;
+  border: 0;
+  padding: 0;
+
+  & input { position: absolute; opacity: 0; pointer-events: none; }
+  & span {
+    padding: 0.25rem 0.625rem;
+    font-size: 0.8125rem;
+    border-radius: 9999px;
+    background: transparent;
+    color: var(--color-stone-muted, #8d857e);
+    cursor: pointer;
+    transition: background 150ms ease, color 150ms ease;
+  }
+  & label:has(:checked) span {
+    background: var(--color-stone-warm, #f2ede4);
+    color: var(--color-stone-bold, #282523);
+  }
+}
+```
+skipped: React state tracking, custom modal overlays, or form click handlers.  
+add when: Multi-tag selections or user-defined custom categories are needed.
