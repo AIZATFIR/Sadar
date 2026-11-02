@@ -6699,3 +6699,94 @@ Eliminate cold, generic grays (`slate`/`zinc`) in favor of organic paper/stone t
 }
 ```
 `→ skipped: Theme-toggle state management, add when user explicitly overrides system `prefers-color-scheme`.`
+
+
+### Cycle #89 Directive (2026-11-03 05:28)
+### 1. Optical Baseline Timeline (Native CSS Grid)
+
+```css
+.log-stream {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1.5rem;
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  line-height: 1.6; /* pony: locks baseline 1:1 with log-text */
+  color: var(--muted, #737373);
+}
+
+.log-content {
+  line-height: 1.6;
+  border-left: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.08));
+  padding-left: 1.25rem;
+}
+```
+skipped: Timeline wrapper nodes, SVG node connectors, flex offset hacking.  
+add when: Multi-day grouping headers require nested subgrids.
+
+---
+
+### 2. Auto-Expanding Zen Input (Zero-JS)
+
+```css
+.log-input {
+  field-sizing: content;
+  min-height: 3lh;
+  line-height: 1.6;
+  width: 100%;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 1rem;
+}
+```
+skipped: JS resize listeners, DOM mirror techniques (`data-replicated-value`).  
+add when: Hard requirement for legacy browsers lacking baseline `field-sizing` support.
+
+---
+
+### 3. Accessible Metacognition State Pills (Zero-JS)
+
+```html
+<fieldset class="state-picker">
+  <label><input type="radio" name="state" value="autopilot" checked><span>Autopilot</span></label>
+  <label><input type="radio" name="state" value="reactive"><span>Reactive</span></label>
+  <label><input type="radio" name="state" value="present"><span>Present</span></label>
+</fieldset>
+
+<style>
+  .state-picker {
+    display: flex;
+    gap: 0.375rem;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .state-picker input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .state-picker span {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    background: var(--bg-chip, rgba(0, 0, 0, 0.04));
+    color: var(--text-muted, #737373);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .state-picker input:checked + span {
+    background: var(--text-primary, #18181b);
+    color: #fff;
+  }
+</style>
+```
+skipped: Custom dropdown components, JavaScript event dispatchers for state selection.  
+add when: Custom multi-state tagging exceeds single-choice radio sematics.
