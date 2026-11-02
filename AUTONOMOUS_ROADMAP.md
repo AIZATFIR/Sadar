@@ -6790,3 +6790,85 @@ add when: Hard requirement for legacy browsers lacking baseline `field-sizing` s
 ```
 skipped: Custom dropdown components, JavaScript event dispatchers for state selection.  
 add when: Custom multi-state tagging exceeds single-choice radio sematics.
+
+
+### Cycle #90 Directive (2026-11-03 05:33)
+### 1. Frictionless Auto-Expanding Log Composer
+
+Eliminate textarea resize listeners, card wrappers, and action buttons. Rely on native CSS sizing and subtle baseline focus.
+
+```css
+.log-composer {
+  field-sizing: content;
+  min-height: 2.5lh;
+  max-height: 14lh;
+  width: 100%;
+  resize: none;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--text, #1c1917);
+  caret-color: var(--accent, #78350f);
+}
+.log-composer::placeholder {
+  color: var(--text-dim, #a8a29e);
+}
+```
+`field-sizing: content` → skipped: JS auto-grow calculation and submit button; add when: supporting Safari <17.4 (fallback to 2-line native `<textarea rows="2">`).
+
+---
+
+### 2. Optical Baseline-Aligned Timeline Rail
+
+Align log metadata directly to the first line text baseline, removing card containers and float offsets.
+
+```css
+.log-list {
+  display: flex;
+  flex-direction: column;
+  border-inline-start: 1px solid var(--rail, #e7e5e4);
+  margin-inline-start: 4rem;
+}
+
+.log-item {
+  display: grid;
+  grid-template-columns: 0 1fr;
+  align-items: first baseline;
+  padding-block: 0.75rem;
+  padding-inline-start: 1.25rem;
+}
+
+.log-meta {
+  grid-column: 1;
+  transform: translateX(calc(-100% - 1.25rem));
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  color: var(--text-dim, #a8a29e);
+  user-select: none;
+}
+```
+`grid-template-columns: 0 1fr` + `align-items: first baseline` → skipped: absolute positioning JS math; add when: responsive width falls below 32rem (swap to vertical stack).
+
+---
+
+### 3. Contextual Dimming (Zen Focus)
+
+Zero-JS focus state that dims past logs to isolate the active train of thought during active logging.
+
+```css
+.journal-canvas:has(.log-composer:focus) .log-item {
+  opacity: 0.35;
+  filter: blur(0.2px);
+  transition: opacity 180ms ease, filter 180ms ease;
+}
+
+.journal-canvas .log-item:hover {
+  opacity: 1;
+  filter: none;
+}
+```
+CSS `:has()` state isolation → skipped: UI toggles or overlay modal state; add when: keyboard navigation mode requires explicit item selection.
