@@ -4691,3 +4691,100 @@ input?.addEventListener('keydown', (e) => {
 }
 ```
 → skipped: card containers, box-shadows, and spacer `div`s. Add when: entries become draggable/reorderable widgets.
+
+
+### Cycle #63 Directive (2026-11-03 03:03)
+### 1. Zero-JS Auto-Expanding Conscious Log Input
+Eliminate auto-resize JS libraries. Use native CSS field sizing with strict optical line-height.
+
+```css
+/* sadar-input.css */
+.log-textarea {
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 15lh;
+  line-height: 1.6;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.08));
+  border-radius: 8px;
+  background: var(--bg-surface, #fcfbf9); /* Zen warmth */
+  font-family: inherit;
+  resize: none;
+}
+/* ponytail: field-sizing unsupported in older WebKit; fallback to fixed min-height with native scroll */
+```
+→ skipped: JS `ResizeObserver` and hidden cloned divs.  
+→ add when: legacy Safari support (<17.4) is explicitly mandated.
+
+---
+
+### 2. Precise Vertical Baseline & Streamlined Log Entry
+Align timestamps, metacognitive tags, and body copy to a single optical baseline using CSS subgrid.
+
+```html
+<!-- log-item.html -->
+<li class="log-row">
+  <time datetime="2025-05-14T07:30" class="log-time">07:30</time>
+  <span class="log-tag">witnessing</span>
+  <p class="log-body">Noticed irritation during review; paused before responding.</p>
+</li>
+```
+
+```css
+/* sadar-stream.css */
+.log-stream {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: baseline;
+  gap: 0.5lh 1rem;
+  font-feature-settings: "tnum" 1; /* Tabular numerals for alignment */
+}
+
+.log-row {
+  display: subgrid;
+  grid-column: 1 / -1;
+  padding-block: 0.35lh;
+  border-bottom: 1px solid var(--line-hairline, rgba(0, 0, 0, 0.04));
+}
+
+.log-time {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary, #8c887b);
+}
+
+.log-tag {
+  font-size: 0.75rem;
+  padding: 0.1lh 0.5rem;
+  border-radius: 999px;
+  background: var(--tag-bg, #f3f0e6);
+  color: var(--text-secondary, #5c584e);
+}
+
+.log-body {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--text-primary, #1c1a17);
+}
+```
+→ skipped: flex wrappers, absolute positioning hacks, and custom timestamp layout components.  
+→ add when: multi-column filtering or editable tag pickers are required in-row.
+
+---
+
+### 3. Native Keyboard Submit for Rapid Capture
+One declarative listener on the journal capture form: `Cmd/Ctrl + Enter` to record reflection without breaking focus.
+
+```js
+// log-capture.js
+document.querySelector('#journal-form')?.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    e.preventDefault();
+    e.currentTarget.requestSubmit();
+  }
+});
+
+// Self-check
+console.assert(typeof HTMLFormElement.prototype.requestSubmit === 'function', 'Native requestSubmit missing');
+```
+→ skipped: heavy command-bar abstractions, hotkey libraries, and custom dispatch events.  
+→ add when: an expanded modal command palette is built.
