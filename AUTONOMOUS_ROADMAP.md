@@ -2636,3 +2636,60 @@ body {
 ```
 → skipped: CSS-in-JS theme provider and dark mode toggle.  
 → add when: System `prefers-color-scheme: dark` is explicitly targeted.
+
+
+### Cycle #36 Directive (2026-11-03 00:31)
+```css
+/* 1. Native auto-expanding entry input (zero JS height listeners) */
+.log-input {
+  field-sizing: content;
+  min-height: 1.6lh;
+  max-height: 12lh;
+  line-height: 1.6;
+  padding: 0;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-family: inherit;
+  color: inherit;
+}
+
+/* 2. Optical vertical baseline alignment for entries */
+.journal-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5lh;
+  max-width: 65ch;
+  margin-inline: auto;
+}
+
+.journal-entry {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  /* ponytail: 2-column grid; switch to subgrid if per-entry tags need cross-row alignment */
+}
+
+.journal-entry time {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.45;
+  font-size: 0.85em;
+}
+```
+
+```html
+<!-- 3. Minimal friction conscious capture row -->
+<form class="journal-entry" onsubmit="event.preventDefault(); /* append to stream */">
+  <time id="stamp"></time>
+  <textarea class="log-input" placeholder="State of mind..." rows="1" autofocus></textarea>
+</form>
+<script>
+  // ponytail: local HH:MM display only; upgrade to full ISO persistence on sync implementation
+  document.getElementById('stamp').textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+</script>
+```
+
+- Skipped: JS auto-resize libraries; add only if Firefox < 128 legacy polyfill is required.
+- Skipped: Complex modal capture; add when log schema expands beyond timestamp + reflection.
+- Skipped: Timezone offset management; add when sync engine touches multi-device storage.
