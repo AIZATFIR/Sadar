@@ -70,3 +70,63 @@
 skipped: JS resize listeners and date stickiness observers; add JS only if supporting Safari < 17.4 or legacy Chromium.
 skipped: Rich text editor toolbar abstractions; add when users demand formatted markdown over raw thought capture.
 skipped: Infinite scroll pagination component; add when client performance degrades past 500 visible entries.
+
+
+### Cycle #1 Directive (2026-11-02 21:09)
+### 1. Auto-Expanding Conscious Log Input (Drop JS resize handlers)
+```css
+/* sadar-input.css */
+textarea.log-entry {
+  field-sizing: content; /* ponytail: native auto-resize; fallback is min-height */
+  min-height: 2.5lh;
+  max-height: 18lh;
+  line-height: 1.6;
+  padding: 0.5lh 0;
+  border: none;
+  border-bottom: 1px solid var(--border-subtle, #e5e5e5);
+  resize: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+}
+```
+→ skipped: JS height recalculation listeners, add when Safari < 17.4 support is strictly required.
+
+---
+
+### 2. Optical Vertical Rhythm & Metacognitive Log Timeline
+```css
+/* sadar-timeline.css */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  border-left: 1px solid var(--line-subtle, #f0ede8);
+  gap: 1.5lh;
+}
+
+.log-item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: first baseline; /* optical alignment between timestamp and thought */
+  column-gap: 1.25rem;
+}
+
+.log-item time {
+  font-feature-settings: "tnum";
+  font-size: 0.8125rem;
+  color: var(--text-tertiary, #8e8e93);
+}
+```
+→ skipped: Nested bullet/connector SVG wrappers, add when tree-branching sub-logs are implemented.
+
+---
+
+### 3. Native Keyboard-First Submission (Zero-bloat capture)
+```html
+<!-- sadar-quick-entry.html -->
+<form method="dialog" class="entry-box" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.requestSubmit();}">
+  <textarea class="log-entry" name="metacognition" placeholder="Observe current state..." required></textarea>
+</form>
+```
+→ skipped: Custom hotkey dispatchers and shortcut libraries, add when multiple modifier key chords are needed.
