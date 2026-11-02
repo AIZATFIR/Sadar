@@ -1627,3 +1627,79 @@ console.assert(parseConsciousLog("Just sitting").state === "aware");
 skipped: JS `autosize` listeners; add when Firefox without `field-sizing` support drops below target threshold.
 skipped: Complex multi-column grid layout; add when side-by-side reflection tagging is explicitly introduced.
 skipped: Custom modal/sheet wrapper; keep log inline on the single zen surface until viewing density demands drawer splits.
+
+
+### Cycle #23 Directive (2026-11-02 23:17)
+### 1. Vertical Alignment & Baseline Locking (CSS)
+Align entry timestamps, states, and reflection text strictly to the baseline without flexbox jitter or bespoke height calculations.
+
+```css
+.log-row {
+  display: grid;
+  grid-template-columns: 4.5ch 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+  padding-block: 0.5lh; /* ponytail: upgrade to explicit rem if targeting legacy engines */
+}
+
+.log-row time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  opacity: 0.4;
+}
+
+.log-row p {
+  margin: 0;
+  line-height: 1.6;
+}
+```
+→ skipped: complex flex wrappers, responsive breakpoints.  
+→ add when: log rows introduce nested multi-column metadata tags.
+
+---
+
+### 2. Streamlined Log Input (Native Zero-JS Auto-grow)
+Eliminate textarea-resizing JS scripts. Native auto-expansion anchored to line heights for flow-state writing.
+
+```css
+textarea.conscious-input {
+  field-sizing: content; /* ponytail: upgrade to JS mirror-div if Safari < 17.4 support required */
+  min-height: 1.6lh;
+  max-height: 40vh;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  line-height: 1.6;
+  font-family: inherit;
+  padding: 0;
+  transition: border-color 0.15s ease;
+}
+
+textarea.conscious-input:focus-visible {
+  border-inline-start: 1.5px solid currentColor;
+  padding-inline-start: 0.75rem;
+}
+```
+→ skipped: auto-resize input event listeners, height caching logic.  
+→ add when: client targets legacy browsers without modern `field-sizing`.
+
+---
+
+### 3. Minimalist Conscious Living Append (Store)
+Store observations as timestamped tuples. No ORM, no client-side schema normalization.
+
+```javascript
+export const addLog = (body, kind = 'awareness') => {
+  const text = body?.trim();
+  if (!text) return null;
+  const entry = { id: Date.now(), kind, text };
+  localStorage.setItem('sadar_logs', JSON.stringify([entry, ...JSON.parse(localStorage.getItem('sadar_logs') || '[]')]));
+  return entry;
+};
+
+// ponycheck: confirm entry persistence
+console.assert(addLog('Recognized thought loop')?.text === 'Recognized thought loop', 'Append failed');
+```
+→ skipped: IndexedDB wrapper, reactive state stores, multi-device syncing.  
+→ add when: log volume exceeds ~5MB or offline multi-tab conflict resolution is required.
