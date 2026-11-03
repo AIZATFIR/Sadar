@@ -7378,3 +7378,81 @@ skipped: Rich text/WYSIWYG dependencies, add when markdown export/inline block a
 }
 ```
 skipped: Relative time auto-updaters (`timeago.js`), add when entries require live second-level staleness indicators.
+
+
+### Cycle #126 Directive (2026-11-03 08:57)
+### 1. Optical Baseline Alignment for Log Entries
+
+Aligns timestamps and reflections to the typographical baseline instead of center/top boxing.
+
+```css
+/* sadar/styles/logs.css */
+.log-row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  column-gap: 1.25rem;
+  padding-block: 0.5rem;
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  color: var(--text-tertiary, #8e8e93);
+}
+
+.log-body {
+  line-height: 1.5;
+  color: var(--text-primary, #1c1c1e);
+}
+```
+→ skipped: JS-driven alignment/table wrappers; add when multi-column data export is needed.
+
+---
+
+### 2. Native Auto-Expanding Reflection Input
+
+Replaces JS height calculators with native browser field sizing.
+
+```css
+/* sadar/styles/editor.css */
+.reflection-input {
+  width: 100%;
+  field-sizing: content; /* ponytail: native expansion; polyfill with trivial JS only if legacy Safari support required */
+  min-height: 3lh;
+  max-height: 50vh;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  line-height: 1.5;
+  font-family: inherit;
+  font-size: 1rem;
+}
+```
+→ skipped: auto-resize JS hooks & shadow textareas; add when Safari <17.4 strict backward compatibility is mandated.
+
+---
+
+### 3. Glassmorphic Daily Anchor Header
+
+Keeps temporal context anchored during long metacognitive scroll-backs with zero runtime overhead.
+
+```css
+/* sadar/styles/logs.css */
+.log-day-anchor {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--surface, #fafaf9) 80%, transparent);
+  padding-block: 0.75rem 0.25rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #636366);
+}
+```
+→ skipped: IntersectionObserver-driven pinned title swaps; add when multi-level nested timeline folding is introduced.
