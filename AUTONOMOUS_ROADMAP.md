@@ -7234,3 +7234,71 @@ document.querySelector('#journal-form')?.addEventListener('keydown', (e) => {
 ```
 skipped: Custom key-binding manager and state-machine debounce.
 add when: supporting multi-key chord shortcuts (e.g., Vim motions).
+
+
+### Cycle #124 Directive (2026-11-03 08:46)
+### 1. Lock Log Stream to Baseline Grid
+Align timestamps and consciousness logs natively without layout drift or wrapper bloat.
+
+```css
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.5ch 1fr;
+  align-items: baseline;
+  column-gap: 1.5ch;
+  line-height: 1.6;
+}
+
+.log-timestamp {
+  font-family: ui-monospace, monospace;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, currentColor 40%, transparent);
+  /* ponytail: single-line time; upgrade to auto-wrap if adding full dates */
+}
+```
+→ skipped: JS layout listeners and fixed-width label wrappers.  
+→ add when: log headers support multi-line date formats.
+
+---
+
+### 2. Zero-JS Auto-Expanding Capture Area
+Eliminate textarea resize flickers and JS height-calculation listeners for quiet, paper-like reflection logs.
+
+```css
+.conscious-input {
+  field-sizing: content;
+  min-height: 1.6lh;
+  max-height: 30lh;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+```
+→ skipped: `input` resize event listeners and shadow measurement divs.  
+→ add when: explicit fallback needed for Firefox < 129.
+
+---
+
+### 3. Anti-Slop Separator & Zen Spacing
+Purge cards, box-shadows, and heavy outlines; let vertical whitespace and quiet 6% ambient lines carry hierarchy.
+
+```css
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.log-entry + .log-entry {
+  border-top: 1px solid color-mix(in srgb, currentColor 6%, transparent);
+  padding-top: 1.25rem;
+}
+```
+→ skipped: Elevation layers, card containers, and theme-specific border variables.  
+→ add when: user introduces card-based drag-and-drop reordering.
