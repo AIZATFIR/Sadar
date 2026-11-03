@@ -8945,3 +8945,58 @@ add when: logs require multi-level grouping (e.g., weekly collapsible sprints).
 ```
 skipped: JS widow-prevention scripts and markdown text-balancing engines.  
 add when: custom non-system typography breaks native punctuation overhang.
+
+
+### Cycle #146 Directive (2026-11-03 10:50)
+### 1. Optical Baseline & Tabular Timestamp Alignment
+
+```css
+.log-row {
+  display: flex;
+  align-items: baseline;
+  column-gap: 1.5ch;
+  line-height: 1.6;
+}
+
+.log-row time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+```
+→ skipped: JavaScript date formatting libraries, custom layout grids. Add when supporting localized multi-calendar views.
+
+### 2. Zero-JS Auto-Expanding Log Input
+
+```css
+.conscious-input {
+  field-sizing: content;
+  min-height: 1.6lh;
+  max-height: 35vh;
+  width: 100%;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  line-height: inherit;
+}
+```
+→ skipped: JS `scrollHeight` auto-resize listeners and wrapper divs. Add polyfill only if target browser baseline drops below Chrome 123 / Safari 17.4.
+
+### 3. Native Enter-to-Append Log Dispatch
+
+```javascript
+// ponytail: syncs directly to memory/storage; move to indexedDB worker when log count exceeds 5k
+const bindLog = (input, onSave) => {
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey && input.value.trim()) {
+      e.preventDefault();
+      onSave({ text: input.value.trim(), ts: Date.now() });
+      input.value = '';
+    }
+  });
+};
+```
+→ skipped: Custom input controller class, debounce logic, and UI confirmation toasts. Add when network sync latency must be visibly surfaced.
