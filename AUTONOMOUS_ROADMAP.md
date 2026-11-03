@@ -7733,3 +7733,74 @@ document.querySelector('#log-form').addEventListener('keydown', (e) => {
 ```
 skipped: Custom state management, debounced draft saves, mutation observers.  
 add when: Offline sync or persistent local draft restoration is requested.
+
+
+### Cycle #130 Directive (2026-11-03 09:20)
+### 1. Auto-Expanding Zen Input (Zero-JS UI)
+Eliminate JS auto-resize listeners. Use modern native CSS sizing for a distraction-free, borderless thought-capture field.
+
+```css
+/* sadar-input.css */
+.conscious-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 60vh;
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  line-height: 1.6;
+  resize: none;
+  /* ponytail: field-sizing needs Chrome 123+ / Safari 18.2+. Fallback is standard min-height */
+}
+```
+→ skipped: JS scrollHeight math, add when Safari <18.2 strict backwards support is mandated.
+
+---
+
+### 2. Typographic Baseline & Vertical Alignment for Logs
+Enforce rhythm using native `lh` units and two-column baseline alignment across metadata and journal entries, avoiding brittle margin cascades.
+
+```css
+/* sadar-log-stream.css */
+.log-stream {
+  display: grid;
+  grid-template-columns: 5ch 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1.5lh;
+  align-items: baseline;
+  max-width: 65ch;
+  margin-inline: auto;
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--zen-subtle, #8c827a);
+}
+
+.log-content {
+  margin: 0;
+  line-height: 1.6;
+}
+```
+→ skipped: Complex flex wrapper hierarchy, add when responsive multi-column layouts are requested.
+
+---
+
+### 3. Chronological Day Grouping (Stdlib)
+Replace custom sorting/bucketing algorithms with native modern JS to group logs by conscious cycle (day).
+
+```javascript
+// sadar-group.js
+export const groupLogsByDay = (entries) =>
+  Object.groupBy(entries, (e) =>
+    new Date(e.timestamp).toLocaleDateString("en-CA") // YYYY-MM-DD
+  );
+
+// self-check
+const sample = [{ id: 1, timestamp: "2025-05-18T10:00:00Z" }];
+console.assert("2025-05-18" in groupLogsByDay(sample), "Grouping failed");
+```
+→ skipped: External date utilities (date-fns/dayjs), add when locale-specific custom calendaring is required.
