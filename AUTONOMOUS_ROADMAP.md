@@ -8606,3 +8606,107 @@ add when: Explicitly tracking multi-variable taxonomies beyond presence/reflecti
 ```
 skipped: Borders, cards, drop-shadows, and elevation layers.  
 add when: User demands drag-and-drop grouping or dense tabular exports.
+
+
+### Cycle #142 Directive (2026-11-03 10:28)
+### 1. Zero-JS Auto-Expanding Reflection Input
+
+Replace textarea auto-resize JS/observers with native CSS `field-sizing`.
+
+```css
+.journal-input {
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 40vh;
+  width: 100%;
+  resize: none;
+  line-height: 1.618;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  color: var(--zen-ink, #1c1c1e);
+  /* ponytail: field-sizing fallback to fixed height on older engines */
+}
+```
+→ skipped: JS `ResizeObserver` and scrollHeight calculating scripts.  
+→ add when: Safari < 17.4 support is an explicit hard requirement.
+
+---
+
+### 2. Baseline-Locked Conscious Living Stream
+
+Align timestamp, state indicator, and metacognitive log along a single typographic baseline using native Grid.
+
+```html
+<article class="log-row">
+  <time datetime="2025-05-14T08:30" class="log-time">08:30</time>
+  <span class="log-state">Calm</span>
+  <p class="log-body">Observed reactive tension in posture before speaking; paused and adjusted breathing.</p>
+</article>
+```
+
+```css
+.log-row {
+  display: grid;
+  grid-template-columns: 3.5rem max-content 1fr;
+  align-items: baseline;
+  column-gap: 0.875rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--sand-subtle, rgba(0, 0, 0, 0.05));
+}
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: #8e8e93;
+}
+.log-state {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: var(--pill-bg, #f2f2f7);
+  color: var(--pill-ink, #48484a);
+}
+.log-body {
+  margin: 0;
+  line-height: 1.5;
+}
+```
+→ skipped: sub-grid abstractions, wrapper layout divs, and custom badge icons.  
+→ add when: entries require multi-tier metadata (tags, locations, biometrics).
+
+---
+
+### 3. Native Minimalist State Selector
+
+Eliminate custom JavaScript dropdown components for metacognitive state logging.
+
+```html
+<label class="state-picker">
+  <select name="state" aria-label="Metacognitive state">
+    <option value="calm">Calm</option>
+    <option value="reactive">Reactive</option>
+    <option value="present">Present</option>
+    <option value="drift">Drift</option>
+  </select>
+</label>
+```
+
+```css
+.state-picker select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 1px solid var(--sand-border, #e5e5ea);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+```
+→ skipped: custom ARIA combobox widgets, floating menu DOM nodes, and click-outside listeners.  
+→ add when: state options exceed 10 items and require fuzzy search.
