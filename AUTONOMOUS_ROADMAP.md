@@ -7887,3 +7887,83 @@ console.assert(typeof HTMLFormElement.prototype.requestSubmit === "function", "B
 ```
 → skipped: Command-bar dialogs, hotkey libraries, and draft debouncing.  
 → add when: Cloud sync conflicts or offline queueing require local caching.
+
+
+### Cycle #132 Directive (2026-11-03 09:32)
+### 1. Auto-Expanding Single-Stream Log Input
+
+```css
+/* Zero-JS height tracking, strict typographic rhythm */
+.log-textarea {
+  field-sizing: content;
+  min-height: 1.6lh;
+  max-height: 35vh;
+  width: 100%;
+  resize: none;
+  line-height: 1.6;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  font-family: inherit;
+  color: inherit;
+}
+```
+skipped: MutationObservers and JS `scrollHeight` syncing.  
+add when: Firefox ESR engine compatibility without `field-sizing` support is strictly mandated.
+
+---
+
+### 2. Optical Center-Column Rhythm & Alignment
+
+```css
+/* Anchored typographic column, eliminates layout shift between empty/active states */
+.sadar-layout {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100dvh;
+  max-width: 62ch;
+  margin-inline: auto;
+  padding: 3rem 1.5rem 6rem;
+  /* ponytail: ceiling is unnested grid; upgrade to subgrid if per-entry sidebars are needed */
+}
+
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 2lh;
+  margin-block: 2.5lh;
+}
+```
+skipped: Wrapper flexboxes, absolute positioning, and dynamic height JS calculations.  
+add when: Multicolumn analysis panels or dock overlays are introduced.
+
+---
+
+### 3. Hairline Timeline without Slop Components
+
+```html
+<article class="log-item">
+  <time datetime="2025-05-18T10:30">10:30</time>
+  <div class="log-content" contenteditable="plaintext-only">Noticed friction before opening mail. Stepped back.</div>
+</article>
+```
+```css
+.log-item {
+  display: grid;
+  grid-template-columns: 4ch 1fr;
+  align-items: baseline;
+  gap: 1.25rem;
+  border-left: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  padding-left: 1.25rem;
+}
+
+.log-item time {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.4;
+  user-select: none;
+}
+```
+skipped: Card containers, timeline node SVGs, and modal edit dialogs.  
+add when: Entries need multi-tag classification or explicit rich-media attachments.
