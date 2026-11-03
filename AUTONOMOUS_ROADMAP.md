@@ -8047,3 +8047,79 @@ textarea.thought-input {
 ```
 → skipped: extra container `<div>` tags, icon decoration, and JavaScript date formatters.  
 → add when: dates require client-side localization or interactive date-picker filtering.
+
+
+### Cycle #134 Directive (2026-11-03 09:43)
+### 1. Auto-Expanding Thought Area (Pure CSS)
+
+```css
+/* textarea auto-expands to content; zero JS resize listeners */
+.log-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 30lh;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  line-height: 1.6;
+  resize: none;
+  /* ponytail: fallback to static rows in older browsers; upgrade if non-Chromium lagging */
+}
+```
+skipped: JS auto-grow libraries and DOM scrollHeight measuring.  
+add when: Safari/Firefox compatibility requirements mandate pre-2024 engine support.
+
+---
+
+### 2. Temporal & Text Baseline Alignment
+
+```css
+/* Locks timestamp and metacognitive note to the true optical baseline */
+.log-row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  column-gap: 1rem;
+  align-items: first baseline;
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+  color: var(--text-muted, #8a8a8e);
+}
+
+.log-text {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text-primary, #1c1c1e);
+}
+```
+skipped: Flexbox hacks, manual `padding-top` offsets, and icon wrappers.  
+add when: Multi-tag badges or interactive actions require vertical centering instead of text flow.
+
+---
+
+### 3. Anti-Card Group Rhythm
+
+```css
+/* Replaces visual container slop with Apple-style typographic cadence */
+.log-day + .log-day {
+  margin-top: 3lh;
+  padding-top: 1.5lh;
+  border-top: 1px solid var(--line-subtle, rgba(0, 0, 0, 0.05));
+}
+
+.log-day-header {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.75lh;
+  color: var(--text-secondary, #636366);
+}
+```
+skipped: Rounded card containers, drop shadows, and collapsible accordion wrappers.  
+add when: Bulk day archiving, filtering, or density controls are explicitly demanded.
