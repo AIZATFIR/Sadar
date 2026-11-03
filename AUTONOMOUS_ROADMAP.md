@@ -7656,3 +7656,80 @@ form?.addEventListener('submit', (e) => {
 ```
 * Skipped: Virtual DOM reconciler, form state stores, and date-formatting dependencies.
 * Add when: Persistent cross-session sync and offline-first IndexedDB export are required.
+
+
+### Cycle #129 Directive (2026-11-03 09:14)
+### 1. Auto-Expanding Thought Input (CSS Native, No JS Observers)
+
+```css
+/* sadar-log-input.css */
+.metacog-input {
+  field-sizing: content;
+  min-height: 1.6lh;
+  max-height: 35vh;
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+  /* ponytail: unsupported engines fallback to scroll; upgrade with light polyfill if Safari <17.4 is required */
+}
+```
+skipped: JS resize listeners, hidden measuring `div`, input-wrapper DOM overhead.  
+add when: Supporting legacy browsers without native `field-sizing`.
+
+---
+
+### 2. Optical Baseline Vertical Alignment for Timeline Entries
+
+```css
+/* sadar-timeline.css */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  padding-inline-start: 0.75rem;
+  border-inline-start: 1px solid oklch(0.9 0.01 50);
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  gap: 1rem;
+  padding-block: 0.625rem;
+}
+
+.log-time {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: oklch(0.55 0.02 50);
+  user-select: none;
+}
+```
+skipped: Absolute positioning rails, flexbox vertical centering hacks, arbitrary margin offsets.  
+add when: Multi-line metadata badges require sub-grid nesting.
+
+---
+
+### 3. Keyboard-First Quick Capture (Zero Framework Overhead)
+
+```javascript
+// sadar-quick-capture.js
+document.querySelector('#log-form').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (e.target.value.trim()) e.target.form.requestSubmit();
+  }
+});
+```
+```html
+<form id="log-form" action="/api/logs" method="POST">
+  <textarea name="entry" class="metacog-input" placeholder="Observe current state..." required></textarea>
+</form>
+```
+skipped: Custom state management, debounced draft saves, mutation observers.  
+add when: Offline sync or persistent local draft restoration is requested.
