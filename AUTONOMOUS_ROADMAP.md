@@ -8710,3 +8710,87 @@ Eliminate custom JavaScript dropdown components for metacognitive state logging.
 ```
 → skipped: custom ARIA combobox widgets, floating menu DOM nodes, and click-outside listeners.  
 → add when: state options exceed 10 items and require fuzzy search.
+
+
+### Cycle #143 Directive (2026-11-03 10:33)
+### 1. Optical Baseline & Auto-Resizing Input (CSS-only)
+
+```css
+.log-stream {
+  display: grid;
+  grid-template-columns: tabular-nums max-content 1fr;
+  row-gap: 0.75rem;
+  column-gap: 1.25rem;
+  align-items: baseline;
+  font-feature-settings: "tnum" 1;
+}
+
+.log-stream time {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.45;
+  font-size: 0.8125rem;
+}
+
+.log-stream textarea {
+  /* ponytail: field-sizing ceiling; add JS scrollHeight fallback if Safari < 17.4 */
+  field-sizing: content;
+  min-height: 1.5lh;
+  line-height: 1.5;
+  border: none;
+  padding: 0;
+  background: transparent;
+  resize: none;
+  outline: none;
+}
+```
+* **Skipped:** JS auto-resize listeners and hidden dummy mirror divs.
+* **Add when:** Supporting legacy browsers lacking CSS `field-sizing` support.
+
+---
+
+### 2. Streamlined Minimal Log Capture (Native Form)
+
+```html
+<form id="journal-input" onsubmit="event.preventDefault(); sadar.save(this.body.value); this.reset();">
+  <div class="log-stream">
+    <time datetime="now" id="clock">12:40</time>
+    <textarea 
+      name="body" 
+      placeholder="Present moment awareness..." 
+      required 
+      autofocus 
+      onkeydown="if(event.key === 'Enter' && (event.metaKey || event.ctrlKey)) this.form.requestSubmit();"
+    ></textarea>
+  </div>
+</form>
+```
+* **Skipped:** Popover modals, distraction-heavy WYSIWYG toolbars, and multi-field inputs.
+* **Add when:** Multi-dimensional tracking (e.g., categorical somatic tags) is explicitly requested.
+
+---
+
+### 3. Native Zero-Dependency Storage Layer
+
+```javascript
+const sadar = {
+  // ponytail: LocalStorage array ceiling ~5MB; upgrade to IndexedDB when text payload exceeds quota
+  save(content) {
+    if (!content.trim()) return;
+    const entries = JSON.parse(localStorage.getItem('sadar_entries') || '[]');
+    entries.unshift({ id: crypto.randomUUID(), ts: Date.now(), content: content.trim() });
+    localStorage.setItem('sadar_entries', JSON.stringify(entries));
+  }
+};
+
+// Self-check
+(() => {
+  const testKey = 'sadar_entries';
+  const before = localStorage.getItem(testKey);
+  sadar.save('test self-check ping');
+  const after = JSON.parse(localStorage.getItem(testKey));
+  console.assert(after[0].content === 'test self-check ping', 'Storage failed');
+  before ? localStorage.setItem(testKey, before) : localStorage.removeItem(testKey);
+})();
+```
+* **Skipped:** Client-side ORMs, IndexedDB wrappers, and background sync queues.
+* **Add when:** Journal entries exceed browser LocalStorage limits (5MB) or require indexed full-text search.
