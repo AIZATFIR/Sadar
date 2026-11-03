@@ -7302,3 +7302,79 @@ Purge cards, box-shadows, and heavy outlines; let vertical whitespace and quiet 
 ```
 → skipped: Elevation layers, card containers, and theme-specific border variables.  
 → add when: user introduces card-based drag-and-drop reordering.
+
+
+### Cycle #125 Directive (2026-11-03 08:51)
+### 1. Baseline Grid & Vertical Rhythm
+
+```css
+/* sadar-layout.css */
+.journal-stream {
+  max-width: 62ch;
+  margin-inline: auto;
+  padding-block: clamp(3rem, 8vh, 6rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.75rem, 3.5vh, 2.75rem);
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  column-gap: 1.5rem;
+  align-items: baseline;
+  text-wrap: pretty;
+}
+```
+skipped: Custom JS masonry/scroll-sync, add when side-by-side split reflection mode is introduced.
+
+---
+
+### 2. Zero-JS Auto-Expanding Conscious Capture
+
+```html
+<!-- Native autogrow, no resize listeners -->
+<form method="POST" action="/api/logs" class="log-entry">
+  <time class="log-time" datetime="now">now</time>
+  <textarea 
+    name="content" 
+    class="zen-input" 
+    placeholder="Witness current state..."
+    rows="1"
+    required></textarea>
+</form>
+
+<style>
+.zen-input {
+  /* ponytail: field-sizing requires modern Chromium/Safari 17.4+; upgrade with JS fallback if supporting older runtimes */
+  field-sizing: content;
+  min-height: 1.5lh;
+  max-height: 30lh;
+  width: 100%;
+  resize: none;
+  border: none;
+  background: transparent;
+  font: inherit;
+  line-height: 1.6;
+  outline: none;
+}
+</style>
+```
+skipped: Rich text/WYSIWYG dependencies, add when markdown export/inline block attachments are explicitly required.
+
+---
+
+### 3. Monospace Tabular Baseline Timestamp
+
+```css
+/* sadar-meta.css */
+.log-time {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--zen-subtle, #8a857e);
+  user-select: none;
+}
+```
+skipped: Relative time auto-updaters (`timeago.js`), add when entries require live second-level staleness indicators.
