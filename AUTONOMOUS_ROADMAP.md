@@ -8390,3 +8390,70 @@ textarea.reflection-input {
 }
 ```
 → skipped: Custom accessible switch component with state management; add ARIA roles when custom keyboard tab navigation breaks standard fieldset accessibility.
+
+
+### Cycle #138 Directive (2026-11-03 10:05)
+```css
+/* 1. Auto-growing log input (Zero JS) */
+.log-input {
+  field-sizing: content;
+  min-height: 2lh;
+  max-height: 15lh;
+  line-height: 1.6;
+  width: 100%;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  /* ponytail: field-sizing unsupported in Safari <17.4; upgrade with JS input event resize if legacy support needed */
+}
+
+/* 2. Vertical rhythm & rail alignment */
+.log-stream {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  row-gap: 1.25rem;
+  border-inline-start: 1px solid var(--border, rgba(0, 0, 0, 0.08));
+  margin-inline-start: 1rem;
+  padding-inline-start: 1.25rem;
+}
+
+.log-stream time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--muted, #8e8e93);
+  align-self: baseline;
+}
+
+.log-stream p {
+  margin: 0;
+  line-height: 1.6;
+  align-self: baseline;
+}
+
+/* 3. Non-intrusive metacognition prompt strip */
+.metacog-prompts {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-block: 0.25rem;
+}
+
+.metacog-prompts button {
+  appearance: none;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.08));
+  border-radius: 9999px;
+  background: transparent;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  color: var(--muted, #636366);
+  cursor: pointer;
+}
+```
+
+skipped: Auto-resize JS listeners, timeline SVG icons, complex prompt drawer modal.
+add when: Supporting pre-2024 legacy browsers, adding category filtering, or requiring multi-step prompt workflows.
