@@ -7967,3 +7967,83 @@ add when: Multicolumn analysis panels or dock overlays are introduced.
 ```
 skipped: Card containers, timeline node SVGs, and modal edit dialogs.  
 add when: Entries need multi-tag classification or explicit rich-media attachments.
+
+
+### Cycle #133 Directive (2026-11-03 09:37)
+### 1. Optical Baseline Alignment for Log Entries
+
+```css
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25lh;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 5ch 1fr;
+  column-gap: 1.5rem;
+  align-items: baseline; /* Locks timestamp cap-height to first line of text */
+}
+
+.log-time {
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--zen-muted, #8a8580);
+}
+```
+→ skipped: JS dynamic positioning and custom column wrappers.  
+→ add when: multi-column tabular metadata (tags, mood meters) is explicitly requested.
+
+---
+
+### 2. Auto-Expanding Thought Entry (Zero JS)
+
+```css
+textarea.thought-input {
+  field-sizing: content; /* ponytail: native auto-grow; modern Chromium/Safari 18+ */
+  min-height: 1.6lh;
+  max-height: 15lh;
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  line-height: 1.6;
+}
+```
+→ skipped: JS resize event listeners, hidden shadow DOM clones, and external textarea packages.  
+→ add when: older browser support without `field-sizing` is an explicit hard requirement.
+
+---
+
+### 3. Streamlined Daily Partition Anchor
+
+```html
+<time datetime="2025-05-14" class="log-divider">
+  <span>Today</span>
+</time>
+```
+
+```css
+.log-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--zen-muted, #8a8580);
+  margin-block: 2lh 1lh;
+
+  &::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid var(--zen-border, #e5e0db);
+  }
+}
+```
+→ skipped: extra container `<div>` tags, icon decoration, and JavaScript date formatters.  
+→ add when: dates require client-side localization or interactive date-picker filtering.
