@@ -8123,3 +8123,96 @@ add when: Multi-tag badges or interactive actions require vertical centering ins
 ```
 skipped: Rounded card containers, drop shadows, and collapsible accordion wrappers.  
 add when: Bulk day archiving, filtering, or density controls are explicitly demanded.
+
+
+### Cycle #135 Directive (2026-11-03 09:48)
+### 1. Optical Baseline Alignment for Log Entries
+
+Align timestamps and markers cleanly with the first line of log text, eliminating multi-line layout drift.
+
+```css
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  column-gap: 1rem;
+  align-items: baseline;
+}
+
+.log-entry time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--text-muted, #78716c);
+  letter-spacing: -0.01em;
+}
+
+.log-entry p {
+  line-height: 1.5;
+  color: var(--text-primary, #1c1917);
+  margin: 0;
+}
+```
+→ skipped: vertical connector lines and icon containers; add when logs require nested branching or multi-user threads.
+
+---
+
+### 2. Zero-JS Auto-Expanding Input for Conscious Logs
+
+Native CSS auto-grow replacing custom JS listeners for rapid, zero-friction captures.
+
+```css
+textarea.log-input {
+  width: 100%;
+  field-sizing: content;
+  min-height: 1.5lh;
+  max-height: 40vh;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  line-height: 1.5;
+  font-family: inherit;
+  padding: 0;
+}
+
+textarea.log-input::placeholder {
+  color: var(--text-faint, #a8a29e);
+}
+```
+→ skipped: mirror divs and input resize event listeners; add when supporting Firefox versions prior to standard `field-sizing` landing.
+
+---
+
+### 3. De-Slopped State Indicator
+
+Replaces heavy card chips and badge wrappers with an inline baseline-anchored indicator.
+
+```html
+<div class="log-entry">
+  <time datetime="2026-03-31T09:15">09:15</time>
+  <p>
+    <span class="state-pip" data-state="calm" title="Calm"></span>
+    Deep flow state achieved without internal resistance.
+  </p>
+</div>
+
+<style>
+  .state-pip {
+    display: inline-block;
+    width: 0.45rem;
+    height: 0.45rem;
+    margin-right: 0.375rem;
+    vertical-align: 0.125em;
+    border-radius: 9999px;
+    background-color: var(--state-color, #78716c);
+  }
+  .state-pip[data-state="calm"] { background-color: #059669; }
+  .state-pip[data-state="friction"] { background-color: #d97706; }
+</style>
+```
+→ skipped: badge borders, background fills, and state selector dropdown menus; add when logs support custom user-defined taxonomies.
