@@ -8508,3 +8508,101 @@ add when: Supporting pre-2024 legacy browsers, adding category filtering, or req
 → skipped: JS auto-resize handlers, add when legacy Safari without `field-sizing` support is required.  
 → skipped: virtualized rendering for entries, add when DOM count exceeds 500 nodes per view.  
 → skipped: heavy entry card components, kept to plain grid text for low-friction logging.
+
+
+### Cycle #140 Directive (2026-11-03 10:16)
+### 1. Optical Baseline Alignment & Native Expanding Input
+
+```css
+/* sadar-entry.css */
+.log-row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  padding-block: 0.375lh;
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--sand-8, #8c827a);
+}
+
+.log-input {
+  field-sizing: content; /* ponytail: modern baseline; fallback to min-height for older WebKit */
+  min-height: 1.5lh;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  line-height: 1.5;
+  color: var(--sand-12, #24211e);
+  padding: 0;
+}
+```
+skipped: JS auto-grow recalculations and manual margin offsets.  
+add when: Supporting pre-2024 browsers without `field-sizing` support via a 3-line `scrollHeight` fallback.
+
+---
+
+### 2. Streamlined Conscious Capture (Inline Timestamp + Enter to Commit)
+
+```html
+<!-- log-capture.html -->
+<form id="logger" class="log-row">
+  <time id="now" class="log-time"></time>
+  <textarea 
+    name="entry" 
+    class="log-input" 
+    placeholder="Witness current state..." 
+    rows="1"
+    required></textarea>
+</form>
+
+<script>
+  const form = document.getElementById('logger');
+  const now = document.getElementById('now');
+  const txt = form.entry;
+
+  const stamp = () => now.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  stamp();
+  txt.addEventListener('focus', stamp);
+
+  txt.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (txt.value.trim()) form.requestSubmit();
+    }
+  });
+</script>
+```
+skipped: Rich text framing, tags, sentiment dropdowns, and modal dialogs.  
+add when: Explicitly tracking multi-variable taxonomies beyond presence/reflection.
+
+---
+
+### 3. Anti-Slop Negative-Space Rhythm (De-Carded Stream)
+
+```css
+/* sadar-stream.css */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* rhythm driven purely by type line-height */
+  max-width: 42ch; /* optimal reading measure for reflection */
+  margin-inline: auto;
+}
+
+.log-item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  padding-block: 0.375lh;
+}
+
+.log-item:hover .log-time {
+  color: var(--sand-11, #48413b);
+}
+```
+skipped: Borders, cards, drop-shadows, and elevation layers.  
+add when: User demands drag-and-drop grouping or dense tabular exports.
