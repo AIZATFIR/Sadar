@@ -8883,3 +8883,65 @@ Zero-dependency micro-toggle to tag metacognitive awareness states inline.
 ```
 → skipped: Dropdown menus, multi-select libraries, and modal picker sheets.  
 → add when: Users require custom taxonomy or arbitrary emotional tags.
+
+
+### Cycle #145 Directive (2026-11-03 10:44)
+### 1. Zero-JS Auto-Expanding Capture Field
+
+```css
+/* Replaces JS auto-resize listeners for frictionless conscious logging */
+.reflection-input {
+  /* ponytail: field-sizing unsupported in older WebKit; fallback is standard min-height scroll */
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 40vh;
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  line-height: 1.6;
+}
+```
+skipped: textarea auto-grow JS libraries and resize event handlers.  
+add when: baseline browser targets require pre-2024 iOS/Safari support without scroll fallback.
+
+---
+
+### 2. Optical Baseline Spine Alignment
+
+```css
+/* Precise vertical rhythm: binds timestamp and reflection to matching font baseline */
+.log-row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  column-gap: 1.25rem;
+  margin-block-end: 1.75rem;
+}
+
+.log-meta {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  letter-spacing: -0.01em;
+  opacity: 0.45;
+}
+```
+skipped: nested subgrids, absolute-positioned timeline tracks, and date-wrapper divs.  
+add when: logs require multi-level grouping (e.g., weekly collapsible sprints).
+
+---
+
+### 3. Apple-Grade Typographic Zen
+
+```css
+/* Anti-slop text flow for introspective reading */
+.log-body {
+  max-width: 62ch;
+  line-height: 1.65;
+  text-wrap: pretty;
+  hanging-punctuation: first allow-end;
+}
+```
+skipped: JS widow-prevention scripts and markdown text-balancing engines.  
+add when: custom non-system typography breaks native punctuation overhang.
