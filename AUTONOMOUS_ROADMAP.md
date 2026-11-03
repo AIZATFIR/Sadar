@@ -7456,3 +7456,118 @@ Keeps temporal context anchored during long metacognitive scroll-backs with zero
 }
 ```
 → skipped: IntersectionObserver-driven pinned title swaps; add when multi-level nested timeline folding is introduced.
+
+
+### Cycle #127 Directive (2026-11-03 09:03)
+### 1. Optical Baseline Alignment for Timeline Logs
+
+Eliminates misaligned bullets and baseline jitter between timestamps and log text using CSS line-height relative units and `first baseline` grid alignment.
+
+```css
+.log-group {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1lh;
+  align-items: first baseline;
+}
+
+.log-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--color-subtle, #8a8178);
+  /* ponytail: static format; add Intl.RelativeTimeFormat when live minute-deltas needed */
+}
+
+.log-content {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--color-ink, #262421);
+}
+```
+→ skipped: JavaScript DOM wrappers and icon alignment hacks.  
+→ add when: multi-line timestamps or variable left-rail metadata are introduced.
+
+---
+
+### 2. Zero-JS Auto-Expanding Input for Conscious Logs
+
+Replaces JavaScript height-calculation hacks and bloated modal overlays with native CSS `field-sizing`.
+
+```html
+<form method="POST" action="/api/logs" class="log-composer">
+  <textarea
+    name="reflection"
+    rows="1"
+    required
+    placeholder="Notice without judging..."
+    aria-label="Conscious log entry"
+    class="zen-field"
+  ></textarea>
+</form>
+```
+
+```css
+.zen-field {
+  width: 100%;
+  field-sizing: content; /* ponytail: native auto-grow; add textarea autogrow JS when Safari <17.4 is mandatory */
+  min-height: 1.5lh;
+  max-height: 12lh;
+  border: none;
+  border-bottom: 1px solid var(--border-warm, #e8e3dc);
+  background: transparent;
+  padding: 0.25lh 0;
+  resize: none;
+  outline: none;
+  font: inherit;
+}
+.zen-field:focus-visible {
+  border-bottom-color: var(--accent-earth, #a07855);
+}
+```
+→ skipped: Auto-resizing libraries, floating action toolbars, rich-text toolbars.  
+→ add when: Markdown parsing or tag-suggestions become core requirements.
+
+---
+
+### 3. Prune Log Container DOM to Semantic Tree
+
+Replaces nested card wrapper `div`s with an accessible, lightweight `<ol>` using a native relative pseudo-rule.
+
+```html
+<ol class="log-stream">
+  <li class="log-item">
+    <time datetime="2025-05-14T09:15:00Z" class="log-time">09:15 AM</time>
+    <p class="log-content">Slight tension behind eyes before opening inbox. Paused for three breaths.</p>
+  </li>
+</ol>
+```
+
+```css
+.log-stream {
+  list-style: none;
+  padding: 0 0 0 1rem;
+  margin: 0;
+  border-left: 1px solid var(--border-warm, #e8e3dc);
+}
+
+.log-item {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1.25lh;
+}
+
+.log-item::before {
+  content: "";
+  position: absolute;
+  left: calc(-1rem - 3.5px);
+  top: 0.45lh; /* Aligns to cap-height of first line */
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--marker-color, #c4b5a5);
+}
+```
+→ skipped: Status badges, action menus per item, nested layout containers.  
+→ add when: In-line editing or log categorization (tags/moods) is explicitly prioritized.
