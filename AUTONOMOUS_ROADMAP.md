@@ -8457,3 +8457,54 @@ textarea.reflection-input {
 
 skipped: Auto-resize JS listeners, timeline SVG icons, complex prompt drawer modal.
 add when: Supporting pre-2024 legacy browsers, adding category filtering, or requiring multi-step prompt workflows.
+
+
+### Cycle #139 Directive (2026-11-03 10:11)
+```css
+/* 1. Baseline Vertical Alignment for Log Stream */
+.log-stream {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 1.5rem;
+  row-gap: 1.25rem;
+  max-width: 65ch;
+  margin: 0 auto;
+}
+.log-stream time {
+  font-variant-numeric: tabular-nums;
+  color: var(--zen-muted, #8e8e93);
+  font-size: 0.8125rem;
+  align-self: baseline;
+}
+.log-stream p {
+  margin: 0;
+  line-height: 1.6;
+  align-self: baseline;
+}
+
+/* 2. Zero-JS Metacognition Input Field */
+.journal-input {
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 20lh;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: none;
+  line-height: 1.6;
+  font-family: inherit;
+  /* ponytail: relies on native field-sizing; add JS auto-grow fallback only if legacy Safari support is mandated */
+}
+
+/* 3. Zen Rhythm & Subtle Section Divider */
+.log-group + .log-group {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid color-mix(in srgb, currentColor 7%, transparent);
+}
+```
+
+→ skipped: JS auto-resize handlers, add when legacy Safari without `field-sizing` support is required.  
+→ skipped: virtualized rendering for entries, add when DOM count exceeds 500 nodes per view.  
+→ skipped: heavy entry card components, kept to plain grid text for low-friction logging.
