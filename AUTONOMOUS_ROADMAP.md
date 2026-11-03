@@ -8319,3 +8319,74 @@ Replaces decorative DOM elements and heavy SVG lines with a single pseudo-elemen
 ```
 → skipped: Timeline SVG components, per-item bullet nodes.  
 → add when: Interactive state indicators (e.g., clickable milestone nodes) are required on the axis itself.
+
+
+### Cycle #137 Directive (2026-11-03 09:59)
+### 1. Zero-JS Auto-Expanding Log Field
+
+```css
+textarea.reflection-input {
+  field-sizing: content;
+  min-height: 3lh;
+  resize: none;
+  line-height: 1.6;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+}
+```
+→ skipped: JS `scrollHeight` syncing and resize listeners; add resize fallback when Safari <18 support is strictly required.
+
+---
+
+### 2. Baseline-Aligned Log Stream
+
+```css
+.log-stream {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1.25lh;
+  align-items: baseline;
+}
+
+.log-stream time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--muted, #86868b);
+}
+```
+→ skipped: Timeline tree nodes, pseudo-element vertical rules, and absolute layout hacks; add connecting rails when sub-entries or nested threads are introduced.
+
+---
+
+### 3. Native Segmented Awareness Toggle
+
+```html
+<fieldset class="awareness-switch">
+  <label><input type="radio" name="mode" value="auto" checked><span>Reactive</span></label>
+  <label><input type="radio" name="mode" value="aware"><span>Present</span></label>
+</fieldset>
+```
+```css
+.awareness-switch {
+  display: inline-flex;
+  padding: 2px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 7px;
+  border: none;
+}
+.awareness-switch input { position: absolute; opacity: 0; pointer-events: none; }
+.awareness-switch span {
+  padding: 3px 10px;
+  font-size: 0.8125rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.awareness-switch input:checked + span {
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+```
+→ skipped: Custom accessible switch component with state management; add ARIA roles when custom keyboard tab navigation breaks standard fieldset accessibility.
