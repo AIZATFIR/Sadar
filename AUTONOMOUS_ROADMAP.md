@@ -8794,3 +8794,92 @@ const sadar = {
 ```
 * **Skipped:** Client-side ORMs, IndexedDB wrappers, and background sync queues.
 * **Add when:** Journal entries exceed browser LocalStorage limits (5MB) or require indexed full-text search.
+
+
+### Cycle #144 Directive (2026-11-03 10:39)
+### 1. Typographic Baseline Grid for Log Entries
+
+Aligns timestamps and journal text to the same optical baseline without flexbox hacks.
+
+```css
+.log-item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  column-gap: 1.25rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.log-item time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--text-muted, #78716c);
+}
+```
+→ skipped: JS-based layout measuring and flexbox margin compensations.  
+→ add when: Logs support multi-line metadata sidebars or nested sub-entries.
+
+---
+
+### 2. Zero-JS Auto-Expanding Input for Conscious Logs
+
+Native dynamic resizing with zen warmth typography and no layout jumps.
+
+```css
+.conscious-log-input {
+  width: 100%;
+  field-sizing: content; /* ponytail: supports modern Chromium/Safari 18+, falls back to min-height */
+  min-height: 2lh;
+  max-height: 30lh;
+  padding: 0.5rem 0;
+  border: none;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  background: transparent;
+  font: inherit;
+  line-height: 1.6;
+  outline: none;
+  resize: none;
+}
+
+.conscious-log-input:focus {
+  border-bottom-color: color-mix(in srgb, currentColor 40%, transparent);
+}
+```
+→ skipped: Heavy autosize textarea listeners, contenteditable wrappers, and toolbars.  
+→ add when: Block-level rich formatting (e.g., code blocks, image drops) is required.
+
+---
+
+### 3. Native State Tag Toggle (Grounded / Reactive)
+
+Zero-dependency micro-toggle to tag metacognitive awareness states inline.
+
+```html
+<label class="state-pill">
+  <input type="checkbox" name="is_grounded" class="sr-only">
+  <span>grounded</span>
+</label>
+```
+```css
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+
+.state-pill span {
+  display: inline-flex;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+  background: color-mix(in srgb, currentColor 6%, transparent);
+  color: color-mix(in srgb, currentColor 60%, transparent);
+  cursor: pointer;
+  user-select: none;
+  transition: all 120ms ease;
+}
+
+.state-pill input:checked + span {
+  background: color-mix(in srgb, #2e7d32 15%, transparent);
+  color: #2e7d32;
+}
+```
+→ skipped: Dropdown menus, multi-select libraries, and modal picker sheets.  
+→ add when: Users require custom taxonomy or arbitrary emotional tags.
