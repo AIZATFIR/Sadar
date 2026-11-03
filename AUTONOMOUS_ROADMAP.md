@@ -7103,3 +7103,61 @@ Eliminate card containers; use a single native CSS vertical trace to anchor cont
 ```
 → skipped: card wrappers, box shadows, and nested structural wrappers.  
 → add when: explicit drag-and-drop grouping or multi-column kanban is requested.
+
+
+### Cycle #121 Directive (2026-11-03 08:28)
+```css
+/* 1. Optical baseline alignment + native zero-JS auto-expanding log entry */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-left: 1px solid color-mix(in srgb, currentColor 8%, transparent);
+  padding-left: 1.25rem;
+  margin-left: 0.5rem;
+}
+
+.log-stream > article {
+  display: grid;
+  grid-template-columns: 4.5ch 1fr;
+  column-gap: 1rem;
+  align-items: baseline;
+}
+
+.conscious-log-input {
+  /* ponytail: ceiling is modern engines; upgrade to JS scrollHeight shim if Safari < 17.4 support is needed */
+  field-sizing: content;
+  min-height: 1.6lh;
+  line-height: 1.6;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  resize: none;
+}
+```
+`→ skipped: JS height auto-resize listeners, add when Safari < 17.4 support is strictly required.`
+
+```js
+// 2. Frictionless submission (Enter commits, Shift+Enter breaks line)
+// ponytail: ceiling is single log streams; upgrade to form action/sync worker when offline queue needed
+input.onkeydown = (e) => {
+  if (e.key === 'Enter' && !e.shiftKey && e.target.value.trim()) {
+    e.preventDefault();
+    e.target.form?.requestSubmit();
+  }
+};
+```
+`→ skipped: LocalStorage drafts and auto-save debounce, add when entries transition to long-form reflections.`
+
+```html
+<!-- 3. Streamlined semantic entry markup -->
+<form class="conscious-log-form" action="/logs" method="POST">
+  <article>
+    <time datetime="2025-05-18T10:00" class="tabular-nums opacity-40 text-xs">10:00</time>
+    <textarea name="log" class="conscious-log-input" placeholder="State awareness..." rows="1" required></textarea>
+  </article>
+</form>
+```
+`→ skipped: Timestamp pickers and mood metadata tags, add when explicit querying/filtering is implemented.`
