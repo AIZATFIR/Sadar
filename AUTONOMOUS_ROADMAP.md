@@ -7161,3 +7161,76 @@ input.onkeydown = (e) => {
 </form>
 ```
 `→ skipped: Timestamp pickers and mood metadata tags, add when explicit querying/filtering is implemented.`
+
+
+### Cycle #123 Directive (2026-11-03 08:40)
+### 1. Zero-JS Auto-Growing Metacognition Input
+```css
+/* Replaces auto-resize JS; maintains 4px baseline grid rhythm */
+.metacog-entry {
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 18lh;
+  line-height: 1.6;
+  padding: 0.5rem 0;
+  border: none;
+  background: transparent;
+  resize: none;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  /* ponytail: field-sizing requires Chrome 123+ / Safari 18.2+; fallback is scrollable min-height */
+}
+.metacog-entry:focus {
+  outline: none;
+}
+```
+skipped: JS auto-resize listeners and hidden clone divs.
+add when: supporting legacy Safari (< 18.2) without scrollbars.
+
+---
+
+### 2. Baseline-Locked Timestamp & Conscious Log Stream
+```css
+/* Perfect optical alignment across tabular metadata and thoughts */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+}
+
+.log-row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  column-gap: 1.5rem;
+  align-items: baseline;
+  padding-block: 0.625rem;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 6%, transparent);
+}
+
+.log-meta {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  letter-spacing: -0.01em;
+  color: var(--muted, #8e8e93);
+}
+
+.log-body {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+```
+skipped: Flexbox column wrappers and manual vertical margins.
+add when: log items require dynamic multi-action toolbars.
+
+---
+
+### 3. Native Low-Friction Capture Trigger
+```js
+// Cmd/Ctrl + Enter logs instantly to existing form action
+document.querySelector('#journal-form')?.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    e.preventDefault();
+    e.currentTarget.requestSubmit();
+  }
+});
+```
+skipped: Custom key-binding manager and state-machine debounce.
+add when: supporting multi-key chord shortcuts (e.g., Vim motions).
