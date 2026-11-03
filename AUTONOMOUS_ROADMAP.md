@@ -7571,3 +7571,88 @@ Replaces nested card wrapper `div`s with an accessible, lightweight `<ol>` using
 ```
 → skipped: Status badges, action menus per item, nested layout containers.  
 → add when: In-line editing or log categorization (tags/moods) is explicitly prioritized.
+
+
+### Cycle #128 Directive (2026-11-03 09:09)
+### 1. Native Auto-Growing Log Input (Zero-JS textarea)
+
+```css
+/* sadar/styles/journal.css */
+.entry-field {
+  field-sizing: content;
+  min-height: 3lh;
+  line-height: 1.6;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: none;
+  outline: none;
+  color: #1c1c1e;
+}
+.entry-field::placeholder {
+  color: #aeaeb2;
+}
+```
+* Skipped: Auto-resize JS libraries/event listeners.
+* Add when: Firefox and older Safari support is mandatory (fallback: standard `rows="3"`).
+
+---
+
+### 2. Tabular Baseline-Aligned Stream Layout
+
+```css
+/* sadar/styles/stream.css */
+.stream-grid {
+  display: grid;
+  grid-template-columns: 3.5rem 1px 1fr;
+  column-gap: 1.25rem;
+  row-gap: 1.75rem;
+  align-items: baseline;
+}
+.stream-grid time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: #8e8e93;
+  line-height: 1.6; /* Matches body line-height to lock vertical baseline */
+  text-align: right;
+}
+.stream-divider {
+  align-self: stretch;
+  background: #f2f2f7;
+}
+.stream-grid article {
+  line-height: 1.6;
+  color: #2c2c2e;
+}
+```
+* Skipped: Flexbox hack-wrappers, nested timeline card components, and absolute positioning.
+* Add when: Multi-tag badges or interactive nested metadata are requested.
+
+---
+
+### 3. Native Zero-State Form Capture
+
+```javascript
+// sadar/src/journal.js
+const form = document.querySelector('#log-form');
+const stream = document.querySelector('#log-stream');
+
+form?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const text = form.elements.namedItem('entry')?.value.trim();
+  if (!text) return;
+
+  // ponytail: DOM prepend + simple text sanitization; upgrade to IndexedDB when entries > 500
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+  const sanitized = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  
+  stream.insertAdjacentHTML('afterbegin', 
+    `<time>${time}</time><div class="stream-divider"></div><article>${sanitized}</article>`
+  );
+  form.reset();
+});
+```
+* Skipped: Virtual DOM reconciler, form state stores, and date-formatting dependencies.
+* Add when: Persistent cross-session sync and offline-first IndexedDB export are required.
