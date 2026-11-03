@@ -7804,3 +7804,86 @@ const sample = [{ id: 1, timestamp: "2025-05-18T10:00:00Z" }];
 console.assert("2025-05-18" in groupLogsByDay(sample), "Grouping failed");
 ```
 → skipped: External date utilities (date-fns/dayjs), add when locale-specific custom calendaring is required.
+
+
+### Cycle #131 Directive (2026-11-03 09:26)
+### 1. Auto-Expanding Journal Entry (Pure CSS)
+
+Eliminate JS-driven textarea auto-resize scripts. Use native modern CSS field sizing with standard vertical rhythm.
+
+```css
+/* sadar-entry.css */
+.journal-input {
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 30lh;
+  line-height: 1.6;
+  padding-block: 0.5lh;
+  width: 100%;
+  max-inline-size: 65ch;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  color: #2c2523; /* Zen warm charcoal */
+  resize: none;
+  /* ponytail: field-sizing unsupported in Safari < 17.4; upgrade to ResizeObserver only if Safari telemetry requires it */
+}
+```
+→ skipped: JS height-calculation loops and hidden clone-divs.  
+→ add when: Safari legacy usage exceeds 15% of your user telemetry.
+
+---
+
+### 2. Tabular Timeline Rhythm (Subgrid Alignment)
+
+Align time anchors and log content to identical baselines across multiple entries without markup wrapping or flex hacks.
+
+```css
+/* sadar-logs.css */
+.log-stream {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1.5rem;
+  row-gap: 1.25lh;
+  align-items: baseline;
+  max-inline-size: 65ch;
+  margin-inline: auto;
+}
+
+.log-stream time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: color-mix(in srgb, #2c2523 45%, transparent);
+}
+
+.log-stream p {
+  margin: 0;
+  line-height: 1.6;
+}
+```
+→ skipped: Dedicated multi-nested timeline components and pseudo-element connector lines.  
+→ add when: Multi-day aggregation or group-by-date headers are introduced.
+
+---
+
+### 3. Frictionless Capture Shortcut
+
+Flush current thought directly into native submission via keyboard chord without a client-side state machine.
+
+```javascript
+// sadar-input.js
+document.querySelector("#journal-form")?.addEventListener("keydown", (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+    e.preventDefault();
+    e.currentTarget.requestSubmit();
+  }
+});
+
+// Self-check
+console.assert(typeof HTMLFormElement.prototype.requestSubmit === "function", "Browser supports native requestSubmit");
+```
+→ skipped: Command-bar dialogs, hotkey libraries, and draft debouncing.  
+→ add when: Cloud sync conflicts or offline queueing require local caching.
