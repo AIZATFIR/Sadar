@@ -9000,3 +9000,62 @@ const bindLog = (input, onSave) => {
 };
 ```
 → skipped: Custom input controller class, debounce logic, and UI confirmation toasts. Add when network sync latency must be visibly surfaced.
+
+
+### Cycle #147 Directive (2026-11-03 10:56)
+### 1. Typographic Baseline Alignment (Log Row)
+
+Align timestamps, conscious notes, and contextual markers along the text baseline rather than centering.
+
+```css
+.log-entry {
+  display: grid;
+  grid-template-columns: 5ch 1fr auto;
+  align-items: baseline;
+  gap: 1rem;
+  padding-block: 0.5rem;
+}
+/* ponytail: 5ch ceiling assumes HH:MM format; switch to auto if displaying full dates inline */
+```
+→ skipped: flexbox centering hacks & custom spacers.  
+→ add when: multi-line timestamps or variable-width badges are introduced.
+
+---
+
+### 2. Zero-JS Auto-Expanding Input (Conscious Capture)
+
+Replace textarea resize scripts with native browser sizing.
+
+```css
+.log-capture {
+  field-sizing: content;
+  min-height: 1.6lh;
+  max-height: 15lh;
+  resize: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  line-height: 1.6;
+}
+```
+→ skipped: JS-based `scrollHeight` event listeners and hidden dummy `div` mirrors.  
+→ add when: targeting older browsers needing a polyfill for `field-sizing`.
+
+---
+
+### 3. De-clutter Actions via Native Focus Boundaries
+
+Hide action triggers until the entry is interacted with, eliminating visual noise in the journal view.
+
+```css
+.log-actions {
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.log-entry:is(:hover, :focus-within) .log-actions {
+  opacity: 1;
+}
+```
+→ skipped: floating context menus and selection state JavaScript.  
+→ add when: mobile touch targets require explicit tap-to-reveal affordances.
