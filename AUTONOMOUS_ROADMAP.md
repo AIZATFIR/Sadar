@@ -8216,3 +8216,106 @@ Replaces heavy card chips and badge wrappers with an inline baseline-anchored in
 </style>
 ```
 → skipped: badge borders, background fills, and state selector dropdown menus; add when logs support custom user-defined taxonomies.
+
+
+### Cycle #136 Directive (2026-11-03 09:53)
+### 1. Optical Baseline Timeline (Native Vertical Rhythm)
+Replaces wrapper bloat and misaligned flexboxes with pure CSS Grid using typography baseline anchoring and `lh` units.
+
+```css
+/* sadar-stream.css */
+.log-stream {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  row-gap: 1.5lh;
+  column-gap: 1.25rem;
+  padding: 2lh 0;
+}
+
+.log-entry-meta {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.75rem;
+  line-height: 1.5lh;
+  color: var(--zen-muted, #737373);
+  text-align: right;
+  align-self: first baseline;
+}
+
+.log-entry-content {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.5lh;
+  color: var(--zen-text, #171717);
+  align-self: first baseline;
+  /* ponytail: single-axis layout ceiling; upgrade to subgrid when nested tags require column alignment */
+}
+```
+→ skipped: JavaScript-based timeline layout engines, nested flex wrappers.  
+→ add when: Multi-column metadata (tags, mood, energy levels) requires strict horizontal cell alignment across entries (`subgrid`).
+
+---
+
+### 2. Auto-Expanding Frictionless Quick-Log (Zero-JS)
+Eliminates resize event listeners, scrollbar flicker, and layout thrashing in the conscious-stream input.
+
+```html
+<!-- sadar-capture.html -->
+<form method="POST" action="/api/logs" class="capture-card">
+  <textarea 
+    name="content" 
+    placeholder="What is present right now?" 
+    required 
+    rows="1" 
+    autofocus 
+    onkeydown="if(event.metaKey && event.key === 'Enter') this.form.requestSubmit()"
+    class="zen-textarea"
+  ></textarea>
+</form>
+
+<style>
+.zen-textarea {
+  width: 100%;
+  field-sizing: content; /* Native CSS auto-growth */
+  min-height: 1.5lh;
+  max-height: 12lh;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: inherit;
+}
+.zen-textarea:focus-visible {
+  outline: none; /* Rely on container state or calm subtle accent */
+}
+</style>
+```
+→ skipped: Autosize textarea JS libraries, synthetic draft persistence.  
+→ add when: Local draft recovery via IndexedDB is explicitly needed for long-form entries.
+
+---
+
+### 3. Hairline Axis (CSS Pseudo-Spine)
+Replaces decorative DOM elements and heavy SVG lines with a single pseudo-element border aligned precisely to the monospace time column.
+
+```css
+/* sadar-axis.css */
+.log-stream {
+  position: relative;
+}
+
+.log-stream::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 4.5rem;
+  width: 1px;
+  background-color: var(--zen-border, rgba(0, 0, 0, 0.06));
+  transform: translateX(0.625rem); /* Half of column-gap (1.25rem / 2) */
+  pointer-events: none;
+}
+```
+→ skipped: Timeline SVG components, per-item bullet nodes.  
+→ add when: Interactive state indicators (e.g., clickable milestone nodes) are required on the axis itself.
