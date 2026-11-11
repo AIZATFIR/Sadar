@@ -115,19 +115,18 @@ class FocusSessionContract {
       uri.queryParameters['minutes'] ?? uri.queryParameters['duration'] ?? '',
     );
     final ts = int.tryParse(uri.queryParameters['timestamp'] ?? '');
-    final callback = Uri.tryParse(uri.queryParameters['callback'] ?? '');
-    if (habitId == null ||
-        habitId <= 0 ||
-        title.trim().isEmpty ||
-        minutes == null ||
-        minutes < 1 ||
-        minutes > 720 ||
-        ts == null) {
+    final callback = uri.queryParameters['callback'];
+    final callbackUri = callback == null ? null : Uri.tryParse(callback);
+
+    if (habitId == null || habitId <= 0 || title.trim().isEmpty) {
       return null;
     }
-    if (callback == null ||
-        callback.scheme != schemeSadar ||
-        callback.host != 'completed') {
+    if (minutes == null || minutes < 1 || minutes > 720 || ts == null) {
+      return null;
+    }
+    if (callbackUri == null ||
+        callbackUri.scheme != schemeSadar ||
+        callbackUri.host != 'completed') {
       return null;
     }
 
@@ -136,6 +135,7 @@ class FocusSessionContract {
       title: title,
       targetMinutes: minutes,
       requestedAt: DateTime.fromMillisecondsSinceEpoch(ts),
+      callbackUrl: callbackUri.toString(),
     );
   }
 
@@ -166,22 +166,16 @@ class FocusSessionContract {
     final endTs = int.tryParse(uri.queryParameters['endedAt'] ?? '');
     final duration = int.tryParse(uri.queryParameters['duration'] ?? '');
     final status = uri.queryParameters['status'];
-    if (habitId == null ||
-        habitId <= 0 ||
-        sessionId.isEmpty ||
-        startTs == null ||
-        endTs == null ||
-        endTs < startTs ||
-        duration == null ||
-        duration < 0 ||
-        duration > 720) {
-      return null;
-    }
+
+    if (habitId == null || habitId <= 0 || sessionId.isEmpty) return null;
+    if (startTs == null || endTs == null || endTs < startTs) return null;
+    if (duration == null || duration < 0 || duration > 720) return null;
     if (status != 'completed' &&
         status != 'cancelled' &&
         status != 'interrupted') {
       return null;
     }
+
     return FocusSessionResult(
       sessionId: sessionId,
       habitId: habitId,

@@ -53,6 +53,7 @@ void main() {
         title: 'French Conversation',
         targetMinutes: 20,
         requestedAt: DateTime(2026, 9, 11, 14, 0),
+        callbackUrl: 'sadar://completed',
       );
 
       final uri = FocusSessionContract.buildFocusClockUri(req);
@@ -68,6 +69,7 @@ void main() {
       expect(parsed!.habitId, 55);
       expect(parsed.title, 'French Conversation');
       expect(parsed.targetMinutes, 20);
+      expect(parsed.callbackUrl, 'sadar://completed');
     });
 
     test('buildSadarCompletedUri and parseSadarCompletedUri roundtrip', () {
