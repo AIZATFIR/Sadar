@@ -104,14 +104,22 @@ void main() {
       final habits = await repo.getHabits();
       final h1 = habits[0];
       final h2 = habits[1];
+      final today = DateTime.now();
+      String daysAgo(int days) {
+        final date = DateTime(today.year, today.month, today.day)
+            .subtract(Duration(days: days));
+        return '${date.year.toString().padLeft(4, '0')}-'
+            '${date.month.toString().padLeft(2, '0')}-'
+            '${date.day.toString().padLeft(2, '0')}';
+      }
 
       // Record 3 days for h1
-      await repo.recordEntryStatus(habitId: h1.id, dateString: '2026-09-01', status: HabitStatus.yes);
-      await repo.recordEntryStatus(habitId: h1.id, dateString: '2026-09-02', status: HabitStatus.yes);
-      await repo.recordEntryStatus(habitId: h1.id, dateString: '2026-09-03', status: HabitStatus.yes);
+      await repo.recordEntryStatus(habitId: h1.id, dateString: daysAgo(3), status: HabitStatus.yes);
+      await repo.recordEntryStatus(habitId: h1.id, dateString: daysAgo(2), status: HabitStatus.yes);
+      await repo.recordEntryStatus(habitId: h1.id, dateString: daysAgo(1), status: HabitStatus.yes);
 
       // Record 1 no for h2
-      await repo.recordEntryStatus(habitId: h2.id, dateString: '2026-09-01', status: HabitStatus.no);
+      await repo.recordEntryStatus(habitId: h2.id, dateString: daysAgo(3), status: HabitStatus.no);
 
       final stats = await repo.getAwarenessStats(daysBack: 60);
       expect(stats.habitCompletedCounts[h1.id], 3);
