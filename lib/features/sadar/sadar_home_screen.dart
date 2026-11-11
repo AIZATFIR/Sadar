@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:app_links/app_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +10,7 @@ import '../../core/theme.dart';
 import '../../models/habit.dart';
 import '../../providers/sadar_providers.dart';
 import '../../services/sadar_timer_engine.dart';
+import '../../services/focus_clock_callback_handler.dart';
 import '../../services/secure_storage_service.dart';
 import 'widgets/awareness_view.dart';
 import 'widgets/daily_fulfillment_banner.dart';
@@ -18,10 +22,7 @@ import 'widgets/today_view.dart';
 import 'widgets/what_i_repeat_view.dart';
 
 class SadarHomeScreen extends ConsumerStatefulWidget {
-  const SadarHomeScreen({
-    super.key,
-    this.onBack,
-  });
+  const SadarHomeScreen({super.key, this.onBack});
 
   final VoidCallback? onBack;
 
@@ -32,18 +33,49 @@ class SadarHomeScreen extends ConsumerStatefulWidget {
 class _SadarHomeScreenState extends ConsumerState<SadarHomeScreen> {
   int _currentTabIndex = 0;
   bool? _isOnboardingDone = kIsWeb ? true : null;
+  StreamSubscription<Uri>? _linkSubscription;
 
   @override
   void initState() {
     super.initState();
+    _linkSubscription = AppLinks().uriLinkStream.listen((uri) {
+      unawaited(_handleExternalResult(uri));
+    }, onError: (Object error) => debugPrint('Sadar deep link error: $error'));
     if (!kIsWeb) {
       _checkOnboardingStatus();
     }
   }
 
+  Future<void> _handleExternalResult(Uri uri) async {
+    try {
+      final applied = await FocusClockCallbackHandler.apply(
+        uri,
+        ref.read(sadarRepoProvider),
+      );
+      if (!applied || !mounted) return;
+      ref.invalidate(habitEntriesStreamProvider);
+      ref.invalidate(dailyFulfillmentProvider);
+      ref.invalidate(whatIRepeatProvider);
+      ref.invalidate(awarenessStatsProvider);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Sesi fokus tersimpan di Sadar.')),
+      );
+    } catch (error) {
+      debugPrint('Could not save Focus Clock result: $error');
+    }
+  }
+
+  @override
+  void dispose() {
+    _linkSubscription?.cancel();
+    super.dispose();
+  }
+
   Future<void> _checkOnboardingStatus() async {
     try {
-      final done = await ref.read(secureStorageServiceProvider).isSadarOnboardingDone();
+      final done = await ref
+          .read(secureStorageServiceProvider)
+          .isSadarOnboardingDone();
       if (mounted) {
         setState(() => _isOnboardingDone = done);
       }
@@ -83,7 +115,11 @@ class _SadarHomeScreenState extends ConsumerState<SadarHomeScreen> {
             SizedBox(width: 8),
             Text(
               'Filosofi Sadar',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppPalette.text),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+                color: AppPalette.text,
+              ),
             ),
           ],
         ),
@@ -93,7 +129,11 @@ class _SadarHomeScreenState extends ConsumerState<SadarHomeScreen> {
           children: [
             Text(
               '"Until you make the unconscious conscious, it will direct your life and you will call it fate."',
-              style: TextStyle(fontStyle: FontStyle.italic, color: AppPalette.text, height: 1.4),
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+                color: AppPalette.text,
+                height: 1.4,
+              ),
             ),
             SizedBox(height: 14),
             Text(
@@ -103,7 +143,11 @@ class _SadarHomeScreenState extends ConsumerState<SadarHomeScreen> {
               '• Kesadaran: Apa yang tidak kau sadari akan mengarahkan hidupmu.\n'
               '• Pengulangan: Apa yang berulang kali kau lakukan membentuk dirimu.\n'
               '• Pemenuhan Diri: Menepati janji pada diri sendiri.',
-              style: TextStyle(fontSize: 13, color: AppPalette.textDim, height: 1.5),
+              style: TextStyle(
+                fontSize: 13,
+                color: AppPalette.textDim,
+                height: 1.5,
+              ),
             ),
           ],
         ),
@@ -113,11 +157,20 @@ class _SadarHomeScreenState extends ConsumerState<SadarHomeScreen> {
               Navigator.of(ctx).pop();
               setState(() => _isOnboardingDone = false);
             },
-            child: const Text('Buka Panduan', style: TextStyle(color: AppPalette.textDim)),
+            child: const Text(
+              'Buka Panduan',
+              style: TextStyle(color: AppPalette.textDim),
+            ),
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Saya Mengerti', style: TextStyle(color: AppPalette.accent, fontWeight: FontWeight.bold)),
+            child: const Text(
+              'Saya Mengerti',
+              style: TextStyle(
+                color: AppPalette.accent,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),
@@ -133,43 +186,48 @@ class _SadarHomeScreenState extends ConsumerState<SadarHomeScreen> {
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 680),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            DailyFulfillmentBanner(
-              selectedDate: selectedDate,
-              isShowingAwareness: false,
-              onToggleAwareness: () {
-                setState(() => _currentTabIndex = 3);
-              },
-            ),
-            const SizedBox(height: 16),
-            habitsAsync.when(
-              data: (habits) => HorizontalTimelineGrid(
-                habits: habits,
-                onEditHabit: (h) => _openHabitEditor(h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              DailyFulfillmentBanner(
+                selectedDate: selectedDate,
+                isShowingAwareness: false,
+                onToggleAwareness: () {
+                  setState(() => _currentTabIndex = 3);
+                },
               ),
-              loading: () => const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(40),
-                  child: CircularProgressIndicator(),
+              const SizedBox(height: 16),
+              habitsAsync.when(
+                data: (habits) => HorizontalTimelineGrid(
+                  habits: habits,
+                  onEditHabit: (h) => _openHabitEditor(h),
+                ),
+                loading: () => const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(40),
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+                error: (err, _) => Center(
+                  child: Text(
+                    'Error: $err',
+                    style: const TextStyle(color: Color(0xFFEF4444)),
+                  ),
                 ),
               ),
-              error: (err, _) => Center(
-                child: Text('Error: $err', style: const TextStyle(color: Color(0xFFEF4444))),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     // 1. Desktop Floating Timer Mode check
-    final isFloating = ref.watch(timerEngineProvider.select((s) => s.isFloating));
+    final isFloating = ref.watch(
+      timerEngineProvider.select((s) => s.isFloating),
+    );
     if (isFloating) {
       return const DesktopFloatingTimer();
     }
@@ -178,7 +236,9 @@ class _SadarHomeScreenState extends ConsumerState<SadarHomeScreen> {
     if (_isOnboardingDone == false) {
       return OnboardingView(
         onComplete: () async {
-          await ref.read(secureStorageServiceProvider).setSadarOnboardingDone(true);
+          await ref
+              .read(secureStorageServiceProvider)
+              .setSadarOnboardingDone(true);
           if (mounted) {
             setState(() => _isOnboardingDone = true);
           }
@@ -204,7 +264,10 @@ class _SadarHomeScreenState extends ConsumerState<SadarHomeScreen> {
         automaticallyImplyLeading: false,
         leading: widget.onBack != null
             ? IconButton(
-                icon: const Icon(Icons.arrow_back_rounded, color: AppPalette.accent),
+                icon: const Icon(
+                  Icons.arrow_back_rounded,
+                  color: AppPalette.accent,
+                ),
                 tooltip: 'Kembali',
                 onPressed: widget.onBack,
               )
