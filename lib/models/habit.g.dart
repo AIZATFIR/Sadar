@@ -15,7 +15,7 @@ extension GetHabitCollection on Isar {
 
 const HabitSchema = CollectionSchema(
   name: r'Habit',
-  id: 3896650575830519,
+  id: (3896650 * 1000000000000 + 575830519340),
   properties: {
     r'allowedPackages': PropertySchema(
       id: 0,

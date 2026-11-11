@@ -11,13 +11,14 @@ class FocusClockCallbackHandler {
     if (habit == null) return false;
 
     final date = DateFormat('yyyy-MM-dd').format(result.startedAt);
-    await repository.recordFocusClockSession(
+    return repository.recordFocusClockSession(
+      sessionId: result.sessionId,
       habitId: habit.id,
       dateString: date,
+      startedAt: result.startedAt,
       targetSnapshot: habit.target,
       durationMinutes: result.actualDurationMinutes,
       completedAt: result.endedAt,
     );
-    return true;
   }
 }

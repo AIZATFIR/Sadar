@@ -4,6 +4,7 @@ import 'package:isar/isar.dart';
 import '../../models/habit.dart';
 import '../../models/habit_entry.dart';
 import '../../models/daily_reflection.dart';
+import '../../models/focus_clock_session.dart';
 import '../../models/timer_session.dart';
 import '../../models/future_self.dart';
 
@@ -65,6 +66,7 @@ class SadarRepository {
   // In-Memory storage for tests / fallback
   final Map<int, Habit> _memHabits = {};
   final Map<String, HabitEntry> _memEntries = {}; // Key: "$habitId-$dateString"
+  final Map<String, FocusClockSession> _memFocusClockSessions = {};
   final Map<String, DailyReflection> _memReflections = {}; // Key: "$dateString"
   int _memHabitIdCounter = 100;
   int _memEntryIdCounter = 1000;
@@ -312,16 +314,26 @@ class SadarRepository {
     return res;
   }
 
-  Future<void> recordFocusClockSession({
+  Future<bool> recordFocusClockSession({
+    required String sessionId,
     required int habitId,
     required String dateString,
+    required DateTime startedAt,
     required int durationMinutes,
     required int targetSnapshot,
     required DateTime completedAt,
   }) async {
+    if (sessionId.isEmpty || durationMinutes <= 0) return false;
     final now = DateTime.now();
+    final session = FocusClockSession()
+      ..sessionId = sessionId
+      ..habitId = habitId
+      ..dateString = dateString
+      ..startedAt = startedAt
+      ..completedAt = completedAt
+      ..durationMinutes = durationMinutes;
+
     Future<void> applyTo(HabitEntry? existing, Future<void> Function(HabitEntry) save) async {
-      if (existing?.source == 'focus_clock' && existing?.completedAt == completedAt) return;
       final entry = existing ?? (HabitEntry()
         ..habitId = habitId
         ..dateString = dateString
@@ -338,17 +350,26 @@ class SadarRepository {
     }
 
     if (_isar == null) {
+      if (_memFocusClockSessions.containsKey(sessionId)) return false;
       final key = '$habitId-$dateString';
       await applyTo(_memEntries[key], (entry) async {
         if (entry.id <= 0) entry.id = _memEntryIdCounter++;
         _memEntries[key] = entry;
       });
+      session.id = _memFocusClockSessions.length + 1;
+      _memFocusClockSessions[sessionId] = session;
       _entriesStreamCtrl.add(null);
       _futureSelfStreamCtrl.add(null);
-      return;
+      return true;
     }
 
-    await _isar.writeTxn(() async {
+    final recorded = await _isar.writeTxn(() async {
+      final duplicate = await _isar.focusClockSessions
+          .filter()
+          .sessionIdEqualTo(sessionId)
+          .findFirst();
+      if (duplicate != null) return false;
+
       final existing = await _isar.habitEntrys
           .filter()
           .habitIdEqualTo(habitId)
@@ -357,8 +378,28 @@ class SadarRepository {
       await applyTo(existing, (entry) async {
         await _isar.habitEntrys.put(entry);
       });
+      await _isar.focusClockSessions.put(session);
+      return true;
     });
-    _futureSelfStreamCtrl.add(null);
+    if (recorded) _futureSelfStreamCtrl.add(null);
+    return recorded;
+  }
+
+  Future<List<FocusClockSession>> getFocusClockSessionsForDateRange(
+    String startDate,
+    String endDate,
+  ) async {
+    if (_isar == null) {
+      return _memFocusClockSessions.values
+          .where((session) =>
+              session.dateString.compareTo(startDate) >= 0 &&
+              session.dateString.compareTo(endDate) <= 0)
+          .toList();
+    }
+    return _isar.focusClockSessions
+        .filter()
+        .dateStringBetween(startDate, endDate)
+        .findAll();
   }
 
   Future<void> advanceProgression(int habitId) async {

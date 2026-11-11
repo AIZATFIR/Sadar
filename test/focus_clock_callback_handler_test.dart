@@ -97,6 +97,24 @@ void main() {
       callback('session-b', 15, endedAt.add(const Duration(minutes: 20))),
       repository,
     );
+    expect(
+      await FocusClockCallbackHandler.apply(
+        callback('session-b', 15, endedAt.add(const Duration(minutes: 20))),
+        repository,
+      ),
+      isFalse,
+    );
+    expect(
+      await FocusClockCallbackHandler.apply(
+        callback('session-a', 25, endedAt),
+        repository,
+      ),
+      isFalse,
+    );
+    await FocusClockCallbackHandler.apply(
+      callback('session-c', 10, endedAt.add(const Duration(minutes: 20))),
+      repository,
+    );
     await FocusClockCallbackHandler.apply(
       callback('session-b', 15, endedAt.add(const Duration(minutes: 20))),
       repository,
@@ -104,8 +122,12 @@ void main() {
 
     final date = DateFormat('yyyy-MM-dd').format(endedAt);
     final entry = (await repository.getEntriesForDateRange(date, date)).single;
-    expect(entry.actualDurationMinutes, 40);
-    expect(entry.valueCompleted, 40);
+    expect(entry.actualDurationMinutes, 50);
+    expect(entry.valueCompleted, 50);
+    expect(
+      await repository.getFocusClockSessionsForDateRange(date, date),
+      hasLength(3),
+    );
   });
 
   test('does not mark a cancelled external session complete', () async {

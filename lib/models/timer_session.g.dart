@@ -15,7 +15,7 @@ extension GetTimerSessionCollection on Isar {
 
 const TimerSessionSchema = CollectionSchema(
   name: r'TimerSession',
-  id: -4159859870323604,
+  id: -(7182897 * 1000000000000 + 665898893431),
   properties: {
     r'accumulatedDurationSeconds': PropertySchema(
       id: 0,

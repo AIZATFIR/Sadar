@@ -59,6 +59,7 @@ Integration occurs exclusively through the **Focus Session Contract** (`FocusSes
 - **Habit**: id, name, type, target, unit, frequency, isArchived, createdAt, updatedAt.
 - **DailyEntry / HabitEntry**: id, habitId, dateString, status, completedAt, actualDurationMinutes, targetSnapshot, source, createdAt, updatedAt.
 - **TimerSession**: id, habitId, habitName, startedAt, endedAt, targetSeconds, accumulatedDurationSeconds, status.
+- **FocusClockSession**: id, unique sessionId, habitId, dateString, startedAt, completedAt, durationMinutes. Each contract callback is stored once; daily habit entries summarize all focus sessions for that habit and date.
 - **DailyReflection**: id, dateString, feeling, proudOfToday, note, updatedAt.
 
 ### Section 59 & 60: Historical Immutability
@@ -81,7 +82,7 @@ Integration occurs exclusively through the **Focus Session Contract** (`FocusSes
   `IDLE → RUNNING → PAUSED → RUNNING → COMPLETED`
   `RUNNING → CANCELLED`
 - Invalid transitions (e.g. `COMPLETED → RUNNING`) are rejected.
-- Operations are protected by idempotency guards against rapid duplicate executions.
+- Focus Clock completion callbacks are deduplicated by persistent `sessionId`, including delayed replays after newer sessions. The daily entry and session ledger update in one Isar transaction.
 
 ---
 

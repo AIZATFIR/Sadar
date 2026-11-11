@@ -15,7 +15,7 @@ extension GetDailyReflectionCollection on Isar {
 
 const DailyReflectionSchema = CollectionSchema(
   name: r'DailyReflection',
-  id: 329460378031511,
+  id: (7755528 * 1000000000000 + 18710024762),
   properties: {
     r'completedCount': PropertySchema(
       id: 0,
@@ -61,7 +61,7 @@ const DailyReflectionSchema = CollectionSchema(
   idName: r'id',
   indexes: {
     r'dateString': IndexSchema(
-      id: 3858744797826177,
+      id: (2390766 * 1000000000000 + 547304188792),
       name: r'dateString',
       unique: false,
       replace: false,

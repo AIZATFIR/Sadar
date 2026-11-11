@@ -10,6 +10,7 @@ import '../models/habit.dart';
 import '../models/habit_entry.dart';
 import '../models/daily_reflection.dart';
 import '../models/timer_session.dart';
+import '../models/focus_clock_session.dart';
 import '../core/theme.dart';
 
 class IsarService {
@@ -26,6 +27,7 @@ class IsarService {
     HabitEntrySchema,
     DailyReflectionSchema,
     TimerSessionSchema,
+    FocusClockSessionSchema,
   ];
 
   static Future<IsarService> open() async {
