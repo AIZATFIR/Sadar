@@ -11,7 +11,7 @@ class FocusClockCallbackHandler {
     final habit = await repository.getHabitById(result.habitId);
     if (habit == null) return false;
 
-    final date = DateFormat('yyyy-MM-dd').format(result.endedAt);
+    final date = DateFormat('yyyy-MM-dd').format(result.startedAt);
     await repository.recordEntryStatus(
       habitId: habit.id,
       dateString: date,

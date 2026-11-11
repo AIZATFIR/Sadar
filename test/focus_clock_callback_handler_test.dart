@@ -38,6 +38,40 @@ void main() {
     },
   );
 
+  test('attributes a session crossing midnight to its start date', () async {
+    final repository = SadarRepository(null);
+    final habit = (await repository.getHabits()).first;
+    final startedAt = DateTime(2026, 11, 11, 23, 55);
+    final endedAt = DateTime(2026, 11, 12, 0, 25);
+    final uri = FocusSessionContract.buildSadarCompletedUri(
+      FocusSessionResult(
+        sessionId: 'session-midnight',
+        habitId: habit.id,
+        startedAt: startedAt,
+        endedAt: endedAt,
+        actualDurationMinutes: 30,
+        status: 'completed',
+      ),
+    );
+
+    final applied = await FocusClockCallbackHandler.apply(uri, repository);
+    final startDate = DateFormat('yyyy-MM-dd').format(startedAt);
+    final endDate = DateFormat('yyyy-MM-dd').format(endedAt);
+    final entries = await repository.getEntriesForDateRange(
+      startDate,
+      startDate,
+    );
+
+    expect(applied, isTrue);
+    expect(entries, hasLength(1));
+    expect(entries.single.completedAt, endedAt);
+    expect(entries.single.actualDurationMinutes, 30);
+    expect(
+      await repository.getEntriesForDateRange(endDate, endDate),
+      isEmpty,
+    );
+  });
+
   test('does not mark a cancelled external session complete', () async {
     final repository = SadarRepository(null);
     final habit = (await repository.getHabits()).first;
