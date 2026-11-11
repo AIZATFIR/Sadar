@@ -72,6 +72,42 @@ void main() {
     );
   });
 
+  test('sums separate focus sessions and ignores a duplicate callback', () async {
+    final repository = SadarRepository(null);
+    final habit = (await repository.getHabits()).first;
+    final endedAt = DateTime(2026, 11, 11, 16, 30);
+
+    Uri callback(String sessionId, int minutes, DateTime end) =>
+        FocusSessionContract.buildSadarCompletedUri(
+          FocusSessionResult(
+            sessionId: sessionId,
+            habitId: habit.id,
+            startedAt: end.subtract(Duration(minutes: minutes)),
+            endedAt: end,
+            actualDurationMinutes: minutes,
+            status: 'completed',
+          ),
+        );
+
+    await FocusClockCallbackHandler.apply(
+      callback('session-a', 25, endedAt),
+      repository,
+    );
+    await FocusClockCallbackHandler.apply(
+      callback('session-b', 15, endedAt.add(const Duration(minutes: 20))),
+      repository,
+    );
+    await FocusClockCallbackHandler.apply(
+      callback('session-b', 15, endedAt.add(const Duration(minutes: 20))),
+      repository,
+    );
+
+    final date = DateFormat('yyyy-MM-dd').format(endedAt);
+    final entry = (await repository.getEntriesForDateRange(date, date)).single;
+    expect(entry.actualDurationMinutes, 40);
+    expect(entry.valueCompleted, 40);
+  });
+
   test('does not mark a cancelled external session complete', () async {
     final repository = SadarRepository(null);
     final habit = (await repository.getHabits()).first;

@@ -312,6 +312,55 @@ class SadarRepository {
     return res;
   }
 
+  Future<void> recordFocusClockSession({
+    required int habitId,
+    required String dateString,
+    required int durationMinutes,
+    required int targetSnapshot,
+    required DateTime completedAt,
+  }) async {
+    final now = DateTime.now();
+    Future<void> applyTo(HabitEntry? existing, Future<void> Function(HabitEntry) save) async {
+      if (existing?.source == 'focus_clock' && existing?.completedAt == completedAt) return;
+      final entry = existing ?? (HabitEntry()
+        ..habitId = habitId
+        ..dateString = dateString
+        ..createdAt = now);
+      final previousDuration = entry.source == 'focus_clock' ? entry.actualDurationMinutes : 0;
+      entry.status = HabitStatus.yes;
+      entry.valueCompleted = previousDuration + durationMinutes;
+      entry.targetSnapshot = entry.targetSnapshot > 0 ? entry.targetSnapshot : targetSnapshot;
+      entry.actualDurationMinutes = previousDuration + durationMinutes;
+      entry.completedAt = completedAt;
+      entry.source = 'focus_clock';
+      entry.updatedAt = now;
+      await save(entry);
+    }
+
+    if (_isar == null) {
+      final key = '$habitId-$dateString';
+      await applyTo(_memEntries[key], (entry) async {
+        if (entry.id <= 0) entry.id = _memEntryIdCounter++;
+        _memEntries[key] = entry;
+      });
+      _entriesStreamCtrl.add(null);
+      _futureSelfStreamCtrl.add(null);
+      return;
+    }
+
+    await _isar.writeTxn(() async {
+      final existing = await _isar.habitEntrys
+          .filter()
+          .habitIdEqualTo(habitId)
+          .dateStringEqualTo(dateString)
+          .findFirst();
+      await applyTo(existing, (entry) async {
+        await _isar.habitEntrys.put(entry);
+      });
+    });
+    _futureSelfStreamCtrl.add(null);
+  }
+
   Future<void> advanceProgression(int habitId) async {
     final habit = await getHabitById(habitId);
     if (habit == null) return;

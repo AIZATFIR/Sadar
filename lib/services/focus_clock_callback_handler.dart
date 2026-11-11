@@ -1,7 +1,6 @@
 import 'package:intl/intl.dart';
 
 import '../data/repositories/sadar_repository.dart';
-import '../models/habit_entry.dart';
 import 'focus_session_contract.dart';
 
 class FocusClockCallbackHandler {
@@ -12,14 +11,11 @@ class FocusClockCallbackHandler {
     if (habit == null) return false;
 
     final date = DateFormat('yyyy-MM-dd').format(result.startedAt);
-    await repository.recordEntryStatus(
+    await repository.recordFocusClockSession(
       habitId: habit.id,
       dateString: date,
-      status: HabitStatus.yes,
-      valueCompleted: result.actualDurationMinutes,
       targetSnapshot: habit.target,
-      actualDurationMinutes: result.actualDurationMinutes,
-      source: 'focus_clock',
+      durationMinutes: result.actualDurationMinutes,
       completedAt: result.endedAt,
     );
     return true;
