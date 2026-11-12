@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import '../../../core/theme.dart';
@@ -8,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../models/future_self.dart';
 import '../../../models/habit_entry.dart';
 import '../../../providers/sadar_providers.dart';
+import '../../../services/deep_link_service.dart';
 import '../../../services/focus_session_contract.dart';
 import 'future_self_visualizer.dart';
 
@@ -739,6 +741,15 @@ class FutureSelfWidget extends ConsumerWidget {
 
   Future<void> _launchFocusSession(BuildContext context, FutureSelfActivityItem act) async {
     HapticFeedback.mediumImpact();
+    if (kIsWeb) {
+      await DeepLinkService.launchFocusClockWebTimer(
+        habitId: act.id,
+        title: act.title,
+        durationMinutes: act.target,
+      );
+      return;
+    }
+
     final uri = FocusSessionContract.buildFocusClockUri(
       FocusSessionRequest(
         habitId: act.id,

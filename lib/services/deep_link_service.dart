@@ -53,23 +53,36 @@ class TimerLaunchParams {
 }
 
 class DeepLinkService {
-  static Future<bool> launchFocusClockWebTimer({
+  static Uri buildFocusClockWebTimerUri({
     required int habitId,
     required String title,
     required int durationMinutes,
-  }) async {
-    if (durationMinutes < 1 || durationMinutes > 720) return false;
+    required Uri callbackUri,
+  }) {
     final now = DateTime.now();
-    final callback = Uri.base.resolve('/');
-    final uri = Uri.https('focus-clock-web.vercel.app', '/', {
+    return Uri.https('focus-clock-web.vercel.app', '/', {
       'task': title,
       'duration': durationMinutes.toString(),
       'autoStart': 'true',
       'habitId': habitId.toString(),
       'sessionId': const Uuid().v4(),
       'timestamp': now.millisecondsSinceEpoch.toString(),
-      'callback': callback.toString(),
+      'callback': callbackUri.toString(),
     });
+  }
+
+  static Future<bool> launchFocusClockWebTimer({
+    required int habitId,
+    required String title,
+    required int durationMinutes,
+  }) async {
+    if (durationMinutes < 1 || durationMinutes > 720) return false;
+    final uri = buildFocusClockWebTimerUri(
+      habitId: habitId,
+      title: title,
+      durationMinutes: durationMinutes,
+      callbackUri: Uri.base.resolve('/'),
+    );
     try {
       return await launchUrl(uri, mode: LaunchMode.externalApplication);
     } catch (error) {
