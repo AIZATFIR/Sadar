@@ -89,3 +89,29 @@ jobs:
         with:
           name: Sadar-Web
           path: Sadar-Web.zip
+  publish-release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [build-android, build-linux, build-windows, build-web]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+      - name: Create preview release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          mv release-assets/Sadar-Android-APK/app-release.apk release-assets/Sadar-Android-APK.apk
+          mv release-assets/Sadar-Linux-x64/Sadar-Linux-x64.tar.gz release-assets/Sadar-Linux-x64.tar.gz
+          mv release-assets/Sadar-Windows-x64/Sadar-Windows-x64.zip release-assets/Sadar-Windows-x64.zip
+          mv release-assets/Sadar-Web/Sadar-Web.zip release-assets/Sadar-Web.zip
+          gh release create "$TAG_NAME" \
+            release-assets/Sadar-Android-APK.apk \
+            release-assets/Sadar-Linux-x64.tar.gz \
+            release-assets/Sadar-Windows-x64.zip \
+            release-assets/Sadar-Web.zip \
+            --verify-tag --title "Sadar $TAG_NAME — Ecosystem Preview" --generate-notes --prerelease
