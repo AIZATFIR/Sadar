@@ -45,12 +45,12 @@ Official multiplatform binaries are published on GitHub Releases:
 
 | Platform | Target Package | Description |
 |---|---|---|
-| **Android** | [Sadar-Android-APK.apk](https://github.com/AIZATFIR/Sadar/releases/download/v1.5.2-preview.1/Sadar-Android-APK.apk) | Full mobile experience with lockscreen focus |
-| **Linux** | [Sadar-Linux-x64.tar.gz](https://github.com/AIZATFIR/Sadar/releases/download/v1.5.2-preview.1/Sadar-Linux-x64.tar.gz) | Desktop Linux application |
-| **Windows** | [Sadar-Windows-x64.zip](https://github.com/AIZATFIR/Sadar/releases/download/v1.5.2-preview.1/Sadar-Windows-x64.zip) | Desktop Windows executable |
-| **Web** | [Sadar-Web.zip](https://github.com/AIZATFIR/Sadar/releases/download/v1.5.2-preview.1/Sadar-Web.zip) | Browser client |
+| **Android** | [Sadar-Android-APK.apk](https://github.com/AIZATFIR/Sadar/releases/download/v1.5.2-preview.2/Sadar-Android-APK.apk) | Full mobile experience with lockscreen focus |
+| **Linux** | [Sadar-Linux-x64.tar.gz](https://github.com/AIZATFIR/Sadar/releases/download/v1.5.2-preview.2/Sadar-Linux-x64.tar.gz) | Desktop Linux application |
+| **Windows** | [Sadar-Windows-x64.zip](https://github.com/AIZATFIR/Sadar/releases/download/v1.5.2-preview.2/Sadar-Windows-x64.zip) | Desktop Windows executable |
+| **Web** | [Sadar-Web.zip](https://github.com/AIZATFIR/Sadar/releases/download/v1.5.2-preview.2/Sadar-Web.zip) | Browser client |
 
-Current ecosystem preview: [Sadar v1.5.2-preview.1](https://github.com/AIZATFIR/Sadar/releases/tag/v1.5.2-preview.1). It is a prerelease; review its notes before installing.
+Current ecosystem preview: [Sadar v1.5.2-preview.2](https://github.com/AIZATFIR/Sadar/releases/tag/v1.5.2-preview.2). It is a prerelease; review its notes before installing.
 
 ---
 
