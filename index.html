@@ -1270,7 +1270,20 @@
         const habit = this.habits.find(h => h.id === habitId);
         if (!habit) return;
 
-        const durationMinutes = habit.durationMinutes || 25;
+        const durationMinutes = Number(habit.durationMinutes) || 25;
+        if (Number.isInteger(durationMinutes) && durationMinutes >= 1 && durationMinutes <= 720) {
+          const focusClockUrl = new URL('https://focus-clock-web.vercel.app/');
+          focusClockUrl.searchParams.set('task', habit.title);
+          focusClockUrl.searchParams.set('duration', durationMinutes);
+          focusClockUrl.searchParams.set('autoStart', 'true');
+
+          const focusClockWindow = window.open(focusClockUrl.toString(), '_blank');
+          if (focusClockWindow) {
+            focusClockWindow.opener = null;
+            return;
+          }
+        }
+
         this.activeTimer = {
           habit,
           totalSeconds: durationMinutes * 60,
