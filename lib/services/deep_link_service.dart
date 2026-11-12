@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:uuid/uuid.dart';
 
 import 'focus_session_contract.dart';
 
@@ -52,6 +53,31 @@ class TimerLaunchParams {
 }
 
 class DeepLinkService {
+  static Future<bool> launchFocusClockWebTimer({
+    required int habitId,
+    required String title,
+    required int durationMinutes,
+  }) async {
+    if (durationMinutes < 1 || durationMinutes > 720) return false;
+    final now = DateTime.now();
+    final callback = Uri.base.resolve('/');
+    final uri = Uri.https('focus-clock-web.vercel.app', '/', {
+      'task': title,
+      'duration': durationMinutes.toString(),
+      'autoStart': 'true',
+      'habitId': habitId.toString(),
+      'sessionId': const Uuid().v4(),
+      'timestamp': now.millisecondsSinceEpoch.toString(),
+      'callback': callback.toString(),
+    });
+    try {
+      return await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } catch (error) {
+      debugPrint('DeepLinkService.launchFocusClockWebTimer error: $error');
+      return false;
+    }
+  }
+
   /// Attempts to launch Focus Clock native timer via URL scheme.
   /// Returns true if successfully launched, false if not supported or app not installed.
   static Future<bool> launchFocusClockTimer(TimerLaunchParams params) async {

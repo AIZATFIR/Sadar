@@ -12,6 +12,10 @@ import '../../providers/sadar_providers.dart';
 import '../../services/sadar_timer_engine.dart';
 import '../../services/focus_clock_callback_handler.dart';
 import '../../services/secure_storage_service.dart';
+import '../../services/focus_session_contract.dart';
+import '../../services/sadar_web_callback_url_stub.dart'
+    if (dart.library.js_interop) '../../services/sadar_web_callback_url_web.dart'
+    as web_callback_url;
 import 'widgets/awareness_view.dart';
 import 'widgets/daily_fulfillment_banner.dart';
 import 'widgets/desktop_floating_timer.dart';
@@ -48,10 +52,24 @@ class _SadarHomeScreenState extends ConsumerState<SadarHomeScreen> {
 
   Future<void> _handleExternalResult(Uri uri) async {
     try {
+      final webResult = FocusSessionContract.parseSadarWebCompletedUri(uri);
       final applied = await FocusClockCallbackHandler.apply(
         uri,
         ref.read(sadarRepoProvider),
       );
+      if (kIsWeb && webResult != null) {
+        web_callback_url.clearSadarWebCallbackQuery();
+      }
+      if (kIsWeb && webResult != null && webResult.status != 'completed') {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Sesi dibatalkan; kebiasaan belum ditandai.'),
+            ),
+          );
+        }
+        return;
+      }
       if (!applied || !mounted) return;
       ref.invalidate(habitEntriesStreamProvider);
       ref.invalidate(dailyFulfillmentProvider);

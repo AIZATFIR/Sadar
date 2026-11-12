@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -53,13 +54,15 @@ class _QuickActionSheetState extends ConsumerState<QuickActionSheet> {
 
   Future<void> _updateStatus(HabitStatus status) async {
     HapticFeedback.mediumImpact();
-    await ref.read(sadarRepoProvider).recordEntryStatus(
-      habitId: widget.habit.id,
-      dateString: _dateStr,
-      status: status,
-      valueCompleted: status == HabitStatus.yes ? widget.habit.target : 0,
-      note: widget.existingEntry?.note,
-    );
+    await ref
+        .read(sadarRepoProvider)
+        .recordEntryStatus(
+          habitId: widget.habit.id,
+          dateString: _dateStr,
+          status: status,
+          valueCompleted: status == HabitStatus.yes ? widget.habit.target : 0,
+          note: widget.existingEntry?.note,
+        );
     ref.invalidate(dailyFulfillmentProvider);
     ref.invalidate(whatIRepeatProvider);
     ref.invalidate(awarenessStatsProvider);
@@ -69,34 +72,41 @@ class _QuickActionSheetState extends ConsumerState<QuickActionSheet> {
   Future<void> _saveNote() async {
     HapticFeedback.lightImpact();
     final text = _noteCtrl.text.trim();
-    await ref.read(sadarRepoProvider).recordEntryStatus(
-      habitId: widget.habit.id,
-      dateString: _dateStr,
-      status: widget.existingEntry?.status ?? HabitStatus.unmarked,
-      note: text.isEmpty ? null : text,
-    );
+    await ref
+        .read(sadarRepoProvider)
+        .recordEntryStatus(
+          habitId: widget.habit.id,
+          dateString: _dateStr,
+          status: widget.existingEntry?.status ?? HabitStatus.unmarked,
+          note: text.isEmpty ? null : text,
+        );
     setState(() => _isEditingNote = false);
   }
 
   void _startTimer() async {
     HapticFeedback.mediumImpact();
+    final navigator = Navigator.of(context);
+    final launched = kIsWeb
+        ? await DeepLinkService.launchFocusClockWebTimer(
+            habitId: widget.habit.id,
+            title: widget.habit.name,
+            durationMinutes: widget.habit.target,
+          )
+        : await DeepLinkService.launchFocusClockTimer(
+            TimerLaunchParams(
+              habitId: widget.habit.id,
+              title: widget.habit.name,
+              durationMinutes: widget.habit.target,
+              iconKey: widget.habit.iconKey,
+              colorValue: widget.habit.colorValue,
+              callbackUrl: 'sadar://completed',
+            ),
+          );
+
+    if (!mounted) return;
     widget.onClose();
-
-    // Try opening Focus Clock native timer via URL scheme
-    final launched = await DeepLinkService.launchFocusClockTimer(
-      TimerLaunchParams(
-        habitId: widget.habit.id,
-        title: widget.habit.name,
-        durationMinutes: widget.habit.target,
-        iconKey: widget.habit.iconKey,
-        colorValue: widget.habit.colorValue,
-        callbackUrl: 'sadar://completed',
-      ),
-    );
-
-    // Fallback to internal Sadar timer if Focus Clock scheme not available or on desktop/web
-    if (!launched && mounted) {
-      Navigator.of(context).push(
+    if (!launched) {
+      navigator.push(
         MaterialPageRoute(
           fullscreenDialog: true,
           builder: (ctx) => SadarTimerView(
@@ -171,13 +181,20 @@ class _QuickActionSheetState extends ConsumerState<QuickActionSheet> {
                     const SizedBox(height: 2),
                     Text(
                       '$dateFormatted · Target ${widget.habit.target} ${_formatUnit(widget.habit.unit)}',
-                      style: const TextStyle(fontSize: 12, color: AppPalette.textDim),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppPalette.textDim,
+                      ),
                     ),
                   ],
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.close_rounded, color: AppPalette.textDim, size: 22),
+                icon: const Icon(
+                  Icons.close_rounded,
+                  color: AppPalette.textDim,
+                  size: 22,
+                ),
                 onPressed: widget.onClose,
               ),
             ],
@@ -192,12 +209,17 @@ class _QuickActionSheetState extends ConsumerState<QuickActionSheet> {
                 backgroundColor: AppPalette.accent,
                 foregroundColor: Colors.black,
                 padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
               ),
               icon: const Icon(Icons.play_arrow_rounded, size: 24),
               label: Text(
                 'Mulai Fokus (${widget.habit.target} min)',
-                style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 14,
+                ),
               ),
               onPressed: _startTimer,
             ),
@@ -213,7 +235,9 @@ class _QuickActionSheetState extends ConsumerState<QuickActionSheet> {
                   icon: Icons.edit_note_rounded,
                   label: hasNote ? 'Catatan ✓' : 'Catatan',
                   color: hasNote ? const Color(0xFFEAB308) : AppPalette.textDim,
-                  bgColor: hasNote ? const Color(0xFFEAB308).withValues(alpha: 0.15) : AppPalette.bg,
+                  bgColor: hasNote
+                      ? const Color(0xFFEAB308).withValues(alpha: 0.15)
+                      : AppPalette.bg,
                   isSelected: hasNote,
                   onTap: () {
                     HapticFeedback.lightImpact();
@@ -284,10 +308,16 @@ class _QuickActionSheetState extends ConsumerState<QuickActionSheet> {
                 children: [
                   TextField(
                     controller: _noteCtrl,
-                    style: const TextStyle(fontSize: 13, color: AppPalette.text),
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: AppPalette.text,
+                    ),
                     decoration: const InputDecoration(
                       hintText: 'Tulis refleksi singkat untuk hari ini...',
-                      hintStyle: TextStyle(color: AppPalette.textDim, fontSize: 13),
+                      hintStyle: TextStyle(
+                        color: AppPalette.textDim,
+                        fontSize: 13,
+                      ),
                       border: InputBorder.none,
                       isDense: true,
                     ),
@@ -302,17 +332,32 @@ class _QuickActionSheetState extends ConsumerState<QuickActionSheet> {
                           _noteCtrl.clear();
                           _saveNote();
                         },
-                        child: const Text('Hapus', style: TextStyle(color: Color(0xFFEF4444), fontSize: 12)),
+                        child: const Text(
+                          'Hapus',
+                          style: TextStyle(
+                            color: Color(0xFFEF4444),
+                            fontSize: 12,
+                          ),
+                        ),
                       ),
                       const SizedBox(width: 8),
                       FilledButton(
                         style: FilledButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 8,
+                          ),
                           backgroundColor: AppPalette.accent,
                           foregroundColor: Colors.black,
                         ),
                         onPressed: _saveNote,
-                        child: const Text('Simpan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                        child: const Text(
+                          'Simpan',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
                       ),
                     ],
                   ),

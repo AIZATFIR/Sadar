@@ -164,6 +164,8 @@
 
   </div>
 
+  <script src="./focus_clock_web_callback.js"></script>
+
   <!-- Application Logic & State Engine -->
   <script>
     // ────────────────────────────────────────────────────────────────────────
@@ -269,6 +271,7 @@
         this.weekOffset = 0; // 0 = current week
         this.timerInterval = null;
         this.activeTimer = null; // { habit, remainingSeconds, isRunning, totalSeconds }
+        this.focusClockNotice = '';
         
         // Load data from localStorage or seed
         this.loadStorage();
@@ -314,6 +317,46 @@
         } catch (e) {
           console.error('Failed to write to localStorage:', e);
         }
+      }
+
+      handleFocusClockReturn() {
+        const params = new URLSearchParams(window.location.search);
+        const hasFocusClockParams = [...params.keys()].some((key) => key.startsWith('fc_'));
+        if (!hasFocusClockParams) return;
+
+        const result = window.SadarFocusClockCallback.parseFocusClockResult(
+          window.location.search,
+          this.habits,
+        );
+        for (const key of [...params.keys()]) {
+          if (key.startsWith('fc_')) params.delete(key);
+        }
+        const remainingQuery = params.toString();
+        window.history.replaceState(
+          null,
+          '',
+          `${window.location.pathname}${remainingQuery ? `?${remainingQuery}` : ''}${window.location.hash}`,
+        );
+
+        if (!result) {
+          this.focusClockNotice = 'Hasil sesi tidak dikenali; kebiasaan tidak diubah.';
+          return;
+        }
+        if (result.status !== 'completed') {
+          this.focusClockNotice = 'Sesi dibatalkan; kebiasaan belum ditandai selesai.';
+          return;
+        }
+
+        const applied = window.SadarFocusClockCallback.applyFocusClockResult(
+          this,
+          result,
+          getTodayString(),
+        );
+        this.focusClockNotice = applied === 'applied'
+          ? `Sesi fokus ${result.durationMinutes} menit tersimpan di Sadar.`
+          : applied === 'duplicate'
+            ? 'Sesi ini sudah tercatat di Sadar.'
+            : 'Sesi tidak tersimpan; kebiasaan mungkin sudah dihapus.';
       }
 
       getHabitLog(date, habitId) {
@@ -364,6 +407,11 @@
         this.render();
       }
 
+      dismissFocusClockNotice() {
+        this.focusClockNotice = '';
+        this.render();
+      }
+
       setUserName(name) {
         this.userName = name.trim() || 'Zafir';
         this.saveStorage();
@@ -396,20 +444,26 @@
         });
 
         // Render Active Tab View
+        let view;
         switch (this.activeTab) {
           case 'today':
-            container.innerHTML = this.renderTodayView();
+            view = this.renderTodayView();
             break;
           case 'timeline':
-            container.innerHTML = this.renderTimelineView();
+            view = this.renderTimelineView();
             break;
           case 'repeat':
-            container.innerHTML = this.renderRepeatView();
+            view = this.renderRepeatView();
             break;
           case 'awareness':
-            container.innerHTML = this.renderAwarenessView();
+            view = this.renderAwarenessView();
             break;
         }
+
+        const notice = this.focusClockNotice
+          ? `<div role="status" class="mb-3 flex items-center justify-between gap-3 rounded-xl border border-gold/30 bg-gold/10 px-3.5 py-3 text-xs text-gold"><span>${this.focusClockNotice}</span><button type="button" aria-label="Tutup notifikasi" onclick="appState.dismissFocusClockNotice()" class="px-2 py-1 text-textMuted">Tutup</button></div>`
+          : '';
+        container.innerHTML = `${notice}${view}`;
 
         // Initialize Lucide icons on fresh DOM
         lucide.createIcons();
@@ -1276,6 +1330,13 @@
           focusClockUrl.searchParams.set('task', habit.title);
           focusClockUrl.searchParams.set('duration', durationMinutes);
           focusClockUrl.searchParams.set('autoStart', 'true');
+          focusClockUrl.searchParams.set('habitKey', habit.id);
+          focusClockUrl.searchParams.set(
+            'sessionId',
+            window.crypto?.randomUUID?.() || `fc-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
+          );
+          focusClockUrl.searchParams.set('timestamp', String(Date.now()));
+          focusClockUrl.searchParams.set('callback', `${window.location.origin}/`);
 
           const focusClockWindow = window.open(focusClockUrl.toString(), '_blank');
           if (focusClockWindow) {
@@ -1624,6 +1685,7 @@
     // Initialize Global App Instance
     const appState = new AppStateStore();
     window.appState = appState;
+    appState.handleFocusClockReturn();
     appState.render();
   </script>
 </body>

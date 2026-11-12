@@ -5,7 +5,9 @@ import 'focus_session_contract.dart';
 
 class FocusClockCallbackHandler {
   static Future<bool> apply(Uri uri, SadarRepository repository) async {
-    final result = FocusSessionContract.parseSadarCompletedUri(uri);
+    final result =
+        FocusSessionContract.parseSadarCompletedUri(uri) ??
+        FocusSessionContract.parseSadarWebCompletedUri(uri);
     if (result == null || !result.isCompleted) return false;
     final habit = await repository.getHabitById(result.habitId);
     if (habit == null) return false;

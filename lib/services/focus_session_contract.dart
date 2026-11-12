@@ -185,4 +185,58 @@ class FocusSessionContract {
       status: status!,
     );
   }
+
+  static bool isAllowedSadarWebCallback(Uri uri) {
+    final isLocal =
+        (uri.host == 'localhost' || uri.host == '127.0.0.1') &&
+        uri.scheme == 'http';
+    final isProduction =
+        uri.host == 'sadar-web.vercel.app' &&
+        uri.scheme == 'https' &&
+        uri.port == 443;
+    return (isLocal || isProduction) &&
+        uri.userInfo.isEmpty &&
+        (uri.path.isEmpty || uri.path == '/') &&
+        uri.fragment.isEmpty;
+  }
+
+  static FocusSessionResult? parseSadarWebCompletedUri(Uri uri) {
+    if (!isAllowedSadarWebCallback(uri)) return null;
+    final params = uri.queryParameters;
+    if (params['fc_version'] != '1') return null;
+
+    final habitId = int.tryParse(params['fc_habit'] ?? '');
+    final sessionId = params['fc_session'] ?? '';
+    final startedAt = int.tryParse(params['fc_started'] ?? '');
+    final endedAt = int.tryParse(params['fc_ended'] ?? '');
+    final duration = int.tryParse(params['fc_duration'] ?? '');
+    final status = params['fc_status'];
+
+    if (habitId == null || habitId <= 0) {
+      return null;
+    }
+    if (!RegExp(r'^[A-Za-z0-9._:-]{1,128}$').hasMatch(sessionId)) {
+      return null;
+    }
+    if (startedAt == null || endedAt == null || endedAt < startedAt) {
+      return null;
+    }
+    if (duration == null || duration < 0 || duration > 720) {
+      return null;
+    }
+    if (status != 'completed' &&
+        status != 'cancelled' &&
+        status != 'interrupted') {
+      return null;
+    }
+
+    return FocusSessionResult(
+      sessionId: sessionId,
+      habitId: habitId,
+      startedAt: DateTime.fromMillisecondsSinceEpoch(startedAt),
+      endedAt: DateTime.fromMillisecondsSinceEpoch(endedAt),
+      actualDurationMinutes: duration,
+      status: status!,
+    );
+  }
 }

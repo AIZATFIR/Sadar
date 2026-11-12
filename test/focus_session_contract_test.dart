@@ -97,5 +97,41 @@ void main() {
       expect(parsed.actualDurationMinutes, 20);
       expect(parsed.isCompleted, true);
     });
+
+    test('parses a completion returned from Focus Clock web', () {
+      final startedAt = DateTime(2026, 11, 12, 9);
+      final endedAt = startedAt.add(const Duration(minutes: 25));
+      final uri = Uri.https('sadar-web.vercel.app', '/', {
+        'fc_version': '1',
+        'fc_session': 'web-session-1',
+        'fc_habit': '55',
+        'fc_started': startedAt.millisecondsSinceEpoch.toString(),
+        'fc_ended': endedAt.millisecondsSinceEpoch.toString(),
+        'fc_duration': '25',
+        'fc_status': 'completed',
+      });
+
+      final parsed = FocusSessionContract.parseSadarWebCompletedUri(uri);
+
+      expect(parsed, isNotNull);
+      expect(parsed!.sessionId, 'web-session-1');
+      expect(parsed.habitId, 55);
+      expect(parsed.actualDurationMinutes, 25);
+      expect(parsed.isCompleted, isTrue);
+    });
+
+    test('rejects a web completion sent to another origin', () {
+      final uri = Uri.https('evil.example', '/', {
+        'fc_version': '1',
+        'fc_session': 'web-session-1',
+        'fc_habit': '55',
+        'fc_started': '1794441600000',
+        'fc_ended': '1794443100000',
+        'fc_duration': '25',
+        'fc_status': 'completed',
+      });
+
+      expect(FocusSessionContract.parseSadarWebCompletedUri(uri), isNull);
+    });
   });
 }

@@ -38,6 +38,32 @@ void main() {
     },
   );
 
+  test('records a completed Focus Clock web callback', () async {
+    final repository = SadarRepository(null);
+    final habit = (await repository.getHabits()).first;
+    final startedAt = DateTime(2026, 11, 11, 16, 5);
+    final endedAt = startedAt.add(const Duration(minutes: 25));
+    final uri = Uri.https('sadar-web.vercel.app', '/', {
+      'fc_version': '1',
+      'fc_session': 'web-session-1',
+      'fc_habit': habit.id.toString(),
+      'fc_started': startedAt.millisecondsSinceEpoch.toString(),
+      'fc_ended': endedAt.millisecondsSinceEpoch.toString(),
+      'fc_duration': '25',
+      'fc_status': 'completed',
+    });
+
+    final applied = await FocusClockCallbackHandler.apply(uri, repository);
+    final date = DateFormat('yyyy-MM-dd').format(startedAt);
+    final entry = (await repository.getEntriesForDateRange(date, date)).single;
+
+    expect(applied, isTrue);
+    expect(entry.habitId, habit.id);
+    expect(entry.status, HabitStatus.yes);
+    expect(entry.actualDurationMinutes, 25);
+    expect(entry.source, 'focus_clock');
+  });
+
   test('attributes a session crossing midnight to its start date', () async {
     final repository = SadarRepository(null);
     final habit = (await repository.getHabits()).first;
@@ -66,69 +92,72 @@ void main() {
     expect(entries, hasLength(1));
     expect(entries.single.completedAt, endedAt);
     expect(entries.single.actualDurationMinutes, 30);
-    expect(
-      await repository.getEntriesForDateRange(endDate, endDate),
-      isEmpty,
-    );
+    expect(await repository.getEntriesForDateRange(endDate, endDate), isEmpty);
   });
 
-  test('sums separate focus sessions and ignores a duplicate callback', () async {
-    final repository = SadarRepository(null);
-    final habit = (await repository.getHabits()).first;
-    final endedAt = DateTime(2026, 11, 11, 16, 30);
+  test(
+    'sums separate focus sessions and ignores a duplicate callback',
+    () async {
+      final repository = SadarRepository(null);
+      final habit = (await repository.getHabits()).first;
+      final endedAt = DateTime(2026, 11, 11, 16, 30);
 
-    Uri callback(String sessionId, int minutes, DateTime end) =>
-        FocusSessionContract.buildSadarCompletedUri(
-          FocusSessionResult(
-            sessionId: sessionId,
-            habitId: habit.id,
-            startedAt: end.subtract(Duration(minutes: minutes)),
-            endedAt: end,
-            actualDurationMinutes: minutes,
-            status: 'completed',
-          ),
-        );
+      Uri callback(String sessionId, int minutes, DateTime end) =>
+          FocusSessionContract.buildSadarCompletedUri(
+            FocusSessionResult(
+              sessionId: sessionId,
+              habitId: habit.id,
+              startedAt: end.subtract(Duration(minutes: minutes)),
+              endedAt: end,
+              actualDurationMinutes: minutes,
+              status: 'completed',
+            ),
+          );
 
-    await FocusClockCallbackHandler.apply(
-      callback('session-a', 25, endedAt),
-      repository,
-    );
-    await FocusClockCallbackHandler.apply(
-      callback('session-b', 15, endedAt.add(const Duration(minutes: 20))),
-      repository,
-    );
-    expect(
-      await FocusClockCallbackHandler.apply(
-        callback('session-b', 15, endedAt.add(const Duration(minutes: 20))),
-        repository,
-      ),
-      isFalse,
-    );
-    expect(
       await FocusClockCallbackHandler.apply(
         callback('session-a', 25, endedAt),
         repository,
-      ),
-      isFalse,
-    );
-    await FocusClockCallbackHandler.apply(
-      callback('session-c', 10, endedAt.add(const Duration(minutes: 20))),
-      repository,
-    );
-    await FocusClockCallbackHandler.apply(
-      callback('session-b', 15, endedAt.add(const Duration(minutes: 20))),
-      repository,
-    );
+      );
+      await FocusClockCallbackHandler.apply(
+        callback('session-b', 15, endedAt.add(const Duration(minutes: 20))),
+        repository,
+      );
+      expect(
+        await FocusClockCallbackHandler.apply(
+          callback('session-b', 15, endedAt.add(const Duration(minutes: 20))),
+          repository,
+        ),
+        isFalse,
+      );
+      expect(
+        await FocusClockCallbackHandler.apply(
+          callback('session-a', 25, endedAt),
+          repository,
+        ),
+        isFalse,
+      );
+      await FocusClockCallbackHandler.apply(
+        callback('session-c', 10, endedAt.add(const Duration(minutes: 20))),
+        repository,
+      );
+      await FocusClockCallbackHandler.apply(
+        callback('session-b', 15, endedAt.add(const Duration(minutes: 20))),
+        repository,
+      );
 
-    final date = DateFormat('yyyy-MM-dd').format(endedAt);
-    final entry = (await repository.getEntriesForDateRange(date, date)).single;
-    expect(entry.actualDurationMinutes, 50);
-    expect(entry.valueCompleted, 50);
-    expect(
-      await repository.getFocusClockSessionsForDateRange(date, date),
-      hasLength(3),
-    );
-  });
+      final date = DateFormat('yyyy-MM-dd').format(endedAt);
+      final entry = (await repository.getEntriesForDateRange(
+        date,
+        date,
+      )).single;
+      expect(entry.actualDurationMinutes, 50);
+      expect(entry.valueCompleted, 50);
+      expect(
+        await repository.getFocusClockSessionsForDateRange(date, date),
+        hasLength(3),
+      );
+    },
+  );
 
   test('does not mark a cancelled external session complete', () async {
     final repository = SadarRepository(null);
